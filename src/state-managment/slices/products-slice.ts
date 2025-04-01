@@ -1,8 +1,8 @@
 // productsSlice.ts
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { Product } from '../../core/domain/entities/Product';
-import { getProducts } from '../../core/domain/useCases/products/getProducts';
-import { ProductRepositoryImpl } from '../../core/infrastructure/api/repositories/ProductRepositoryImpl';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { Product } from "@core/domain/entities";
+import { getProducts } from "@core/domain/use-cases/products/get-products";
+import { ProductRepositoryImpl } from "@core/infrastructure/api/repositories/ProductRepositoryImpl";
 
 interface ProductsState {
   data: Product[];
@@ -17,13 +17,13 @@ const initialState: ProductsState = {
 };
 
 // Async thunk using domain useCase
-export const fetchProducts = createAsyncThunk('products/fetch', async () => {
+export const fetchProducts = createAsyncThunk("products/fetch", async () => {
   const repo = new ProductRepositoryImpl();
   return getProducts(repo);
 });
 
 const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState,
   reducers: {
     clearProducts: (state) => {
@@ -42,10 +42,10 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to load products';
+        state.error = action.error.message || "Failed to load products";
       });
   },
 });
 
 export const { clearProducts } = productsSlice.actions;
-export {productsSlice.reducer as productsReducer};
+export default productsSlice.reducer;
