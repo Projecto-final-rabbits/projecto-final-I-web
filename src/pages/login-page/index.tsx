@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography, Button, Divider, Stack } from "@mui/material";
 import { Footer, LoginForm, LoginImage } from "./components";
 
