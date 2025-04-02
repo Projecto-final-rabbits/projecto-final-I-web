@@ -2,6 +2,9 @@ import { Button, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { auth } from "@config/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const loginSchema = z.object({
   email: z.string({ message: "This field is required" }).email(),
@@ -18,8 +21,26 @@ const LoginForm: React.FC = () => {
       password: "",
     },
   });
+  const navigate = useNavigate();
+
+  const handleSubmit = async ({
+    email,
+    password,
+  }: z.infer<typeof loginSchema>) => {
+    const userCredentials = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const token = await userCredentials.user?.getIdToken();
+    if (token) {
+      localStorage.setItem("token", token);
+      navigate("/home");
+    }
+  };
+
   return (
-    <form onSubmit={form.handleSubmit(() => console.log("submit"))}>
+    <form onSubmit={form.handleSubmit((data) => handleSubmit(data))}>
       <Stack spacing={2}>
         <TextField
           label="Email"

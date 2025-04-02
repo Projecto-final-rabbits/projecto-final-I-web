@@ -1,23 +1,23 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  PORT: z.string().default("3000"),
-  NODE_ENV: z.enum(["development", "production"]).default("development"),
+  VITE_PORT: z.string().default("3000"),
+  VITE_NODE_ENV: z.enum(["development", "production"]).default("development"),
 
-  API_URL_CLIENTS: z.string(),
-  API_URL_SELLERS: z.string(),
+  VITE_API_URL_CLIENTS: z.string(),
+  VITE_API_URL_SELLERS: z.string(),
 
-  FIREBASE_API_KEY: z.string(),
-  FIREBASE_AUTH_DOMAIN: z.string(),
-  FIREBASE_PROJECT_ID: z.string(),
-  FIREBASE_STORAGE_BUCKET: z.string(),
-  FIREBASE_MESSAGING_SENDER_ID: z.string(),
+  VITE_FIREBASE_API_KEY: z.string(),
+  VITE_FIREBASE_AUTH_DOMAIN: z.string(),
+  VITE_FIREBASE_PROJECT_ID: z.string(),
+  VITE_FIREBASE_STORAGE_BUCKET: z.string(),
+  VITE_FIREBASE_MESSAGING_SENDER_ID: z.string(),
 });
 
 // Function to validate environment variables
 const validateEnv = () => {
   try {
-    return envSchema.parse(process.env);
+    return envSchema.parse(import.meta.env);
   } catch (error) {
     console.error("❌ Invalid environment variables:", error);
     process.exit(1);

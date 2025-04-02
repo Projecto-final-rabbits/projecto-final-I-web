@@ -1,9 +1,9 @@
 // axiosClient.ts
 import axios from "axios";
-import { API_BASE_URL } from "../../../config/env";
+import { env } from "@config/env";
 
 const axiosClient = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: env.VITE_API_URL_CLIENTS,
   timeout: 6000,
   headers: {
     "Content-Type": "application/json",

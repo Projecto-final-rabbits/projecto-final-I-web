@@ -1,9 +1,8 @@
-import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { LoginPage } from "../pages/login-page";
+import { LoginPage } from "@pages/login-page";
 import { Typography } from "@mui/material";
+import { HomePage } from "@pages/home";
 
-// Simple auth guard component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -28,6 +27,7 @@ const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }
       />
+      <Route path="/home" element={<HomePage />} />
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
