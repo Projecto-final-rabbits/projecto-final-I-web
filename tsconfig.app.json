@@ -33,7 +33,8 @@
       "@config/*": ["src/config/*"],
       "@routes/*": ["src/routes/*"],
       "@state/*": ["src/state-management/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@assets/*": ["src/assets/*"]
     }
   },
   "include": ["src"]

@@ -2,6 +2,15 @@
 
 import { createTheme } from "@mui/material/styles";
 
+declare module "@mui/material/styles" {
+  interface Palette {
+    gray: string;
+  }
+  interface TypeBackground {
+    gray: string;
+  }
+}
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -11,12 +20,13 @@ const theme = createTheme({
       contrastText: "#FFFFFF",
     },
     secondary: {
-      main: "#0F172A", // slate-900
+      main: "#18181B", // slate-900
       contrastText: "#FFFFFF",
     },
     background: {
-      default: "#F1F5F9", // slate-100
+      default: "#FFF", // slate-100
       paper: "#FFFFFF",
+      gray: "#F4F4F5",
     },
     text: {
       primary: "#0F172A", // slate-900
