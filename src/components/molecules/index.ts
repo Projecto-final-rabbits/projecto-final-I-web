@@ -16,6 +16,6 @@ export const PAGINATION = {
 };
 
 export const APP_META = {
-  NAME: "CCP - Rabits",
+  NAME: "CCP - Rabbits",
   VERSION: "1.0.0",
 };
