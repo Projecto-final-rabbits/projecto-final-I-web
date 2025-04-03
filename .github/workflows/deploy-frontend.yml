@@ -35,6 +35,8 @@ jobs:
           VITE_NODE_ENV: ${{ secrets.VITE_NODE_ENV }}
           VITE_PORT: ${{ secrets.VITE_PORT }}
         run: npm run build
+      - name: 🐛 Debug ENV Variables
+        run: printenv | grep VITE_
       - name: 🔥 Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
