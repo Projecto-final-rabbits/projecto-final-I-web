@@ -2,9 +2,13 @@ import { Button, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { auth } from "@config/auth";
+import { auth, firestoreDb } from "@config/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { getDoc, doc } from "firebase/firestore";
+import { setUser } from "@/state-managment/slices";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 const loginSchema = z.object({
   email: z.string({ message: "This field is required" }).email(),
@@ -14,6 +18,8 @@ const loginSchema = z.object({
 });
 
 const LoginForm: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -27,15 +33,37 @@ const LoginForm: React.FC = () => {
     email,
     password,
   }: z.infer<typeof loginSchema>) => {
-    const userCredentials = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const token = await userCredentials.user?.getIdToken();
-    if (token) {
-      localStorage.setItem("token", token);
-      navigate("/home");
+    setIsLoading(true);
+    try{
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const token = await userCredentials.user?.getIdToken();
+  
+      if (token) {
+        //localStorage.setItem("token", token);
+        const docRef = await getDoc(doc(firestoreDb, `users/${userCredentials.user?.uid}`));
+        
+        if (docRef.exists()) {
+          const userData = docRef.data();
+  
+          dispatch(setUser({
+            id: userCredentials.user.uid,
+            fullname: userData.fullname,
+            email: userCredentials.user.email,
+            role: userData.role,
+          }));        
+          navigate("/home");
+        } else {
+          console.log('No user document found');
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -65,6 +93,7 @@ const LoginForm: React.FC = () => {
           variant="contained"
           color="secondary"
           fullWidth
+          loading={isLoading}
           disabled={!form.formState.isValid}
         >
           Continuar

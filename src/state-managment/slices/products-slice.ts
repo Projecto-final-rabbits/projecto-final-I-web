@@ -1,4 +1,3 @@
-// productsSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Product } from "@core/domain/entities";
 import { getProducts } from "@core/domain/use-cases/products/get-products";

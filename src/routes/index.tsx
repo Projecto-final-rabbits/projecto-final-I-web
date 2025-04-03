@@ -2,17 +2,25 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { LoginPage } from "@pages/login-page";
 import { Typography } from "@mui/material";
 import { HomePage } from "@pages/home";
-
+import { Layout } from "@/components/template";
+import { useSelector } from "react-redux";
+import { RootState } from "@/state-managment/store";
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAuthenticated = user !== null;
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  return <>{children}</>;
+  return (
+    <Layout>
+      {children}
+    </Layout>
+  );
 };
 
 const AppRoutes: React.FC = () => {
@@ -27,7 +35,7 @@ const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="/home" element={<HomePage />} />
+      <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
