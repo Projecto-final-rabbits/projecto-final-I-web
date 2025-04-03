@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const envSchema = z.object({
   VITE_PORT: z.string().default("3000"),
-  VITE_NODE_ENV: z.enum(["development", "production"]).default("development"),
+  VITE_NODE_ENV: z.enum(["develop", "production"]).default("develop"),
 
   VITE_API_URL_CLIENTS: z.string(),
   VITE_API_URL_SELLERS: z.string(),
