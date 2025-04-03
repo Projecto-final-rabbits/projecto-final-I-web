@@ -25,8 +25,10 @@ jobs:
           echo "VITE_PORT=${{ secrets.VITE_PORT }}" >> .env
       - name: 🛠️ Build React App
         run: npm run build
-      - name: 🐛 Debug ENV Variables
-        run: printenv | grep VITE_
+      - name: 📝 Show .env file (for debug only)
+        run: ls -la
+      - name: 📝 Show .env file (for debug only)
+        run: cat .env
       - name: 🔥 Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
