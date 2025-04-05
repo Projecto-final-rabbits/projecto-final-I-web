@@ -44,7 +44,7 @@ export class ProductRepositoryImpl implements IProductRepository {
     //   Product.fromDtoToEntity(product)
     // );
 
-    return axiosClientForBuyers.get("/productos").then((response) => {
+    return axiosClientForBuyers.get("/productos/").then((response) => {
       const products = response.data.map((product: IProductDTO) =>
         Product.fromDtoToEntity(product)
       );
