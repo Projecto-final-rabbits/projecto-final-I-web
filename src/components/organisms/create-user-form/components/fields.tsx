@@ -19,7 +19,6 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         size="small"
         {...register("fullname")}
         error={!!formState.errors.fullname}
-        helperText={formState.errors.fullname?.message}
       />
       <TextField
         label="Correo electrónico"
@@ -30,7 +29,6 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         size="small"
         {...register("email")}
         error={!!formState.errors.email}
-        helperText={formState.errors.email?.message}
       />
     </Stack>
   );
