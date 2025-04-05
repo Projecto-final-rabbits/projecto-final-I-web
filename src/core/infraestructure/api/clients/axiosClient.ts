@@ -2,7 +2,7 @@
 import axios from "axios";
 import { env } from "@config/env";
 
-const axiosClient = axios.create({
+const axiosClientForBuyers = axios.create({
   baseURL: env.VITE_API_URL_CLIENTS,
   timeout: 6000,
   headers: {
@@ -11,7 +11,7 @@ const axiosClient = axios.create({
 });
 
 // Interceptors for Auth tokens, error handling, logging, etc.
-axiosClient.interceptors.request.use(
+axiosClientForBuyers.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
     if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -20,7 +20,7 @@ axiosClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-axiosClient.interceptors.response.use(
+axiosClientForBuyers.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
@@ -30,4 +30,4 @@ axiosClient.interceptors.response.use(
   }
 );
 
-export { axiosClient };
+export { axiosClientForBuyers };

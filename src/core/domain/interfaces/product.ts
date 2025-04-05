@@ -1,24 +1,49 @@
-export interface IProduct {
+interface IProduct {
   id: string;
   nombre: string;
-  categoria: string;
-  fechaVencimiento: Date;
-  condicionAlmacenamiento: string;
   descripcion: string;
   precioCompra: number;
+  categoria: string;
   proveedorId: string;
   tiempoEntregaDias: number;
-  precioVenta: number;
-  promocionActiva: boolean;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
-export type ICreateProductDTO = Omit<
-  IProduct,
-  "id" | "createdAt" | "updatedAt"
->;
+interface IProductDTO {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  precio_compra: number;
+  categoria: string;
+  proveedor_id: string;
+  tiempo_entrega_dias: number;
+}
 
-export type IUpdateProductDTO = Partial<
+type ICreateProduct = {
+  nombre: string;
+  descripcion: string;
+  precioCompra: number;
+  categoria: string;
+  proveedorId: string;
+  tiempoEntregaDias: number;
+};
+
+type ICreateProductDTO = {
+  nombre: string;
+  descripcion: string;
+  precio_compra: number;
+  categoria: string;
+  proveedor_id: string;
+  tiempo_entrega_dias: number;
+};
+
+type IUpdateProductDTO = Partial<
   Omit<IProduct, "id" | "createdAt" | "updatedAt">
 >;
+
+export type {
+  IProduct,
+  IProductDTO,
+  ICreateProduct,
+  ICreateProductDTO,
+  IUpdateProductDTO,
+};
