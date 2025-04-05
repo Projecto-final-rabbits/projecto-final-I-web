@@ -17,7 +17,7 @@ const TITLE: Record<Role, string> = {
 const CreateUser: React.FC<CreateUserProps> = ({ role }) => {
   const [open, setOpen] = React.useState(false);
 
-  const hableOnClose = () => {
+  const handleOnClose = () => {
     setOpen(false);
   };
 
@@ -29,7 +29,7 @@ const CreateUser: React.FC<CreateUserProps> = ({ role }) => {
       {open && (
         <CreateUserForm
           open={open}
-          onClose={hableOnClose}
+          onClose={handleOnClose}
           title={TITLE[role]}
           role={role}
         />

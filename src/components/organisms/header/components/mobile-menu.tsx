@@ -4,14 +4,14 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 
-type MovileMenuProps = {
+type MobileMenuProps = {
   isMobileMenuOpen: boolean;
   handleProfileMenuOpen: (event: React.MouseEvent<HTMLElement>) => void;
   handleLogout: () => void;
   menuId?: string;
 };
 
-const MovileMenu: React.FC<MovileMenuProps> = ({
+const MobileMenu: React.FC<MobileMenuProps> = ({
   isMobileMenuOpen,
   handleProfileMenuOpen,
   handleLogout,
@@ -78,4 +78,4 @@ const MovileMenu: React.FC<MovileMenuProps> = ({
   );
 };
 
-export { MovileMenu };
+export { MobileMenu as MovileMenu };
