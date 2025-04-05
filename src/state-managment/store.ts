@@ -1,16 +1,21 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import productsReducer from "./slices/products-slice";
 import authReducer from "./slices/auth-slice";
 import userReducer from "./slices/user-slice";
+import { productsApi } from "./slices";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 export const store = configureStore({
   reducer: {
-    products: productsReducer,
     auth: authReducer,
     user: userReducer,
+    [productsApi.reducerPath]: productsApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(productsApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
