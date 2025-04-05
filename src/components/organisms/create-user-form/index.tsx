@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { createUserThunk } from "@/state-managment/slices";
 import { AppDispatch, RootState } from "@/state-managment/store";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 type CreateUserFormProps = {
   open: boolean;
@@ -37,7 +38,15 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
   const dispatch: AppDispatch = useDispatch();
 
   const handleCreateUser = (newUser: User) => {
-    dispatch(createUserThunk(newUser));
+    dispatch(createUserThunk(newUser))
+      .unwrap()
+      .then(() => {
+        toast.success("Usuario creado correctamente");
+        onClose();
+      })
+      .catch(() => {
+        toast.error("Oops! Error, intentalo mas tarde.");
+      });
   };
 
   return (

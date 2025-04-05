@@ -9,6 +9,7 @@ const createUserThunk = createAsyncThunk(
 
 type InitialState = {
   loading: boolean;
+  status?: "pending" | "succeeded" | "failed";
   error: unknown | null;
 };
 
@@ -24,13 +25,16 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createUserThunk.pending, (state) => {
+        state.status = "pending";
         state.loading = true;
         state.error = null;
       })
       .addCase(createUserThunk.fulfilled, (state) => {
+        state.status = "succeeded";
         state.loading = false;
       })
       .addCase(createUserThunk.rejected, (state, action) => {
+        state.status = "failed";
         state.loading = false;
         state.error = action.payload;
       });
