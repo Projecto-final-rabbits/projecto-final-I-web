@@ -13,8 +13,10 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { removeUser } from "@/state-managment/slices";
-import { DesktopMenu, MovileMenu } from "./components";
+import { DesktopMenu, MovileMenu, CreateUser } from "./components";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import { useSelector } from "react-redux";
+import { RootState } from "@/state-managment/store";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -58,6 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.auth.user);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -110,6 +113,7 @@ const Header: React.FC = () => {
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
+          <CreateUser role={user?.role ?? "admin"} />
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

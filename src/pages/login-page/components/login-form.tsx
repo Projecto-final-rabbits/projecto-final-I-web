@@ -34,30 +34,34 @@ const LoginForm: React.FC = () => {
     password,
   }: z.infer<typeof loginSchema>) => {
     setIsLoading(true);
-    try{
+    try {
       const userCredentials = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
       const token = await userCredentials.user?.getIdToken();
-  
+
       if (token) {
-        //localStorage.setItem("token", token);
-        const docRef = await getDoc(doc(firestoreDb, `users/${userCredentials.user?.uid}`));
-        
+        const docRef = await getDoc(
+          doc(firestoreDb, `users/${userCredentials.user?.uid}`)
+        );
+
         if (docRef.exists()) {
           const userData = docRef.data();
-  
-          dispatch(setUser({
+
+          const user = {
             id: userCredentials.user.uid,
             fullname: userData.fullname,
             email: userCredentials.user.email,
             role: userData.role,
-          }));        
+          };
+
+          // Dispatch user data to the store
+          dispatch(setUser(user));
           navigate("/home");
         } else {
-          console.log('No user document found');
+          console.log("No user document found");
         }
       }
     } catch (error) {

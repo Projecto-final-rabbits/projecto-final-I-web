@@ -5,10 +5,12 @@ import { HomePage } from "@pages/home";
 import { Layout } from "@/components/template";
 import { useSelector } from "react-redux";
 import { RootState } from "@/state-managment/store";
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
 
+type ProtectedRouteProps = {
+  children: React.ReactNode;
+};
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const isAuthenticated = user !== null;
 
@@ -16,11 +18,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
     return <Navigate to="/login" replace />;
   }
 
-  return (
-    <Layout>
-      {children}
-    </Layout>
-  );
+  return <Layout>{children}</Layout>;
 };
 
 const AppRoutes: React.FC = () => {
@@ -35,7 +33,14 @@ const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }
       />
-      <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+      <Route
+        path="/home"
+        element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>

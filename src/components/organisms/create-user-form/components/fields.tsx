@@ -9,7 +9,7 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
   const { register, formState } = useFormContext();
 
   return (
-    <Stack direction="column" spacing={1}>
+    <Stack direction="column" spacing={2}>
       <TextField
         label="Nombre completo"
         variant="outlined"

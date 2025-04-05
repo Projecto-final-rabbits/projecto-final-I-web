@@ -1,8 +1,8 @@
 interface User {
-  id: string;
+  id?: string;
   fullname: string;
   email: string;
-  role: string;
+  role: Role;
 }
 
 type Role = "ventas" | "compras" | "bodega" | "admin";

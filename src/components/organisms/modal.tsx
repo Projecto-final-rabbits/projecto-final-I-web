@@ -1,6 +1,10 @@
-import { Dialog, DialogContent, DialogTitle, Slide } from "@mui/material";
-import { TransitionProps as MuiTransitionProps } from "@mui/material/transitions";
-import { ReactElement, Ref } from "react";
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
 
 type ModalProps = {
   open: boolean;
@@ -9,20 +13,6 @@ type ModalProps = {
   children: React.ReactNode;
   footer?: React.ReactNode;
 };
-
-type TransitionProps = {
-  props: MuiTransitionProps & {
-    children: ReactElement<
-      unknown,
-      string | React.JSXElementConstructor<unknown>
-    >;
-  };
-  ref: Ref<unknown>;
-};
-
-const Transition = ({ ref, props }: TransitionProps) => (
-  <Slide direction="up" ref={ref} {...props} />
-);
 
 const Modal: React.FC<ModalProps> = ({
   open,
@@ -34,14 +24,27 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <Dialog
       open={open}
-      TransitionComponent={Transition}
       keepMounted
       onClose={handleClose}
       aria-describedby={`modal-${title}`}
+      fullWidth
     >
-      <DialogTitle>{title}</DialogTitle>
-      <DialogContent>
-        {children}
+      <DialogTitle
+        sx={{
+          paddingInline: "3rem",
+        }}
+      >
+        <Typography
+          variant="h5"
+          fontWeight={600}
+          data-testid={`modal-${title}`}
+        >
+          {title}
+        </Typography>
+      </DialogTitle>
+      <DialogContent sx={{ padding: "2rem 3rem" }}>
+        <Box sx={{ paddingTop: "1rem" }}>{children}</Box>
+
         {/* <DialogContentText id="alert-dialog-slide-description">
           Let Google help apps determine location. This means sending anonymous
           location data to Google, even when no apps are running.

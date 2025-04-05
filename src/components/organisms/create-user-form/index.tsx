@@ -1,28 +1,30 @@
-import { Role } from "@/core/domain/interfaces";
-import React, { useState } from "react";
+import { Role, User } from "@/core/domain/interfaces";
+import React from "react";
 import { Modal } from "../modal";
 import { Stack } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Fields, Actions } from "./components";
+import { CreateUserFormValues, createUserSchema } from "./types";
+import { useDispatch } from "react-redux";
+import { createUserThunk } from "@/state-managment/slices";
+import { AppDispatch, RootState } from "@/state-managment/store";
+import { useSelector } from "react-redux";
 
 type CreateUserFormProps = {
+  open: boolean;
+  onClose: () => void;
   title: string;
   role: Role;
 };
 
-const createUserSchema = z.object({
-  fullname: z.string({ message: "This field is required" }),
-  email: z.string({ message: "This field is required" }).email(),
-  role: z.enum(["ventas", "compras", "bodega", "admin"]),
-});
-type CreateUserFormValues = z.infer<typeof createUserSchema>;
-
-const CreateUserForm: React.FC<CreateUserFormProps> = ({ title, role }) => {
-  const [open, setOpen] = useState(false);
-
-  const form = useForm<CreateUserFormValues>({
+const CreateUserForm: React.FC<CreateUserFormProps> = ({
+  open,
+  onClose,
+  title,
+  role,
+}) => {
+  const methods = useForm<CreateUserFormValues>({
     resolver: zodResolver(createUserSchema),
     defaultValues: {
       fullname: "",
@@ -31,21 +33,33 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({ title, role }) => {
     },
   });
 
-  const handleClose = () => {
-    setOpen(false);
+  const isLoading = useSelector((state: RootState) => state.user.loading);
+  const dispatch: AppDispatch = useDispatch();
+
+  const handleCreateUser = (newUser: User) => {
+    dispatch(createUserThunk(newUser));
   };
 
   return (
-    <Modal title={title} open={open} handleClose={handleClose}>
-      <form onSubmit={form.handleSubmit((data) => console.log(data))}>
-        <Stack direction="column" spacing={1}>
-          <Fields />
-          <Actions onCancel={handleClose} />
-        </Stack>
-      </form>
+    <Modal title={title} open={open} handleClose={onClose}>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit((data) =>
+            handleCreateUser({
+              fullname: data.fullname,
+              email: data.email,
+              role: data.role,
+            })
+          )}
+        >
+          <Stack direction="column" spacing={3}>
+            <Fields disabled={isLoading} />
+            <Actions onCancel={onClose} isLoading={isLoading} />
+          </Stack>
+        </form>
+      </FormProvider>
     </Modal>
   );
 };
 
 export { CreateUserForm };
-export type { CreateUserFormValues };

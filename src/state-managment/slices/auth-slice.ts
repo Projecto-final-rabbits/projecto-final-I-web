@@ -7,8 +7,9 @@ interface AuthState {
   error: string | null;
 }
 
+const storedUser = sessionStorage.getItem("user");
 const initialState: AuthState = {
-  user: null,
+  user: storedUser ? JSON.parse(storedUser) : null,
   loading: false,
   error: null,
 };
@@ -21,12 +22,15 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.loading = false;
       state.error = null;
+
+      sessionStorage.setItem("user", JSON.stringify(action.payload));
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
     removeUser: (state) => {
       state.user = null;
+      sessionStorage.removeItem("user");
     },
     removeLoading: (state) => {
       state.loading = false;
@@ -39,4 +43,3 @@ const authSlice = createSlice({
 
 export const { setUser, removeUser } = authSlice.actions;
 export default authSlice.reducer;
-
