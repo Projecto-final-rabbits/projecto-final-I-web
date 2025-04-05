@@ -5,4 +5,6 @@ interface User {
   role: string;
 }
 
-export type { User };
+type Role = "ventas" | "compras" | "bodega" | "admin";
+
+export type { User, Role };
