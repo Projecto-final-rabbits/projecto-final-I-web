@@ -34,7 +34,8 @@
       "@routes/*": ["src/routes/*"],
       "@state/*": ["src/state-management/*"],
       "@utils/*": ["src/utils/*"],
-      "@assets/*": ["src/assets/*"]
+      "@assets/*": ["src/assets/*"],
+      "@services/*": ["src/services/*"]
     }
   },
   "include": ["src"]

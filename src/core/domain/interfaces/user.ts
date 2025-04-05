@@ -1,8 +1,10 @@
 interface User {
-  id: string;
+  id?: string;
   fullname: string;
   email: string;
-  role: string;
+  role: Role;
 }
 
-export type { User };
+type Role = "ventas" | "compras" | "bodega" | "admin";
+
+export type { User, Role };

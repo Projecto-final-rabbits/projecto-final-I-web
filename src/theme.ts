@@ -5,6 +5,14 @@ import { createTheme } from "@mui/material/styles";
 declare module "@mui/material/styles" {
   interface Palette {
     gray: string;
+    customColors: {
+      border: string;
+    };
+  }
+  interface PaletteOptions {
+    customColors?: {
+      border: string;
+    };
   }
   interface TypeBackground {
     gray: string;
@@ -34,6 +42,9 @@ const theme = createTheme({
       disabled: "#94A3B8", // slate-400
     },
     divider: "#E2E8F0", // slate-200
+    customColors: {
+      border: "#E4E4E7",
+    },
   },
   typography: {
     fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
