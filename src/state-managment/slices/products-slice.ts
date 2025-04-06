@@ -15,7 +15,6 @@ export const productsApi = createApi({
         try {
           const repo = new ProductRepositoryImpl();
           const data = await getProducts(repo);
-          console.log("** data", data);
           return { data };
         } catch (error) {
           return {
@@ -47,7 +46,30 @@ export const productsApi = createApi({
       },
       invalidatesTags: ["Products"],
     }),
+    saveMultipleProducts: builder.mutation<void, FormData>({
+      queryFn: async (file) => {
+        try {
+          const repo = new ProductRepositoryImpl();
+          await repo.saveMany(file);
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+          return { data: undefined };
+        } catch (error) {
+          return {
+            error: {
+              status: 500,
+              data:
+                error instanceof Error ? error.message : "Ops, algo salió mal",
+            },
+          };
+        }
+      },
+      invalidatesTags: ["Products"],
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useSaveProductMutation } = productsApi;
+export const {
+  useGetProductsQuery,
+  useSaveProductMutation,
+  useSaveMultipleProductsMutation,
+} = productsApi;

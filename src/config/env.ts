@@ -6,6 +6,7 @@ const envSchema = z.object({
 
   VITE_API_URL_CLIENTS: z.string(),
   VITE_API_URL_SELLERS: z.string(),
+  VITE_API_URL_WAREHOUSE: z.string(),
 
   VITE_FIREBASE_API_KEY: z.string(),
   VITE_FIREBASE_AUTH_DOMAIN: z.string(),
