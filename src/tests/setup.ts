@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
-// Mock window.matchMedia
 Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: vi.fn().mockImplementation((query) => ({
@@ -16,17 +15,27 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
-// Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
+  root: Element | null = null;
+  rootMargin: string = "";
+  thresholds: ReadonlyArray<number> = [];
+
   constructor() {}
+
   observe() {
     return null;
   }
+
   unobserve() {
     return null;
   }
+
   disconnect() {
     return null;
+  }
+
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
   }
 };
 
