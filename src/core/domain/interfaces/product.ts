@@ -1,11 +1,11 @@
 interface IProduct {
   id: string;
   nombre: string;
-  descripcion: string;
+  descripcion?: string;
   precioCompra: number;
-  categoria: string;
-  proveedorId: string;
-  tiempoEntregaDias: number;
+  categoria?: string;
+  proveedorId: number;
+  tiempoEntregaDias?: number;
 }
 
 interface IProductDTO {
@@ -14,26 +14,26 @@ interface IProductDTO {
   descripcion: string;
   precio_compra: number;
   categoria: string;
-  proveedor_id: string;
+  proveedor_id: number;
   tiempo_entrega_dias: number;
 }
 
 type ICreateProduct = {
   nombre: string;
-  descripcion: string;
+  descripcion?: string;
   precioCompra: number;
-  categoria: string;
-  proveedorId: string;
-  tiempoEntregaDias: number;
+  categoria?: string;
+  proveedorId: number;
+  tiempoEntregaDias?: number;
 };
 
 type ICreateProductDTO = {
   nombre: string;
-  descripcion: string;
+  descripcion?: string;
   precio_compra: number;
-  categoria: string;
-  proveedor_id: string;
-  tiempo_entrega_dias: number;
+  categoria?: string;
+  proveedor_id: number;
+  tiempo_entrega_dias?: number;
 };
 
 type IUpdateProductDTO = Partial<

@@ -3,6 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { Product } from "@core/domain/entities";
 import { ProductRepositoryImpl } from "@core/infrastructure/api/repositories/ProductRepositoryImpl";
 import { getProducts } from "@core/domain/use-cases/products/get-products";
+import { ICreateProduct } from "@/core/domain/interfaces";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
@@ -14,6 +15,7 @@ export const productsApi = createApi({
         try {
           const repo = new ProductRepositoryImpl();
           const data = await getProducts(repo);
+          console.log("** data", data);
           return { data };
         } catch (error) {
           return {
@@ -27,7 +29,7 @@ export const productsApi = createApi({
       },
       providesTags: ["Products"],
     }),
-    saveProduct: builder.mutation<void, Product>({
+    saveProduct: builder.mutation<void, ICreateProduct>({
       queryFn: async (product) => {
         try {
           const repo = new ProductRepositoryImpl();

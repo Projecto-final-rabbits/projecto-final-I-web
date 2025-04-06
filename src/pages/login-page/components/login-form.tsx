@@ -11,9 +11,9 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 const loginSchema = z.object({
-  email: z.string({ message: "This field is required" }).email(),
+  email: z.string({ message: "El campo es requerido" }).email(),
   password: z
-    .string({ message: "This field is required" })
+    .string({ message: "El campo es requerido" })
     .min(4, { message: "Password must be at least 4 characters" }),
 });
 

@@ -8,11 +8,11 @@ import {
 class Product implements IProduct {
   id: string;
   nombre: string;
-  descripcion: string;
+  descripcion?: string;
   precioCompra: number;
-  categoria: string;
-  proveedorId: string;
-  tiempoEntregaDias: number;
+  categoria?: string;
+  proveedorId: number;
+  tiempoEntregaDias?: number;
 
   constructor({
     id,
@@ -52,6 +52,18 @@ class Product implements IProduct {
       proveedor_id: entity.proveedorId,
       tiempo_entrega_dias: entity.tiempoEntregaDias,
     };
+  }
+
+  static fromCreateProductToEntity(dto: ICreateProductDTO): Product {
+    return new Product({
+      id: "",
+      nombre: dto.nombre,
+      descripcion: dto.descripcion,
+      precioCompra: dto.precio_compra,
+      categoria: dto.categoria,
+      proveedorId: dto.proveedor_id,
+      tiempoEntregaDias: dto.tiempo_entrega_dias,
+    });
   }
 }
 

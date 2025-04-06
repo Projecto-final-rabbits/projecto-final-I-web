@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 const createUserSchema = z.object({
-  fullname: z.string({ message: "This field is required" }),
-  email: z.string({ message: "This field is required" }).email(),
+  fullname: z.string({ message: "El campo es requerido" }),
+  email: z.string({ message: "El campo es requerido" }).email(),
   role: z.enum(["ventas", "compras", "bodega", "admin"]),
 });
 
