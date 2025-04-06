@@ -37,8 +37,8 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         data-testid="telefono-del-proveedor"
         size="small"
         {...register("phone")}
-        error={!!formState.errors.telefono}
-        helperText={formState.errors.telefono?.message as string}
+        error={!!formState.errors.phone}
+        helperText={formState.errors.phone?.message as string}
       />
       <TextField
         label="Country"
@@ -57,8 +57,8 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         data-testid="contacto-del-proveedor"
         size="small"
         {...register("contact")}
-        error={!!formState.errors.contacto}
-        helperText={formState.errors.contacto?.message as string}
+        error={!!formState.errors.contact}
+        helperText={formState.errors.contact?.message as string}
       />
     </>
   );
