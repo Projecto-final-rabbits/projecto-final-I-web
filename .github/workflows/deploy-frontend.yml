@@ -17,6 +17,7 @@ jobs:
         run: |
           echo "VITE_API_URL_CLIENTS=${{ secrets.VITE_API_URL_CLIENTS }}" >> .env
           echo "VITE_API_URL_SELLERS=${{ secrets.VITE_API_URL_SELLERS }}" >> .env
+          echo "VITE_API_URL_WAREHOUSE=${{ secrets.VITE_API_URL_WAREHOUSE }}" >> .env
           echo "VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}" >> .env
           echo "VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}" >> .env
           echo "VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }}" >> .env

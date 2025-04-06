@@ -8,7 +8,7 @@ type CreateUserProps = {
 };
 
 const TITLE: Record<Role, string> = {
-  admin: "Crear Administrador",
+  admin: "Crear Usuario",
   ventas: "Crear Vendedor",
   compras: "Crear Comprador",
   bodega: "Crear usuario de Bodega",

@@ -1,4 +1,9 @@
-import { IProvider, IProviderDTO } from "../interfaces/provider";
+import {
+  IProvider,
+  ICreateProvider,
+  IProviderDTO,
+  ICreateProviderDTO,
+} from "../interfaces/provider";
 
 class Provider implements IProvider {
   id: number;
@@ -37,6 +42,16 @@ class Provider implements IProvider {
       email: dto.email,
       direccion: dto.direccion,
     });
+  }
+
+  static fromCreateEntityToDto(entity: ICreateProvider): ICreateProviderDTO {
+    return {
+      nombre: entity.nombre,
+      pais: entity.pais,
+      contacto: entity.contacto,
+      telefono: entity.telefono,
+      email: entity.email,
+    };
   }
 }
 

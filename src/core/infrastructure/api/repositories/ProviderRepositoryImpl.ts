@@ -1,7 +1,7 @@
 import { IProviderRepository } from "@core/domain/repositories/provider.repository";
 import { Provider } from "@core/domain/entities/provider";
 import { axiosClientForBuyers } from "@/core/infraestructure/api/clients";
-import { IProviderDTO } from "@/core/domain/interfaces";
+import { ICreateProvider, IProviderDTO } from "@/core/domain/interfaces";
 
 class ProviderRepositoryImpl implements IProviderRepository {
   async findById(id: number): Promise<Provider | null> {
@@ -21,6 +21,11 @@ class ProviderRepositoryImpl implements IProviderRepository {
       );
       return providers;
     });
+  }
+
+  async save(provider: ICreateProvider): Promise<void> {
+    const providerDto = Provider.fromCreateEntityToDto(provider);
+    return axiosClientForBuyers.post("/proveedores/", providerDto);
   }
 }
 

@@ -5,6 +5,7 @@ import { HomePage } from "@pages/home";
 import { Layout } from "@/components/template";
 import { useSelector } from "react-redux";
 import { RootState } from "@/state-managment/store";
+import { ProvidersPage } from "@/pages/providers";
 
 type ProtectedRouteProps = {
   children: React.ReactNode;
@@ -38,6 +39,14 @@ const AppRoutes: React.FC = () => {
         element={
           <ProtectedRoute>
             <HomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/proveedores"
+        element={
+          <ProtectedRoute>
+            <ProvidersPage />
           </ProtectedRoute>
         }
       />

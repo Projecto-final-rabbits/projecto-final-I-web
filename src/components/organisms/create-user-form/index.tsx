@@ -30,7 +30,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
     defaultValues: {
       fullname: "",
       email: "",
-      role,
+      role: role == "admin" ? undefined : role,
     },
   });
 

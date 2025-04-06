@@ -51,15 +51,14 @@ const CustomTable = <TData,>({
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 5,
+                pageSize: 7,
               },
             },
           }}
           slots={{
             pagination: CustomPagination,
           }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
+          pageSizeOptions={[5, 7, 20]}
           disableRowSelectionOnClick
         />
       </Stack>
