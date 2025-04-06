@@ -4,6 +4,7 @@ import {
   Box,
   IconButton,
   InputBase,
+  Stack,
   styled,
   Toolbar,
 } from "@mui/material";
@@ -17,6 +18,7 @@ import { DesktopMenu, MovileMenu, CreateUser } from "./components";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useSelector } from "react-redux";
 import { RootState } from "@/state-managment/store";
+import { Link } from "react-router-dom";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -112,6 +114,34 @@ const Header: React.FC = () => {
           >
             <MenuIcon />
           </IconButton>
+          <Stack spacing={2} direction="row">
+            <Link
+              to="/home"
+              style={{
+                textDecoration: "none",
+                color: "white",
+                "&:hover": {
+                  opacity: 0.8,
+                  fontWeight: 600,
+                },
+              }}
+            >
+              Home
+            </Link>
+            <Link
+              to="/proveedores"
+              style={{
+                textDecoration: "none",
+                color: "white",
+                "&:hover": {
+                  opacity: 0.8,
+                  fontWeight: 600,
+                },
+              }}
+            >
+              Proveedores
+            </Link>
+          </Stack>
           <Box sx={{ flexGrow: 1 }} />
           <CreateUser role={user?.role ?? "admin"} />
           <Search>
