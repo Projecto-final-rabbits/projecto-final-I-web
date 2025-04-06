@@ -117,7 +117,7 @@ const Header: React.FC = () => {
           <Stack spacing={2} direction="row">
             <Link
               to="/home"
-              style={{
+              sx={{
                 textDecoration: "none",
                 color: "white",
                 "&:hover": {
@@ -130,7 +130,7 @@ const Header: React.FC = () => {
             </Link>
             <Link
               to="/proveedores"
-              style={{
+              sx={{
                 textDecoration: "none",
                 color: "white",
                 "&:hover": {
