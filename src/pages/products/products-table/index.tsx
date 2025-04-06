@@ -6,13 +6,22 @@ import { Skeleton } from "@mui/material";
 
 const ProductsTable = () => {
   const { data, isSuccess } = useGetProductsQuery();
+  console.log("data: ", data);
 
   if (isSuccess) {
     return (
       <CustomTable
         actions={<Actions />}
         title="Tus productos"
-        rows={data}
+        rows={data.map((product) => ({
+          id: product.id,
+          nombre: product.nombre,
+          descripcion: product.descripcion,
+          precioCompra: product.precioCompra,
+          categoria: product.categoria,
+          proveedorId: product.proveedorId,
+          tiempoEntregaDias: product.tiempoEntregaDias,
+        }))}
         columns={columns}
       />
     );

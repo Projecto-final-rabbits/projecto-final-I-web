@@ -19,3 +19,5 @@ export const APP_META = {
   NAME: "CCP - Rabbits",
   VERSION: "1.0.0",
 };
+
+export * from "./provicer-autocomplete";

@@ -11,6 +11,7 @@ type ModalProps = {
   handleClose: () => void;
   title: string;
   children: React.ReactNode;
+  disableEscapeKeyDown?: boolean;
   footer?: React.ReactNode;
 };
 
@@ -19,13 +20,24 @@ const Modal: React.FC<ModalProps> = ({
   handleClose,
   title,
   children,
+  disableEscapeKeyDown = false,
   footer,
 }) => {
+  const handleDialogClose = (
+    _: object,
+    reason: "backdropClick" | "escapeKeyDown"
+  ) => {
+    if (disableEscapeKeyDown && reason === "backdropClick") return;
+
+    handleClose();
+  };
+
   return (
     <Dialog
       open={open}
       keepMounted
-      onClose={handleClose}
+      disableEscapeKeyDown={disableEscapeKeyDown}
+      onClose={handleDialogClose}
       aria-describedby={`modal-${title}`}
       fullWidth
     >
@@ -34,11 +46,7 @@ const Modal: React.FC<ModalProps> = ({
           paddingInline: "3rem",
         }}
       >
-        <Typography
-          variant="h5"
-          fontWeight={600}
-          data-testid={`modal-${title}`}
-        >
+        <Typography fontWeight={600} data-testid={`modal-${title}`}>
           {title}
         </Typography>
       </DialogTitle>

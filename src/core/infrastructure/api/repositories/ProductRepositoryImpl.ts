@@ -1,7 +1,7 @@
 import { IProductRepository } from "@core/domain/repositories/product.repository";
 import { Product } from "@core/domain/entities/product";
 import { axiosClientForBuyers } from "@/core/infraestructure/api/clients";
-import { IProductDTO } from "@/core/domain/interfaces";
+import { ICreateProduct, IProductDTO } from "@/core/domain/interfaces";
 
 // const PRODUCT_MOCK = [
 //   {
@@ -32,7 +32,7 @@ import { IProductDTO } from "@/core/domain/interfaces";
 //     id: 3,
 //   },
 // ];
-export class ProductRepositoryImpl implements IProductRepository {
+class ProductRepositoryImpl implements IProductRepository {
   async findById(id: string): Promise<Product | null> {
     // TODO: Implement actual API call
     console.log("findById", id);
@@ -54,8 +54,10 @@ export class ProductRepositoryImpl implements IProductRepository {
     });
   }
 
-  async save(product: Product): Promise<void> {
-    console.log("save", product);
-    throw new Error("Not implemented");
+  async save(product: ICreateProduct): Promise<void> {
+    const productDto = Product.fromCreateEntityToDto(product);
+    return axiosClientForBuyers.post("/productos/", productDto);
   }
 }
+
+export { ProductRepositoryImpl };
