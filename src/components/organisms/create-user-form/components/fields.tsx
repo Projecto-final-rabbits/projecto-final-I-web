@@ -1,11 +1,14 @@
+import { RoleAutocomplete } from "@/components/molecules";
+import { Role } from "@/core/domain/interfaces";
 import { Stack, TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 
 type FieldsProps = {
   disabled?: boolean;
+  role?: Role;
 };
 
-const Fields: React.FC<FieldsProps> = ({ disabled }) => {
+const Fields: React.FC<FieldsProps> = ({ disabled, role }) => {
   const { register, formState } = useFormContext();
 
   return (
@@ -20,6 +23,13 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         {...register("fullname")}
         error={!!formState.errors.fullname}
       />
+      {role && (
+        <RoleAutocomplete
+          name="role"
+          disabled={disabled}
+          data-testid="rol-autocomplete"
+        />
+      )}
       <TextField
         label="Correo electrónico"
         variant="outlined"
