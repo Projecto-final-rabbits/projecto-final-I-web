@@ -1,0 +1,28 @@
+name: CI for React App
+
+on:
+  push:
+    branches:
+      - main   # Ejecutar el flujo de trabajo cuando se haga push a la rama principal
+  pull_request:
+    branches:
+      - main   # Ejecutar el flujo de trabajo cuando se abra un pull request hacia la rama principal
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Usar una máquina virtual Ubuntu
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2   # Descargar el código fuente del repositorio
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2   # Configurar Node.js
+      with:
+        node-version: '20'   # Puedes ajustar la versión de Node.js según tu proyecto
+
+    - name: Install dependencies
+      run: npm install   # Instalar las dependencias de tu proyecto React
+
+    - name: Run tests
+      run: npm test -- --coverage  # Ejecutar las pruebas y generar el reporte de cobertura
