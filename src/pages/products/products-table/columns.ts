@@ -2,7 +2,6 @@ import { IProduct } from "@/core/domain/interfaces";
 import { GridColDef } from "@mui/x-data-grid";
 
 const columns: GridColDef<IProduct>[] = [
-  { field: "id", headerName: "ID" },
   { field: "nombre", headerName: "Nombre", flex: 1 },
   { field: "descripcion", headerName: "Descripcion", flex: 1 },
   {
