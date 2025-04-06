@@ -1,7 +1,7 @@
 // api/productsApi.ts
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { Product } from "@core/domain/entities";
-import { ProductRepositoryImpl } from "@core/infrastructure/api/repositories/ProductRepositoryImpl";
+import { ProductRepositoryImpl } from "@core/infrastructure/api/repositories";
 import { getProducts } from "@core/domain/use-cases/products/get-products";
 import { ICreateProduct } from "@/core/domain/interfaces";
 

@@ -32,7 +32,7 @@ import { ICreateProduct, IProductDTO } from "@/core/domain/interfaces";
 //     id: 3,
 //   },
 // ];
-export class ProductRepositoryImpl implements IProductRepository {
+class ProductRepositoryImpl implements IProductRepository {
   async findById(id: string): Promise<Product | null> {
     // TODO: Implement actual API call
     console.log("findById", id);
@@ -59,3 +59,5 @@ export class ProductRepositoryImpl implements IProductRepository {
     return axiosClientForBuyers.post("/productos/", productDto);
   }
 }
+
+export { ProductRepositoryImpl };

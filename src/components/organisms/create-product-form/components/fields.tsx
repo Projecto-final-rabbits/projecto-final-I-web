@@ -1,3 +1,4 @@
+import { ProviderAutocomplete } from "@/components/molecules";
 import { TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 
@@ -42,6 +43,7 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         error={!!formState.errors.purchasePrice}
         helperText={formState.errors.purchasePrice?.message as string}
       />
+      <ProviderAutocomplete name="providerId" />
       <TextField
         label="Categoria"
         fullWidth

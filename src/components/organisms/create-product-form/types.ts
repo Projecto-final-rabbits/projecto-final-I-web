@@ -5,9 +5,9 @@ const createProductSchema = z.object({
   description: z.string().optional(),
   purchasePrice: z.string({ message: "El campo es requerido" }),
   category: z.string().optional(),
-  // providerId: z.number({
-  //   message: "El campo es requerido",
-  // }),
+  providerId: z.number({
+    message: "El campo es requerido",
+  }),
   deliveryTime: z.string({ message: "El campo es requerido" }),
 });
 
