@@ -31,7 +31,7 @@ class ProductRepositoryImpl implements IProductRepository {
   async saveMany(products: FormData): Promise<void> {
     return axiosClientForWarehouse.post("/productos/masivo", products, {
       headers: {
-        "Content-Type": "multipart/form-data, application/json",
+        "Content-Type": "multipart/form-data",
       },
     });
   }
