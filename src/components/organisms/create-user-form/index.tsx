@@ -62,7 +62,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({
           )}
         >
           <Stack direction="column" spacing={3}>
-            <Fields disabled={isLoading} />
+            <Fields disabled={isLoading} isAdmin={role === "admin"} />
             <Actions onCancel={onClose} isLoading={isLoading} />
           </Stack>
         </form>

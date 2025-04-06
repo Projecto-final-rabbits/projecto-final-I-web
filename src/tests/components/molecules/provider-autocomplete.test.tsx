@@ -57,7 +57,7 @@ describe("ProviderAutocomplete Component", () => {
     });
 
     render(<ProviderAutocomplete name="providerId" />);
-    console.log(screen.debug());
+
     expect(screen.getByLabelText("Select Provider")).toBeInTheDocument();
   });
 

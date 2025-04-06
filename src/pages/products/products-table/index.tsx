@@ -6,7 +6,6 @@ import { Skeleton } from "@mui/material";
 
 const ProductsTable = () => {
   const { data, isSuccess } = useGetProductsQuery();
-  console.log("data: ", data);
 
   if (isSuccess) {
     return (

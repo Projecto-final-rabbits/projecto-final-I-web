@@ -117,30 +117,26 @@ const Header: React.FC = () => {
           <Stack spacing={2} direction="row">
             <Link
               to="/home"
-              sx={{
+              style={{
                 textDecoration: "none",
                 color: "white",
-                "&:hover": {
-                  opacity: 0.8,
-                  fontWeight: 600,
-                },
+                fontWeight: 500,
               }}
             >
               Home
             </Link>
-            <Link
-              to="/proveedores"
-              sx={{
-                textDecoration: "none",
-                color: "white",
-                "&:hover": {
-                  opacity: 0.8,
-                  fontWeight: 600,
-                },
-              }}
-            >
-              Proveedores
-            </Link>
+            {user?.role != "ventas" && (
+              <Link
+                to="/proveedores"
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontWeight: 500,
+                }}
+              >
+                Proveedores
+              </Link>
+            )}
           </Stack>
           <Box sx={{ flexGrow: 1 }} />
           <CreateUser role={user?.role ?? "admin"} />

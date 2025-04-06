@@ -1,14 +1,14 @@
 import { RoleAutocomplete } from "@/components/molecules";
-import { Role } from "@/core/domain/interfaces";
+
 import { Stack, TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 
 type FieldsProps = {
   disabled?: boolean;
-  role?: Role;
+  isAdmin?: boolean;
 };
 
-const Fields: React.FC<FieldsProps> = ({ disabled, role }) => {
+const Fields: React.FC<FieldsProps> = ({ disabled, isAdmin }) => {
   const { register, formState } = useFormContext();
 
   return (
@@ -23,7 +23,7 @@ const Fields: React.FC<FieldsProps> = ({ disabled, role }) => {
         {...register("fullname")}
         error={!!formState.errors.fullname}
       />
-      {role && (
+      {isAdmin && (
         <RoleAutocomplete
           name="role"
           disabled={disabled}

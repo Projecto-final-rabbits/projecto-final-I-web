@@ -15,7 +15,6 @@ describe("Modal Component", () => {
     const BODY = "Modal Content";
     const TITLE = "Test Modal";
     render(<Modal {...mockProps} />);
-    console.log(screen.debug());
     const title = screen.getByText(TITLE);
     expect(title.textContent).toBe("Test Modal");
     const body = screen.getByText(BODY);
