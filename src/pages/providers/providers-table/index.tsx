@@ -6,7 +6,6 @@ import { Skeleton } from "@mui/material";
 
 const ProvidersTable = () => {
   const { data, isSuccess } = useGetProvidersQuery();
-  console.log("data: ", data);
 
   if (isSuccess) {
     return (
