@@ -7,13 +7,36 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    environment: develop
     steps:
       - name: ⬇️ Checkout Code
         uses: actions/checkout@v4
       - name: 📦 Install Dependencies
         run: npm ci
+      - name: 📝 Create .env file for Vite
+        run: |
+          echo "VITE_API_URL_CLIENTS=${{ secrets.VITE_API_URL_CLIENTS }}" >> .env
+          echo "VITE_API_URL_SELLERS=${{ secrets.VITE_API_URL_SELLERS }}" >> .env
+          echo "VITE_API_URL_WAREHOUSE=${{ secrets.VITE_API_URL_WAREHOUSE }}" >> .env
+          echo "VITE_FIREBASE_API_KEY=${{ secrets.VITE_FIREBASE_API_KEY }}" >> .env
+          echo "VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}" >> .env
+          echo "VITE_FIREBASE_PROJECT_ID=${{ secrets.VITE_FIREBASE_PROJECT_ID }}" >> .env
+          echo "VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}" >> .env
+          echo "VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}" >> .env
+          echo "VITE_NODE_ENV=${{ secrets.VITE_NODE_ENV }}" >> .env
+          echo "VITE_PORT=${{ secrets.VITE_PORT }}" >> .env
+          echo "PEPE=${{ secrets.PEPE }}" >> .env
+          echo "PEPE1=${{ secrets.PEPE1 }}" >> .env
+          echo "PEPE2=${{ secrets.PEPE2 }}" >> .env
+          echo "PEPE3=${{ secrets.PEPE3 }}" >> .env
+          echo "PEPE4=${{ secrets.PEPE4 }}" >> .env
+          echo "PEPE5=${{ secrets.PEPE5 }}" >> .env
       - name: 🛠️ Build React App
         run: npm run build
+      - name: 📝 Show .env file (for debug only)
+        run: ls -la
+      - name: 📝 Show .env file (for debug only)
+        run: cat .env
       - name: 🔥 Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
