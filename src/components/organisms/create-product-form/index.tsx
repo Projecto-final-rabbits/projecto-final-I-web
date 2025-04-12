@@ -18,6 +18,18 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({
 }) => {
   const methods = useForm<CreateProductFormValues>({
     resolver: zodResolver(createProductSchema),
+    defaultValues: {
+      productName: undefined,
+      description: undefined,
+      purchasePrice: undefined,
+      salePrice: undefined,
+      category: undefined,
+      deliveryTime: undefined,
+      storageCondition: undefined,
+      activePromotion: false,
+      expirationDate: undefined,
+      providerId: undefined,
+    },
   });
   const [saveProduct, { isLoading }] = useSaveProductMutation();
 
@@ -27,6 +39,7 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({
   };
 
   const handleCreateProduct = (data: ICreateProduct) => {
+    console.log("data: **", data);
     saveProduct(data)
       .unwrap()
       .then(() => {
@@ -42,16 +55,12 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit((data) => {
-          console.log("data", data);
-
-          return;
-
           handleCreateProduct({
             nombre: data.productName,
             descripcion: data.description,
             precioCompra: Number(data.purchasePrice),
             categoria: data.category,
-            proveedorId: 1,
+            proveedorId: data.providerId,
             tiempoEntregaDias: Number(data.deliveryTime),
             precioVenta: Number(data.salePrice),
             condicionAlmacenamiento: data.storageCondition,

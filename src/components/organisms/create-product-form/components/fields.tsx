@@ -1,5 +1,5 @@
 import { ProviderAutocomplete } from "@/components/molecules";
-import { TextField } from "@mui/material";
+import { FormControlLabel, Switch, TextField } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useFormContext, Controller } from "react-hook-form";
 
@@ -8,9 +8,7 @@ type FieldsProps = {
 };
 
 const Fields: React.FC<FieldsProps> = ({ disabled }) => {
-  const { register, formState, control, watch } = useFormContext();
-  const expirationDate = watch("expirationDate");
-  console.log(formState.errors, expirationDate);
+  const { register, formState, control } = useFormContext();
 
   return (
     <>
@@ -70,8 +68,12 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         error={!!formState.errors.salePrice}
         helperText={formState.errors.salePrice?.message as string}
       />
-
-      <ProviderAutocomplete name="providerId" />
+      <FormControlLabel
+        sx={{ alignSelf: "flex-start" }}
+        control={<Switch name="activePromotion" />}
+        label="Promocion activa?"
+        labelPlacement="start"
+      />
       <TextField
         label="Categoria"
         fullWidth
@@ -82,6 +84,7 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         error={!!formState.errors.category}
         helperText={formState.errors.category?.message as string}
       />
+      <ProviderAutocomplete name="providerId" />
       <TextField
         label="Tiempo de entrega"
         fullWidth

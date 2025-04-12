@@ -21,7 +21,9 @@ class ProductRepositoryImpl implements IProductRepository {
   }
 
   async save(product: ICreateProduct): Promise<void> {
+    console.log("*** product", product);
     const productDto = Product.fromCreateEntityToDto(product);
+    console.log("*** productDto", productDto);
     return axiosClientForWarehouse.post("/productos/", productDto);
   }
 

@@ -1,4 +1,4 @@
-import { dateToIsoString, isoDateToDate } from "@/utils/dates";
+import { isoDateToDate } from "@/utils/dates";
 import {
   IProduct,
   ICreateProductDTO,
@@ -70,7 +70,7 @@ class Product implements IProduct {
       precio_compra: entity.precioCompra,
       precio_venta: entity.precioVenta,
       promocion_activa: entity.promocionActiva,
-      fecha_vencimiento: dateToIsoString(entity.fechaVencimiento),
+      fecha_vencimiento: entity.fechaVencimiento,
       condicion_almacenamiento: entity.condicionAlmacenamiento,
       tiempo_entrega_dias: entity.tiempoEntregaDias,
     };

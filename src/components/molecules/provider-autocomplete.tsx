@@ -49,7 +49,7 @@ const ProviderAutocomplete: React.FC<ProviderAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Select Provider"
+              label="Fabricante"
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}

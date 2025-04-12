@@ -48,7 +48,7 @@ type ICreateProductDTO = {
   precio_venta: number;
   promocion_activa: boolean;
   condicion_almacenamiento: string | null;
-  fecha_vencimiento: string | null;
+  fecha_vencimiento: Date | null;
   tiempo_entrega_dias?: number;
 };
 

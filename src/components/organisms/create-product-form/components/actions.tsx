@@ -21,10 +21,11 @@ const Actions: React.FC<ActionsProps> = ({
   disabled,
 }) => {
   const {
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm<CreateProductFormValues>({
     mode: "onChange",
   });
+  console.log("isValid: ", isValid, errors);
 
   return (
     <Stack direction="row" spacing={2} justifyContent="flex-end">
