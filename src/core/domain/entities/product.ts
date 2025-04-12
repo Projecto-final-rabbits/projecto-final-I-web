@@ -1,3 +1,4 @@
+import { isoDateToDate } from "@/utils/dates";
 import {
   IProduct,
   ICreateProductDTO,
@@ -13,6 +14,10 @@ class Product implements IProduct {
   categoria?: string;
   proveedorId: number;
   tiempoEntregaDias?: number;
+  promocionActiva?: boolean;
+  condicionAlmacenamiento?: string;
+  fechaVencimiento?: Date;
+  precioVenta?: number;
 
   constructor({
     id,
@@ -22,6 +27,10 @@ class Product implements IProduct {
     categoria,
     proveedorId,
     tiempoEntregaDias,
+    promocionActiva,
+    condicionAlmacenamiento,
+    fechaVencimiento,
+    precioVenta,
   }: IProduct) {
     this.id = id;
     this.nombre = nombre;
@@ -30,6 +39,10 @@ class Product implements IProduct {
     this.categoria = categoria;
     this.proveedorId = proveedorId;
     this.tiempoEntregaDias = tiempoEntregaDias;
+    this.promocionActiva = promocionActiva;
+    this.condicionAlmacenamiento = condicionAlmacenamiento;
+    this.fechaVencimiento = fechaVencimiento;
+    this.precioVenta = precioVenta;
   }
   static fromDtoToEntity(dto: IProductDTO): Product {
     return new Product({
@@ -40,6 +53,11 @@ class Product implements IProduct {
       categoria: dto.categoria,
       proveedorId: dto.proveedor_id,
       tiempoEntregaDias: dto.tiempo_entrega_dias,
+      promocionActiva: dto.promocion_activa,
+      condicionAlmacenamiento: dto.condicion_almacenamiento,
+      fechaVencimiento: dto.fecha_vencimiento
+        ? isoDateToDate(dto.fecha_vencimiento)
+        : undefined,
     });
   }
 
@@ -47,9 +65,13 @@ class Product implements IProduct {
     return {
       nombre: entity.nombre,
       descripcion: entity.descripcion,
-      precio_compra: entity.precioCompra,
       categoria: entity.categoria,
       proveedor_id: entity.proveedorId,
+      precio_compra: entity.precioCompra,
+      precio_venta: entity.precioVenta,
+      promocion_activa: entity.promocionActiva,
+      fecha_vencimiento: entity.fechaVencimiento,
+      condicion_almacenamiento: entity.condicionAlmacenamiento,
       tiempo_entrega_dias: entity.tiempoEntregaDias,
     };
   }

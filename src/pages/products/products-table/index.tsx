@@ -12,15 +12,7 @@ const ProductsTable = () => {
       <CustomTable
         actions={<Actions />}
         title="Tus productos"
-        rows={data.map((product) => ({
-          id: product.id,
-          nombre: product.nombre,
-          descripcion: product.descripcion,
-          precioCompra: product.precioCompra,
-          categoria: product.categoria,
-          proveedorId: product.proveedorId,
-          tiempoEntregaDias: product.tiempoEntregaDias,
-        }))}
+        rows={data}
         columns={columns}
       />
     );
