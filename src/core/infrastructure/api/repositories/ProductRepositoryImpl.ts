@@ -1,9 +1,6 @@
 import { IProductRepository } from "@core/domain/repositories/product.repository";
 import { Product } from "@core/domain/entities/product";
-import {
-  axiosClientForWarehouse,
-  axiosClientForBuyers,
-} from "@/core/infraestructure/api/clients";
+import { axiosClientForWarehouse } from "@/core/infraestructure/api/clients";
 import { ICreateProduct, IProductDTO } from "@/core/domain/interfaces";
 
 class ProductRepositoryImpl implements IProductRepository {
@@ -14,7 +11,7 @@ class ProductRepositoryImpl implements IProductRepository {
   }
 
   async findAll(): Promise<Product[]> {
-    return axiosClientForBuyers.get("/productos/").then((response) => {
+    return axiosClientForWarehouse.get("/productos/").then((response) => {
       const products = response.data.map((product: IProductDTO) =>
         Product.fromDtoToEntity(product)
       );
@@ -25,7 +22,7 @@ class ProductRepositoryImpl implements IProductRepository {
 
   async save(product: ICreateProduct): Promise<void> {
     const productDto = Product.fromCreateEntityToDto(product);
-    return axiosClientForBuyers.post("/productos/", productDto);
+    return axiosClientForWarehouse.post("/productos/", productDto);
   }
 
   async saveMany(products: FormData): Promise<void> {

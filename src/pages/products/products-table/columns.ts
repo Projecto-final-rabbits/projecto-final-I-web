@@ -1,4 +1,5 @@
 import { IProduct } from "@/core/domain/interfaces";
+import { dateToStringFormat } from "@/utils/dates";
 import { GridColDef } from "@mui/x-data-grid";
 
 const columns: GridColDef<IProduct>[] = [
@@ -9,6 +10,31 @@ const columns: GridColDef<IProduct>[] = [
     headerName: "Precio de compra",
     type: "number",
     valueGetter: (value) => `$${value || ""}`,
+    flex: 1,
+  },
+  {
+    field: "precioVenta",
+    headerName: "Precio de venta",
+    type: "number",
+    valueGetter: (value) => `$${value || ""}`,
+    flex: 1,
+  },
+  {
+    field: "promocionActiva",
+    headerName: "Promocion activa",
+    type: "boolean",
+    valueGetter: (value) => (value ? "Si" : "No"),
+    flex: 1,
+  },
+  {
+    field: "condicionAlmacenamiento",
+    headerName: "Condicion de almacenamiento",
+    flex: 1,
+  },
+  {
+    field: "fechaVencimiento",
+    headerName: "Fecha de vencimiento",
+    valueGetter: (value) => dateToStringFormat(value),
     flex: 1,
   },
   {

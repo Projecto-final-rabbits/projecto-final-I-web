@@ -1,13 +1,16 @@
 import { ProviderAutocomplete } from "@/components/molecules";
 import { TextField } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import { DatePicker } from "@mui/x-date-pickers";
+import { useFormContext, Controller } from "react-hook-form";
 
 type FieldsProps = {
   disabled?: boolean;
 };
 
 const Fields: React.FC<FieldsProps> = ({ disabled }) => {
-  const { register, formState } = useFormContext();
+  const { register, formState, control, watch } = useFormContext();
+  const expirationDate = watch("expirationDate");
+  console.log(formState.errors, expirationDate);
 
   return (
     <>
@@ -21,15 +24,27 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         error={!!formState.errors.productName}
         helperText={formState.errors.productName?.message as string}
       />
-      <TextField
-        label="Descripcion"
-        fullWidth
-        disabled={disabled}
-        data-testid="descripcion-del-producto"
-        size="small"
-        {...register("description")}
-        error={!!formState.errors.description}
-        helperText={formState.errors.description?.message as string}
+
+      <Controller
+        name="expirationDate"
+        control={control}
+        defaultValue={null}
+        render={({ field }) => (
+          <DatePicker
+            label="Fecha de expiración"
+            value={field.value}
+            onChange={field.onChange}
+            slotProps={{
+              textField: {
+                size: "small",
+                fullWidth: true,
+                disabled,
+                error: !!formState.errors.expirationDate,
+                helperText: formState.errors.expirationDate?.message as string,
+              },
+            }}
+          />
+        )}
       />
       <TextField
         label="Precio de compra"
@@ -43,6 +58,19 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         error={!!formState.errors.purchasePrice}
         helperText={formState.errors.purchasePrice?.message as string}
       />
+      <TextField
+        label="Precio de venta"
+        fullWidth
+        type="number"
+        min={0}
+        disabled={disabled}
+        data-testid="precio-de-venta"
+        size="small"
+        {...register("salePrice")}
+        error={!!formState.errors.salePrice}
+        helperText={formState.errors.salePrice?.message as string}
+      />
+
       <ProviderAutocomplete name="providerId" />
       <TextField
         label="Categoria"
@@ -65,6 +93,29 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         {...register("deliveryTime")}
         error={!!formState.errors.deliveryTime}
         helperText={formState.errors.deliveryTime?.message as string}
+      />
+      <TextField
+        label="Descripcion"
+        rows={3}
+        fullWidth
+        disabled={disabled}
+        data-testid="descripcion-del-producto"
+        size="small"
+        {...register("description")}
+        error={!!formState.errors.description}
+        helperText={formState.errors.description?.message as string}
+        multiline
+      />
+      <TextField
+        label="Condicion de almacenamiento"
+        rows={3}
+        disabled={disabled}
+        data-testid="condicion-almacenamiento"
+        size="small"
+        {...register("storageCondition")}
+        error={!!formState.errors.storageCondition}
+        helperText={formState.errors.storageCondition?.message as string}
+        multiline
       />
     </>
   );

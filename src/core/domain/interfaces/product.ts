@@ -6,6 +6,10 @@ interface IProduct {
   categoria?: string;
   proveedorId: number;
   tiempoEntregaDias?: number;
+  promocionActiva?: boolean;
+  condicionAlmacenamiento?: string;
+  fechaVencimiento?: Date;
+  precioVenta?: number;
 }
 
 interface IProductDTO {
@@ -13,7 +17,11 @@ interface IProductDTO {
   nombre: string;
   descripcion: string;
   precio_compra: number;
+  precio_venta: number;
+  promocion_activa: boolean;
   categoria: string;
+  condicion_almacenamiento: string;
+  fecha_vencimiento: string;
   proveedor_id: number;
   tiempo_entrega_dias: number;
 }
@@ -21,18 +29,26 @@ interface IProductDTO {
 type ICreateProduct = {
   nombre: string;
   descripcion?: string;
-  precioCompra: number;
   categoria?: string;
   proveedorId: number;
+  precioCompra: number;
+  precioVenta: number;
+  promocionActiva: boolean;
+  fechaVencimiento: Date;
+  condicionAlmacenamiento: string;
   tiempoEntregaDias?: number;
 };
 
 type ICreateProductDTO = {
   nombre: string;
   descripcion?: string;
-  precio_compra: number;
   categoria?: string;
   proveedor_id: number;
+  precio_compra: number;
+  precio_venta: number;
+  promocion_activa: boolean;
+  condicion_almacenamiento: string | null;
+  fecha_vencimiento: string | null;
   tiempo_entrega_dias?: number;
 };
 

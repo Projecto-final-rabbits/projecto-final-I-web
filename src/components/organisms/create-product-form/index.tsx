@@ -41,7 +41,11 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit((data) =>
+        onSubmit={methods.handleSubmit((data) => {
+          console.log("data", data);
+
+          return;
+
           handleCreateProduct({
             nombre: data.productName,
             descripcion: data.description,
@@ -49,8 +53,12 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({
             categoria: data.category,
             proveedorId: 1,
             tiempoEntregaDias: Number(data.deliveryTime),
-          })
-        )}
+            precioVenta: Number(data.salePrice),
+            condicionAlmacenamiento: data.storageCondition,
+            promocionActiva: data.activePromotion,
+            fechaVencimiento: data.expirationDate,
+          });
+        })}
       >
         <Stack spacing={2}>
           <Stack direction="column" spacing={1.5}>
