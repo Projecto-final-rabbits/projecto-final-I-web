@@ -7,12 +7,12 @@ import { useSearchParams } from "react-router-dom";
 
 const Filters: React.FC = () => {
   const formMethods = useForm({});
-  const [seachParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const providerId = formMethods.watch("providerId");
   const countryId = formMethods.watch("countryId");
 
   useEffect(() => {
-    const countryId = seachParams.get("countryId");
+    const countryId = searchParams.get("countryId");
     if (providerId !== undefined) {
       setSearchParams({
         ...(countryId && { countryId: countryId }),
