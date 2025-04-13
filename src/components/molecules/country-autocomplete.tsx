@@ -1,31 +1,27 @@
 import React from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { useGetProvidersQuery } from "@/state-managment/slices";
 import { useFormContext, Controller } from "react-hook-form";
+import { COUNTRIES } from "@/utils/countries";
 
-type ProviderAutocompleteProps = {
+type CountryAutocompleteProps = {
   name: string;
   disabled?: boolean;
 };
 
-const ProviderAutocomplete: React.FC<ProviderAutocompleteProps> = ({
+const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
   name,
   disabled = false,
 }) => {
-  const { data: providers, isLoading, error } = useGetProvidersQuery();
   const {
     control,
     formState: { errors },
   } = useFormContext();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading providers</p>;
-
-  const providerOptions =
-    providers?.map(({ id, nombre }) => ({
-      label: nombre,
-      id: id,
+  const countryOptions =
+    COUNTRIES?.map(({ es_name }) => ({
+      label: es_name,
+      id: es_name,
     })) || [];
 
   return (
@@ -34,13 +30,13 @@ const ProviderAutocomplete: React.FC<ProviderAutocompleteProps> = ({
       control={control}
       render={({ field: { onChange, value } }) => (
         <Autocomplete
-          options={providerOptions}
+          options={countryOptions}
           getOptionLabel={(option) => option?.label || ""}
           size="small"
           fullWidth
           value={
             value
-              ? providerOptions.find((option) => option.id === value) || null
+              ? countryOptions.find((option) => option.id === value) || null
               : null
           }
           onChange={(_, newValue) => {
@@ -50,7 +46,7 @@ const ProviderAutocomplete: React.FC<ProviderAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Fabricante"
+              label="Pais"
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}
@@ -62,4 +58,4 @@ const ProviderAutocomplete: React.FC<ProviderAutocompleteProps> = ({
   );
 };
 
-export { ProviderAutocomplete };
+export { CountryAutocomplete };

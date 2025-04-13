@@ -1,4 +1,5 @@
 import { ProviderAutocomplete } from "@/components/molecules";
+import { CountryAutocomplete } from "@/components/molecules/country-autocomplete";
 import { Stack } from "@mui/material";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -24,8 +25,9 @@ const Filters: React.FC = () => {
   return (
     <FormProvider {...formMethods}>
       <form>
-        <Stack>
+        <Stack direction="row" spacing={1} alignItems="center" width={"100%"}>
           <ProviderAutocomplete name="providerId" />
+          <CountryAutocomplete name="country" />
         </Stack>
       </form>
     </FormProvider>
