@@ -28,7 +28,7 @@ const Filters: React.FC = () => {
   }, [providerId]);
 
   useEffect(() => {
-    const providerId = seachParams.get("providerId");
+    const providerId = searchParams.get("providerId");
     if (countryId !== undefined) {
       setSearchParams({
         ...(providerId && { providerId: providerId }),
