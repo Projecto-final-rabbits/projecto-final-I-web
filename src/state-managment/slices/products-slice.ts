@@ -10,11 +10,11 @@ export const productsApi = createApi({
   tagTypes: ["Products"],
   baseQuery: () => ({ data: {} }),
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], void>({
-      queryFn: async () => {
+    getProducts: builder.query<Product[], { providerId?: string | null }>({
+      queryFn: async ({ providerId }) => {
         try {
           const repo = new ProductRepositoryImpl();
-          const data = await getProducts(repo);
+          const data = await getProducts(repo, { providerId });
           return { data };
         } catch (error) {
           return {
