@@ -7,27 +7,48 @@ import { useSearchParams } from "react-router-dom";
 
 const Filters: React.FC = () => {
   const formMethods = useForm({});
-  const [, setSearchParams] = useSearchParams();
+  const [seachParams, setSearchParams] = useSearchParams();
   const providerId = formMethods.watch("providerId");
+  const countryId = formMethods.watch("countryId");
 
   useEffect(() => {
+    const countryId = seachParams.get("countryId");
     if (providerId !== undefined) {
       setSearchParams({
+        ...(countryId && { countryId: countryId }),
         providerId: providerId,
       });
     }
 
     if (providerId === "" || providerId === null) {
-      setSearchParams({});
+      setSearchParams({
+        ...(countryId && { countryId: countryId }),
+      });
     }
   }, [providerId]);
+
+  useEffect(() => {
+    const providerId = seachParams.get("providerId");
+    if (countryId !== undefined) {
+      setSearchParams({
+        ...(providerId && { providerId: providerId }),
+        countryId: countryId,
+      });
+    }
+
+    if (countryId === "" || countryId === null) {
+      setSearchParams({
+        ...(providerId && { providerId: providerId }),
+      });
+    }
+  }, [countryId]);
 
   return (
     <FormProvider {...formMethods}>
       <form>
         <Stack direction="row" spacing={1} alignItems="center" width={"100%"}>
           <ProviderAutocomplete name="providerId" />
-          <CountryAutocomplete name="country" />
+          <CountryAutocomplete name="countryId" />
         </Stack>
       </form>
     </FormProvider>
