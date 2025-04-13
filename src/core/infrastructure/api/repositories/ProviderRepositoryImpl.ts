@@ -19,6 +19,7 @@ class ProviderRepositoryImpl implements IProviderRepository {
       const providers = response.data.map((provider: IProviderDTO) =>
         Provider.fromDtoToEntity(provider)
       );
+      console.log("providers: ", providers);
       return providers;
     });
   }
@@ -26,6 +27,15 @@ class ProviderRepositoryImpl implements IProviderRepository {
   async save(provider: ICreateProvider): Promise<void> {
     const providerDto = Provider.fromCreateEntityToDto(provider);
     return axiosClientForBuyers.post("/proveedores/", providerDto);
+  }
+
+  async update(provider: ICreateProvider, id: number): Promise<void> {
+    const providerDto = Provider.fromCreateEntityToDto(provider);
+    return axiosClientForBuyers.put(`/proveedores/${id}`, providerDto);
+  }
+
+  async delete(id: number): Promise<void> {
+    return axiosClientForBuyers.delete(`/proveedores/${id}`);
   }
 }
 

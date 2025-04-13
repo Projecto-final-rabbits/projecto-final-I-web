@@ -3,46 +3,38 @@ import { Stack } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { CreateProviderFormValues, createProviderSchema } from "./types";
 import { Actions, Fields } from "./components";
-import { useSaveProviderMutation } from "@/state-managment/slices";
 import { ICreateProvider } from "@/core/domain/interfaces";
-import { toast } from "react-toastify";
 
 type CreateProviderFormProps = {
+  onSubmit: (data: ICreateProvider) => void;
   onClose: () => void;
   disabled?: boolean;
+  defaultValues?: CreateProviderFormValues;
 };
 
-const CreateProviderForm: React.FC<CreateProviderFormProps> = ({
+const ProviderForm: React.FC<CreateProviderFormProps> = ({
+  onSubmit,
   onClose,
   disabled,
+  defaultValues,
 }) => {
   const methods = useForm<CreateProviderFormValues>({
     resolver: zodResolver(createProviderSchema),
+    defaultValues: {
+      ...defaultValues,
+    },
   });
-  const [saveProvider, { isLoading }] = useSaveProviderMutation();
 
   const handleOnClose = () => {
     methods.reset();
     onClose();
   };
 
-  const handleCreateProvider = (data: ICreateProvider) => {
-    saveProvider(data)
-      .unwrap()
-      .then(() => {
-        toast.success("Proveedor creado correctamente");
-        handleOnClose();
-      })
-      .catch(() => {
-        toast.error("Oops! Error, intentalo mas tarde.");
-      });
-  };
-
   return (
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit((data) =>
-          handleCreateProvider({
+          onSubmit({
             nombre: data.name,
             telefono: data.phone,
             email: data.email,
@@ -53,13 +45,13 @@ const CreateProviderForm: React.FC<CreateProviderFormProps> = ({
       >
         <Stack spacing={2}>
           <Stack direction="column" spacing={1.5}>
-            <Fields disabled={disabled || isLoading} />
+            <Fields disabled={disabled} />
           </Stack>
           <Actions
             onCancel={handleOnClose}
             submitText="Agregar Proveedor"
             cancelText="Cancelar"
-            isLoading={isLoading}
+            isLoading={disabled}
             disabled={disabled}
           />
         </Stack>
@@ -68,4 +60,4 @@ const CreateProviderForm: React.FC<CreateProviderFormProps> = ({
   );
 };
 
-export { CreateProviderForm };
+export { ProviderForm };

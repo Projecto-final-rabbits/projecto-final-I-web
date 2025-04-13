@@ -39,7 +39,6 @@ const CreateProductForm: React.FC<CreateProductFormProps> = ({
   };
 
   const handleCreateProduct = (data: ICreateProduct) => {
-    console.log("data: **", data);
     saveProduct(data)
       .unwrap()
       .then(() => {
