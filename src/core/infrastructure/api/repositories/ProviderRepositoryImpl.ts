@@ -19,7 +19,6 @@ class ProviderRepositoryImpl implements IProviderRepository {
       const providers = response.data.map((provider: IProviderDTO) =>
         Provider.fromDtoToEntity(provider)
       );
-      console.log("providers: ", providers);
       return providers;
     });
   }

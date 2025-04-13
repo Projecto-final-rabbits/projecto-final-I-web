@@ -62,7 +62,7 @@ const EditProvider: React.FC<EditProviderProps> = ({
               country: pais,
               contact: contacto,
             }}
-            disabled={isLoading}
+            isLoading={isLoading}
             onSubmit={handleEditProvider}
             onClose={handleOnClose}
           />

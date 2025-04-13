@@ -48,7 +48,7 @@ const AddProvider: React.FC = () => {
         <ProviderForm
           onSubmit={handleCreateProvider}
           onClose={handleOnClose}
-          disabled={isLoading}
+          isLoading={isLoading}
         />
       </Modal>
     </>
