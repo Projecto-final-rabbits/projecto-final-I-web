@@ -1,5 +1,6 @@
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { AddMultipleProducts, AddProduct, InventoryToggle } from "./components";
+import { Filters } from "../filters";
 
 type ActionsProps = {
   onCancel?: () => void;
@@ -12,6 +13,9 @@ const Actions: React.FC<ActionsProps> = () => {
       <Stack>
         <InventoryToggle />
       </Stack>
+      <Box sx={{ minWidth: "300px" }}>
+        <Filters />
+      </Box>
       <Stack direction="row" spacing={1} alignItems="center">
         <AddMultipleProducts />
         <AddProduct />

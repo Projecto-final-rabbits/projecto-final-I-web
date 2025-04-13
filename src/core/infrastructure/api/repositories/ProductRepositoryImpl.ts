@@ -1,4 +1,7 @@
-import { IProductRepository } from "@core/domain/repositories/product.repository";
+import {
+  IProductRepository,
+  ProductsFilterParams,
+} from "@core/domain/repositories/product.repository";
 import { Product } from "@core/domain/entities/product";
 import { axiosClientForWarehouse } from "@/core/infraestructure/api/clients";
 import { ICreateProduct, IProductDTO } from "@/core/domain/interfaces";
@@ -10,14 +13,22 @@ class ProductRepositoryImpl implements IProductRepository {
     throw new Error("Not implemented");
   }
 
-  async findAll(): Promise<Product[]> {
-    return axiosClientForWarehouse.get("/productos/").then((response) => {
-      const products = response.data.map((product: IProductDTO) =>
-        Product.fromDtoToEntity(product)
-      );
+  async findAll(params: ProductsFilterParams): Promise<Product[]> {
+    return axiosClientForWarehouse
+      .get("/productos/", {
+        params: {
+          ...params,
+          page: 1,
+          pageSize: 1000,
+        },
+      })
+      .then((response) => {
+        const products = response.data.map((product: IProductDTO) =>
+          Product.fromDtoToEntity(product)
+        );
 
-      return products;
-    });
+        return products;
+      });
   }
 
   async save(product: ICreateProduct): Promise<void> {

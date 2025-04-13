@@ -2,19 +2,24 @@ import { columns } from "./columns";
 import { CustomTable } from "@/components/organisms";
 import { Actions } from "./components";
 import { useGetProductsQuery } from "@/state-managment/slices";
-import { Skeleton } from "@mui/material";
+import { Skeleton, Stack } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
 
 const ProductsTable = () => {
-  const { data, isSuccess } = useGetProductsQuery();
+  const [searchParams] = useSearchParams();
+  const providerId = searchParams.get("providerId");
+  const { data, isSuccess } = useGetProductsQuery({ providerId });
 
   if (isSuccess) {
     return (
-      <CustomTable
-        actions={<Actions />}
-        title="Tus productos"
-        rows={data}
-        columns={columns}
-      />
+      <Stack direction="column" spacing={1}>
+        <CustomTable
+          actions={<Actions />}
+          title="Tus productos"
+          rows={data}
+          columns={columns}
+        />
+      </Stack>
     );
   }
 
