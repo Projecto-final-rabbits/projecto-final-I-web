@@ -19,6 +19,7 @@ const ProvidersTable = () => {
           email: product.email,
           direccion: product.direccion,
           pais: product.pais,
+          contacto: product.contacto,
         }))}
         columns={columns}
       />
