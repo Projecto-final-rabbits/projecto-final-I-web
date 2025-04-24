@@ -13,7 +13,7 @@ const Actions: React.FC<ActionsProps> = () => {
       <Stack>
         <InventoryToggle />
       </Stack>
-      <Box sx={{ minWidth: "300px" }}>
+      <Box sx={{ minWidth: "400px" }}>
         <Filters />
       </Box>
       <Stack direction="row" spacing={1} alignItems="center">

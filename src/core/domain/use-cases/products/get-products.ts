@@ -5,13 +5,13 @@ const getProducts = async (
   repository: IProductRepository,
   params?: {
     providerId?: string | null;
-    countryId?: string | null;
+    categoryId?: string | null;
   }
 ): Promise<Product[]> => {
-  const { providerId, countryId } = params || {};
+  const { providerId, categoryId } = params || {};
   const filters = {
-    ...(providerId && { proveedor_id: providerId }),
-    ...(countryId && { countryId }),
+    ...(providerId && { proveedorId: providerId }),
+    ...(categoryId && { categoriaId: categoryId }),
   };
   return repository.findAll(filters);
 };

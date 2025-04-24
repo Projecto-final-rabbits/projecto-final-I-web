@@ -10,11 +10,14 @@ export const productsApi = createApi({
   tagTypes: ["Products"],
   baseQuery: () => ({ data: {} }),
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], { providerId?: string | null }>({
-      queryFn: async ({ providerId }) => {
+    getProducts: builder.query<
+      Product[],
+      { providerId?: string | null; categoryId?: string | null }
+    >({
+      queryFn: async ({ providerId, categoryId }) => {
         try {
           const repo = new ProductRepositoryImpl();
-          const data = await getProducts(repo, { providerId });
+          const data = await getProducts(repo, { providerId, categoryId });
           return { data };
         } catch (error) {
           return {

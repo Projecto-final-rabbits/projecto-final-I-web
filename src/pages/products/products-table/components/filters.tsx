@@ -1,5 +1,7 @@
-import { ProviderAutocomplete } from "@/components/molecules";
-import { CountryAutocomplete } from "@/components/molecules/country-autocomplete";
+import {
+  CategoryAutocomplete,
+  ProviderAutocomplete,
+} from "@/components/molecules";
 import { Stack } from "@mui/material";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
@@ -9,46 +11,46 @@ const Filters: React.FC = () => {
   const formMethods = useForm({});
   const [searchParams, setSearchParams] = useSearchParams();
   const providerId = formMethods.watch("providerId");
-  const countryId = formMethods.watch("countryId");
+  const categoryId = formMethods.watch("categoryId");
 
   useEffect(() => {
-    const countryId = searchParams.get("countryId");
+    const categoryId = searchParams.get("categoryId");
     if (providerId !== undefined) {
       setSearchParams({
-        ...(countryId && { countryId: countryId }),
+        ...(categoryId && { categoryId: categoryId }),
         providerId: providerId,
       });
     }
 
     if (providerId === "" || providerId === null) {
       setSearchParams({
-        ...(countryId && { countryId: countryId }),
+        ...(categoryId && { categoryId: categoryId }),
       });
     }
   }, [providerId]);
 
   useEffect(() => {
     const providerId = searchParams.get("providerId");
-    if (countryId !== undefined) {
+    if (categoryId !== undefined) {
       setSearchParams({
         ...(providerId && { providerId: providerId }),
-        countryId: countryId,
+        categoryId,
       });
     }
 
-    if (countryId === "" || countryId === null) {
+    if (categoryId === "" || categoryId === null) {
       setSearchParams({
         ...(providerId && { providerId: providerId }),
       });
     }
-  }, [countryId]);
+  }, [categoryId]);
 
   return (
     <FormProvider {...formMethods}>
       <form>
         <Stack direction="row" spacing={1} alignItems="center" width={"100%"}>
           <ProviderAutocomplete name="providerId" />
-          <CountryAutocomplete name="countryId" />
+          <CategoryAutocomplete name="categoryId" />
         </Stack>
       </form>
     </FormProvider>
