@@ -46,9 +46,9 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
         onSubmit={methods.handleSubmit((data) => {
           handleCreateProduct({
             productId: data.productId,
-            warehouseId: data.warehouseId,
+            warehouseId: data.warehouseId + "",
             description: data.description,
-            quantity: data.quantity,
+            quantity: Number(data.quantity),
           });
         })}
       >
