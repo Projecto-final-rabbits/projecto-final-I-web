@@ -14,6 +14,7 @@ const WarehouseAutocomplete: React.FC<WarehouseAutocompleteProps> = ({
   disabled = false,
 }) => {
   const { data: warehouses, isLoading, error } = useGetWarehousesQuery();
+  console.log("warehouses", warehouses);
   const {
     control,
     formState: { errors },

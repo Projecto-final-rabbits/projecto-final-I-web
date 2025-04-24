@@ -17,6 +17,18 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
       <ProductAutocomplete name="productId" />
       <WarehouseAutocomplete name="warehouseId" />
       <TextField
+        label="Cantidad"
+        fullWidth
+        type="number"
+        min={1}
+        disabled={disabled}
+        data-testid="cantidad-de-productos"
+        size="small"
+        {...register("quantity")}
+        error={!!formState.errors.quantity}
+        helperText={formState.errors.quantity?.message as string}
+      />
+      <TextField
         label="Descripcion"
         fullWidth
         multiline

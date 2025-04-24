@@ -11,13 +11,10 @@ export const warehousesApi = createApi({
     getWarehouses: builder.query<Warehouse[], void>({
       queryFn: async () => {
         try {
-          console.log("********+ 1");
           const repo = new WarehouseRepositoryImpl();
           const data = await getWarehouses(repo);
-          console.log("********+ 2");
           return { data };
         } catch (error) {
-          console.log("********+ 3", error);
           return {
             error: {
               status: 500,

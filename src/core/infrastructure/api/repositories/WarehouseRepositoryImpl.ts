@@ -4,12 +4,13 @@ import { Warehouse } from "@/core/domain/entities";
 
 class WarehouseRepositoryImpl implements IWarehouseRepository {
   async findAll(): Promise<Warehouse[]> {
-    return axiosClientForWarehouse.get("/bodegas/", {
+    const response = await axiosClientForWarehouse.get("/bodegas/", {
       params: {
         page: 1,
         pageSize: 1000,
       },
     });
+    return response.data;
   }
 }
 
