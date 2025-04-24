@@ -1,5 +1,10 @@
 import { Box, Stack } from "@mui/material";
-import { AddMultipleProducts, AddProduct, InventoryToggle } from "./components";
+import {
+  AddMultipleProducts,
+  AddProduct,
+  InventoryToggle,
+  MoveProduct,
+} from "./components";
 import { Filters } from "../filters";
 
 type ActionsProps = {
@@ -19,6 +24,7 @@ const Actions: React.FC<ActionsProps> = () => {
       <Stack direction="row" spacing={1} alignItems="center">
         <AddMultipleProducts />
         <AddProduct />
+        <MoveProduct />
       </Stack>
     </Stack>
   );

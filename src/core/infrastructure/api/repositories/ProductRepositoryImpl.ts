@@ -4,7 +4,11 @@ import {
 } from "@core/domain/repositories/product.repository";
 import { Product } from "@core/domain/entities/product";
 import { axiosClientForWarehouse } from "@/core/infraestructure/api/clients";
-import { ICreateProduct, IProductDTO } from "@/core/domain/interfaces";
+import {
+  ICreateProduct,
+  IMoveProduct,
+  IProductDTO,
+} from "@/core/domain/interfaces";
 
 class ProductRepositoryImpl implements IProductRepository {
   async findById(id: string): Promise<Product | null> {
@@ -41,6 +45,16 @@ class ProductRepositoryImpl implements IProductRepository {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+    });
+  }
+
+  async move(movement: IMoveProduct): Promise<void> {
+    return axiosClientForWarehouse.post("/movimientos/entrada", {
+      producto_id: movement.productId,
+      bodega_id: movement.warehouseId,
+      cantidad: +movement.quantity,
+      descripcion: movement.description,
+      tipo_movimiento: "entrada",
     });
   }
 }

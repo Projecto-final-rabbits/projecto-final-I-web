@@ -52,6 +52,13 @@ type ICreateProductDTO = {
   tiempo_entrega_dias?: number;
 };
 
+type IMoveProduct = {
+  productId: string;
+  warehouseId: string;
+  description: string;
+  quantity: number;
+};
+
 type IUpdateProductDTO = Partial<
   Omit<IProduct, "id" | "createdAt" | "updatedAt">
 >;
@@ -62,4 +69,5 @@ export type {
   ICreateProduct,
   ICreateProductDTO,
   IUpdateProductDTO,
+  IMoveProduct,
 };

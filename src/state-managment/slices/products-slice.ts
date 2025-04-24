@@ -3,7 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { Product } from "@core/domain/entities";
 import { ProductRepositoryImpl } from "@core/infrastructure/api/repositories";
 import { getProducts } from "@core/domain/use-cases/products/get-products";
-import { ICreateProduct } from "@/core/domain/interfaces";
+import { ICreateProduct, IMoveProduct } from "@/core/domain/interfaces";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
@@ -68,6 +68,23 @@ export const productsApi = createApi({
       },
       invalidatesTags: ["Products"],
     }),
+    moveProduct: builder.mutation<void, IMoveProduct>({
+      queryFn: async (movement) => {
+        try {
+          const repo = new ProductRepositoryImpl();
+          await repo.move(movement);
+          return { data: undefined };
+        } catch (error) {
+          return {
+            error: {
+              status: 500,
+              data:
+                error instanceof Error ? error.message : "Ops, algo salió mal",
+            },
+          };
+        }
+      },
+    }),
   }),
 });
 
@@ -75,4 +92,5 @@ export const {
   useGetProductsQuery,
   useSaveProductMutation,
   useSaveMultipleProductsMutation,
+  useMoveProductMutation,
 } = productsApi;
