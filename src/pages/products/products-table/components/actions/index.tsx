@@ -14,7 +14,13 @@ type ActionsProps = {
 
 const Actions: React.FC<ActionsProps> = () => {
   return (
-    <Stack direction="row" justifyContent="space-between" alignItems="center">
+    <Stack
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+      flexWrap="wrap"
+      gap="0.5rem"
+    >
       <Stack>
         <InventoryToggle />
       </Stack>
