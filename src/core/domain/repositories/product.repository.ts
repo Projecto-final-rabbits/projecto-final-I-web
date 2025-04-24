@@ -2,7 +2,7 @@ import { Product } from "../entities/product";
 
 type ProductsFilterParams = {
   providerId?: string | null;
-  countryId?: string | null;
+  categoriaId?: string | null;
 };
 
 interface IProductRepository {

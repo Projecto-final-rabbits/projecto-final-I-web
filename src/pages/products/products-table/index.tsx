@@ -8,7 +8,11 @@ import { useSearchParams } from "react-router-dom";
 const ProductsTable = () => {
   const [searchParams] = useSearchParams();
   const providerId = searchParams.get("providerId");
-  const { data, isSuccess } = useGetProductsQuery({ providerId });
+  const categoryId = searchParams.get("categoryId");
+  const { data, isSuccess } = useGetProductsQuery({
+    providerId,
+    categoryId,
+  });
 
   if (isSuccess) {
     return (
