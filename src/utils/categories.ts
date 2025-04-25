@@ -1,19 +1,19 @@
 const CATEGORIES = [
   {
     id: 1,
-    name: "Embutidos",
+    name: "Alimentos",
   },
   {
     id: 2,
-    name: "Carnes",
+    name: "Limpieza",
   },
   {
     id: 3,
-    name: "Pescados",
+    name: "Dulces",
   },
   {
     id: 4,
-    name: "Frutas",
+    name: "Bebidas",
   },
   {
     id: 5,

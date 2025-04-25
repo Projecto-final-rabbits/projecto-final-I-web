@@ -11,7 +11,7 @@ const getProducts = async (
   const { providerId, categoryId } = params || {};
   const filters = {
     ...(providerId && { proveedor_id: providerId }),
-    ...(categoryId && { categoria_id: categoryId }),
+    ...(categoryId && { categoryId }),
   };
   return repository.findAll(filters);
 };
