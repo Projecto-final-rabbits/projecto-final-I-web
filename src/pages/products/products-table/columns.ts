@@ -23,8 +23,8 @@ const columns: GridColDef<IProduct>[] = [
     field: "promocionActiva",
     headerName: "Promocion activa",
     type: "boolean",
-    valueGetter: (value) => (value ? "Si" : "No"),
     flex: 1,
+    valueFormatter: ({ value }) => (value ? "Sí" : "No"),
   },
   {
     field: "condicionAlmacenamiento",
@@ -34,8 +34,9 @@ const columns: GridColDef<IProduct>[] = [
   {
     field: "fechaVencimiento",
     headerName: "Fecha de vencimiento",
-    valueGetter: (value) => dateToStringFormat(value),
     flex: 1,
+    renderCell: ({ value }) =>
+      value ? dateToStringFormat(value) : "No aplica",
   },
   {
     field: "tiempoEntregaDias",

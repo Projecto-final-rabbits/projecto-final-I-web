@@ -6,10 +6,10 @@ interface IProduct {
   categoria?: string;
   proveedorId: number;
   tiempoEntregaDias?: number;
-  promocionActiva?: boolean;
+  promocionActiva: boolean;
   condicionAlmacenamiento?: string;
   fechaVencimiento?: Date;
-  precioVenta?: number;
+  precioVenta: number;
 }
 
 interface IProductDTO {

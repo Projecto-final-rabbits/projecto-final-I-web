@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Inventory } from "@/pages/products/inventories-table/columns";
+import { InventoryApi } from "@/pages/products/inventories-table/columns";
 import { env } from "@config/env";
 
 export const inventoriesApi = createApi({
@@ -13,8 +13,9 @@ export const inventoriesApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getInventories: builder.query<Inventory[], void>({
+    getInventories: builder.query<InventoryApi[], void>({
       query: () => "/inventarios/",
+      providesTags: ["Inventories"],
     }),
   }),
 });
