@@ -7,7 +7,7 @@ import { ICreateProduct, IMoveProduct } from "@/core/domain/interfaces";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
-  tagTypes: ["Products"],
+  tagTypes: ["Products", "Inventories"],
   baseQuery: () => ({ data: {} }),
   endpoints: (builder) => ({
     getProducts: builder.query<
@@ -84,6 +84,7 @@ export const productsApi = createApi({
           };
         }
       },
+      invalidatesTags: ["Inventories"],
     }),
   }),
 });
