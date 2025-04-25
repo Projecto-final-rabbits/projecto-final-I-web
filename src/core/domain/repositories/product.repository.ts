@@ -2,8 +2,8 @@ import { Product } from "../entities/product";
 import { IMoveProduct } from "../interfaces";
 
 type ProductsFilterParams = {
-  provider_id?: string | null;
-  categoria_id?: string | null;
+  provedor_id?: string | null;
+  categoryId?: string | null;
 };
 
 interface IProductRepository {
