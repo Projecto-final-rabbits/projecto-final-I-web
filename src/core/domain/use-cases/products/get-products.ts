@@ -10,8 +10,8 @@ const getProducts = async (
 ): Promise<Product[]> => {
   const { providerId, categoryId } = params || {};
   const filters = {
-    ...(providerId && { proveedorId: providerId }),
-    ...(categoryId && { categoriaId: categoryId }),
+    ...(providerId && { proveedor_id: providerId }),
+    ...(categoryId && { categoria_id: categoryId }),
   };
   return repository.findAll(filters);
 };
