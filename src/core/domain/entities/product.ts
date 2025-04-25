@@ -14,10 +14,10 @@ class Product implements IProduct {
   categoria?: string;
   proveedorId: number;
   tiempoEntregaDias?: number;
-  promocionActiva?: boolean;
+  promocionActiva: boolean;
   condicionAlmacenamiento?: string;
   fechaVencimiento?: Date;
-  precioVenta?: number;
+  precioVenta: number;
 
   constructor({
     id,
@@ -50,6 +50,7 @@ class Product implements IProduct {
       nombre: dto.nombre,
       descripcion: dto.descripcion,
       precioCompra: dto.precio_compra,
+      precioVenta: dto.precio_venta,
       categoria: dto.categoria,
       proveedorId: dto.proveedor_id,
       tiempoEntregaDias: dto.tiempo_entrega_dias,
@@ -82,7 +83,9 @@ class Product implements IProduct {
       nombre: dto.nombre,
       descripcion: dto.descripcion,
       precioCompra: dto.precio_compra,
+      precioVenta: dto.precio_venta,
       categoria: dto.categoria,
+      promocionActiva: dto.promocion_activa,
       proveedorId: dto.proveedor_id,
       tiempoEntregaDias: dto.tiempo_entrega_dias,
     });

@@ -12,14 +12,14 @@ const ProvidersTable = () => {
       <CustomTable
         actions={<Actions />}
         title="Tus proveedores"
-        rows={data.map((product) => ({
-          id: product.id,
-          nombre: product.nombre,
-          telefono: product.telefono,
-          email: product.email,
-          direccion: product.direccion,
-          pais: product.pais,
-          contacto: product.contacto,
+        rows={data.map((provider) => ({
+          id: provider.id,
+          nombre: provider.nombre,
+          telefono: provider.telefono,
+          email: provider.email,
+          direccion: provider.direccion,
+          pais: provider.pais,
+          contacto: provider.contacto,
         }))}
         columns={columns}
       />
