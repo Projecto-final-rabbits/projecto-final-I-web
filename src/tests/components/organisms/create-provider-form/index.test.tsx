@@ -47,7 +47,7 @@ describe("CreateProviderForm Component", () => {
   });
 
   it("renders provider form fields correctly", () => {
-    render(<ProviderForm onClose={vi.fn()} />);
+    render(<ProviderForm onClose={vi.fn()} onSubmit={vi.fn()} />);
 
     expect(screen.getByText("Agregar Proveedor")).toBeInTheDocument();
     expect(screen.getByText("Cancelar")).toBeInTheDocument();
@@ -55,7 +55,7 @@ describe("CreateProviderForm Component", () => {
 
   it("calls onClose when cancel button is clicked", () => {
     const onClose = vi.fn();
-    render(<ProviderForm onClose={onClose} />);
+    render(<ProviderForm onClose={vi.fn()} onSubmit={vi.fn()} />);
 
     fireEvent.click(screen.getByText("Cancelar"));
     expect(onClose).toHaveBeenCalled();
