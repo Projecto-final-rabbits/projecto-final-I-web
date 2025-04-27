@@ -31,6 +31,7 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
           <DatePicker
             label="Fecha de expiración"
             value={field.value}
+            data-testid="fecha-de-expiracion"
             onChange={field.onChange}
             slotProps={{
               textField: {

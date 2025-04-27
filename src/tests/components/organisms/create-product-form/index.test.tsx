@@ -4,6 +4,8 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { CreateProductForm } from "@/components/organisms/create-product-form";
 import { useForm } from "react-hook-form";
 import { vi } from "vitest";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 // Mock dependencies
 vi.mock("react-hook-form", () => ({
@@ -55,16 +57,32 @@ describe("CreateProductForm Component", () => {
   });
 
   it("renders product form fields correctly", () => {
-    render(<CreateProductForm onClose={vi.fn()} />);
+    const onClose = vi.fn();
 
-    expect(screen.getByTestId("provider-autocomplete")).toBeInTheDocument();
+    render(
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CreateProductForm onClose={onClose} />
+      </LocalizationProvider>
+    );
+
+    expect(screen.getByTestId("nombre-del-producto")).toBeInTheDocument();
+    expect(screen.getByTestId("fecha-de-expiracion")).toBeInTheDocument();
+    expect(screen.getByTestId("precio-de-compra")).toBeInTheDocument();
+    expect(screen.getByTestId("precio-de-venta")).toBeInTheDocument();
+    expect(screen.getByTestId("categoria")).toBeInTheDocument();
+    expect(screen.getByTestId("tiempo-de-entrega")).toBeInTheDocument();
+
     expect(screen.getByText("Agregar producto")).toBeInTheDocument();
     expect(screen.getByText("Cancelar")).toBeInTheDocument();
   });
 
   it("calls onClose when cancel button is clicked", () => {
     const onClose = vi.fn();
-    render(<CreateProductForm onClose={onClose} />);
+    render(
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CreateProductForm onClose={onClose} />
+      </LocalizationProvider>
+    );
 
     fireEvent.click(screen.getByText("Cancelar"));
     expect(onClose).toHaveBeenCalled();
