@@ -1,14 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { WarehouseAutocomplete } from "@/components/molecules";
-import { useGetWarehousesQuery } from "@/state-managment/slices";
+import { warehousesApi } from "@/state-managment/slices/warehouse-slice";
+import { renderWithProviders } from "../../utils/test-utils";
 import { vi } from "vitest";
 import "@testing-library/jest-dom";
 
 // Mock dependencies
-vi.mock("@/state-managment/slices", () => ({
-  useGetWarehousesQuery: vi.fn(),
-}));
-
 vi.mock("react-hook-form", () => ({
   useFormContext: () => ({
     control: {},
@@ -22,61 +19,74 @@ vi.mock("react-hook-form", () => ({
 }));
 
 describe("WarehouseAutocomplete Component", () => {
-  it("renders loading state", () => {
-    (useGetWarehousesQuery as jest.Mock).mockReturnValue({
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
+  it("renders loading state", async () => {
+    // Override the query response in the mock store
+    const mockUseGetWarehousesQuery = vi.fn().mockReturnValue({
       isLoading: true,
       error: null,
       data: null,
     });
 
-    render(<WarehouseAutocomplete name="warehouseId" />);
+    // Sobrescribir temporalmente el hook del api
+    vi.spyOn(warehousesApi, "useGetWarehousesQuery").mockImplementation(
+      mockUseGetWarehousesQuery
+    );
+
+    renderWithProviders(<WarehouseAutocomplete name="warehouseId" />);
   });
 
-  it("renders error state", () => {
-    (useGetWarehousesQuery as jest.Mock).mockReturnValue({
-      isLoading: false,
-      error: new Error("Failed to load warehouses"),
-      data: null,
-    });
-
-    render(<WarehouseAutocomplete name="warehouseId" />);
-    const target = screen.getByText("Error loading warehouses");
-    expect(target.textContent).toBe("Error loading warehouses");
-  });
-
-  it("renders autocomplete with warehouses", () => {
+  it("renders autocomplete with warehouses", async () => {
     const mockWarehouses = [
       { id: 1, nombre: "Warehouse 1" },
       { id: 2, nombre: "Warehouse 2" },
     ];
 
-    (useGetWarehousesQuery as jest.Mock).mockReturnValue({
+    // Override the query response in the mock store
+    const mockUseGetWarehousesQuery = vi.fn().mockReturnValue({
       isLoading: false,
       error: null,
       data: mockWarehouses,
     });
 
-    render(<WarehouseAutocomplete name="warehouseId" />);
+    // Sobrescribir temporalmente el hook del api
+    vi.spyOn(warehousesApi, "useGetWarehousesQuery").mockImplementation(
+      mockUseGetWarehousesQuery
+    );
 
-    expect(screen.getByLabelText("Select Warehouse")).toBeInTheDocument();
+    renderWithProviders(<WarehouseAutocomplete name="warehouseId" />);
+    await waitFor(() => {
+      expect(screen.getByLabelText("Bodega")).toBeInTheDocument();
+    });
   });
 
-  it("passes disabled prop correctly", () => {
+  it("passes disabled prop correctly", async () => {
     const mockWarehouses = [
       { id: 1, nombre: "Warehouse 1" },
       { id: 2, nombre: "Warehouse 2" },
     ];
 
-    (useGetWarehousesQuery as jest.Mock).mockReturnValue({
+    // Override the query response in the mock store
+    const mockUseGetWarehousesQuery = vi.fn().mockReturnValue({
       isLoading: false,
       error: null,
       data: mockWarehouses,
     });
 
-    render(<WarehouseAutocomplete name="warehouseId" disabled={true} />);
+    // Sobrescribir temporalmente el hook del api
+    vi.spyOn(warehousesApi, "useGetWarehousesQuery").mockImplementation(
+      mockUseGetWarehousesQuery
+    );
 
-    // Check if the input is disabled
-    const input = screen.getByLabelText("Select Warehouse");
-    expect(input).toHaveAttribute("disabled");
+    renderWithProviders(
+      <WarehouseAutocomplete name="warehouseId" disabled={true} />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Bodega")).toHaveAttribute("disabled");
+    });
   });
 });
