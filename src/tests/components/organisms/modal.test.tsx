@@ -4,29 +4,55 @@ import { vi } from "vitest";
 import "@testing-library/jest-dom";
 
 describe("Modal Component", () => {
-  const mockProps = {
-    open: true,
-    handleClose: vi.fn(),
-    title: "Test Modal",
-    children: <div>Modal Content</div>,
-  };
+  const mockHandleClose = vi.fn();
+  const mockTitle = "Test Modal";
+  const mockContent = "Test Content";
 
-  it("renders correctly when open is true", () => {
-    const BODY = "Modal Content";
-    const TITLE = "Test Modal";
-    render(<Modal {...mockProps} />);
-    const title = screen.getByText(TITLE);
-    expect(title.textContent).toBe("Test Modal");
-    const body = screen.getByText(BODY);
-    expect(body.textContent).toBe("Modal Content");
+  beforeEach(() => {
+    mockHandleClose.mockClear();
   });
 
-  it("calls handleClose when clicking outside if not disableEscapeKeyDown", () => {
-    render(<Modal {...mockProps} />);
-    const backdrop = document.querySelector(".MuiBackdrop-root");
-    if (backdrop) {
-      fireEvent.click(backdrop);
-      expect(mockProps.handleClose).toHaveBeenCalled();
+  it("renders with the correct title and content", () => {
+    render(
+      <Modal open={true} handleClose={mockHandleClose} title={mockTitle}>
+        <div>{mockContent}</div>
+      </Modal>
+    );
+
+    expect(screen.getByTestId(`modal-${mockTitle}`)).toHaveTextContent(
+      mockTitle
+    );
+    expect(screen.getByText(mockContent)).toBeInTheDocument();
+  });
+
+  it("calls handleClose when backdrop is clicked", () => {
+    render(
+      <Modal open={true} handleClose={mockHandleClose} title={mockTitle}>
+        <div>{mockContent}</div>
+      </Modal>
+    );
+
+    // Simulate backdrop click
+    const backdropElement = document.querySelector(".MuiBackdrop-root");
+    if (backdropElement) {
+      fireEvent.click(backdropElement);
+      expect(mockHandleClose).toHaveBeenCalledTimes(1);
     }
+  });
+
+  it("renders with footer when provided", () => {
+    const footerContent = "Footer Content";
+    render(
+      <Modal
+        open={true}
+        handleClose={mockHandleClose}
+        title={mockTitle}
+        footer={<div>{footerContent}</div>}
+      >
+        <div>{mockContent}</div>
+      </Modal>
+    );
+
+    expect(screen.getByText(footerContent)).toBeInTheDocument();
   });
 });

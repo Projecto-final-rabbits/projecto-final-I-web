@@ -39,6 +39,7 @@ const Modal: React.FC<ModalProps> = ({
       disableEscapeKeyDown={disableEscapeKeyDown}
       onClose={handleDialogClose}
       aria-describedby={`modal-${title}`}
+      aria-modal="true"
       fullWidth
     >
       <DialogTitle

@@ -55,7 +55,7 @@ describe("CreateProviderForm Component", () => {
 
   it("calls onClose when cancel button is clicked", () => {
     const onClose = vi.fn();
-    render(<ProviderForm onClose={vi.fn()} onSubmit={vi.fn()} />);
+    render(<ProviderForm onClose={onClose} onSubmit={vi.fn()} />);
 
     fireEvent.click(screen.getByText("Cancelar"));
     expect(onClose).toHaveBeenCalled();

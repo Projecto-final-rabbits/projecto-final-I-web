@@ -39,6 +39,9 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
                 disabled,
                 error: !!formState.errors.expirationDate,
                 helperText: formState.errors.expirationDate?.message as string,
+                inputProps: {
+                  "data-testid": "fecha-de-expiracion",
+                },
               },
             }}
           />

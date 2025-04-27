@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { ProviderAutocomplete } from "@/components/molecules";
 import { useGetProvidersQuery } from "@/state-managment/slices";
 import { vi } from "vitest";
@@ -32,7 +32,7 @@ describe("ProviderAutocomplete Component", () => {
     render(<ProviderAutocomplete name="providerId" />);
   });
 
-  it("renders error state", () => {
+  it("renders error state", async () => {
     (useGetProvidersQuery as jest.Mock).mockReturnValue({
       isLoading: false,
       error: new Error("Failed to load providers"),
@@ -40,11 +40,14 @@ describe("ProviderAutocomplete Component", () => {
     });
 
     render(<ProviderAutocomplete name="providerId" />);
-    const target = screen.getByText("Error loading providers");
-    expect(target.textContent).toBe("Error loading providers");
+
+    await waitFor(() => {
+      const target = screen.getByText("Error loading providers");
+      expect(target.textContent).toBe("Error loading providers");
+    });
   });
 
-  it("renders autocomplete with providers", () => {
+  it("renders autocomplete with providers", async () => {
     const mockProviders = [
       { id: 1, nombre: "Provider 1" },
       { id: 2, nombre: "Provider 2" },
@@ -58,10 +61,12 @@ describe("ProviderAutocomplete Component", () => {
 
     render(<ProviderAutocomplete name="providerId" />);
 
-    expect(screen.getByLabelText("Select Provider")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByLabelText("Fabricante")).toBeInTheDocument();
+    });
   });
 
-  it("passes disabled prop correctly", () => {
+  it("passes disabled prop correctly", async () => {
     const mockProviders = [
       { id: 1, nombre: "Provider 1" },
       { id: 2, nombre: "Provider 2" },
@@ -75,8 +80,9 @@ describe("ProviderAutocomplete Component", () => {
 
     render(<ProviderAutocomplete name="providerId" disabled={true} />);
 
-    // Check if the input is disabled
-    const input = screen.getByLabelText("Select Provider");
-    expect(input).toHaveAttribute("disabled");
+    await waitFor(() => {
+      const input = screen.getByLabelText("Fabricante");
+      expect(input).toHaveAttribute("disabled");
+    });
   });
 });
