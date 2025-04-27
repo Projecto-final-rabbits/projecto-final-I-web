@@ -1,10 +1,14 @@
-import { IProductRepository } from "@core/domain/repositories/product.repository";
-import { Product } from "@core/domain/entities/product";
 import {
-  axiosClientForWarehouse,
-  axiosClientForBuyers,
-} from "@/core/infraestructure/api/clients";
-import { ICreateProduct, IProductDTO } from "@/core/domain/interfaces";
+  IProductRepository,
+  ProductsFilterParams,
+} from "@core/domain/repositories/product.repository";
+import { Product } from "@core/domain/entities/product";
+import { axiosClientForWarehouse } from "@/core/infraestructure/api/clients";
+import {
+  ICreateProduct,
+  IMoveProduct,
+  IProductDTO,
+} from "@/core/domain/interfaces";
 
 class ProductRepositoryImpl implements IProductRepository {
   async findById(id: string): Promise<Product | null> {
@@ -13,19 +17,27 @@ class ProductRepositoryImpl implements IProductRepository {
     throw new Error("Not implemented");
   }
 
-  async findAll(): Promise<Product[]> {
-    return axiosClientForBuyers.get("/productos/").then((response) => {
-      const products = response.data.map((product: IProductDTO) =>
-        Product.fromDtoToEntity(product)
-      );
+  async findAll(params: ProductsFilterParams): Promise<Product[]> {
+    return axiosClientForWarehouse
+      .get("/productos/", {
+        params: {
+          ...params,
+          page: 1,
+          pageSize: 1000,
+        },
+      })
+      .then((response) => {
+        const products = response.data.map((product: IProductDTO) =>
+          Product.fromDtoToEntity(product)
+        );
 
-      return products;
-    });
+        return products;
+      });
   }
 
   async save(product: ICreateProduct): Promise<void> {
     const productDto = Product.fromCreateEntityToDto(product);
-    return axiosClientForBuyers.post("/productos/", productDto);
+    return axiosClientForWarehouse.post("/productos/", productDto);
   }
 
   async saveMany(products: FormData): Promise<void> {
@@ -33,6 +45,16 @@ class ProductRepositoryImpl implements IProductRepository {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+    });
+  }
+
+  async move(movement: IMoveProduct): Promise<void> {
+    return axiosClientForWarehouse.post("/movimientos/entrada", {
+      producto_id: movement.productId,
+      bodega_id: movement.warehouseId,
+      cantidad: +movement.quantity,
+      descripcion: movement.description,
+      tipo_movimiento: "entrada",
     });
   }
 }

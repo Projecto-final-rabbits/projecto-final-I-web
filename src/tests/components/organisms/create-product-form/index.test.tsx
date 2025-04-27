@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { CreateProductForm } from "@/components/organisms/create-product-form";
 import { useForm } from "react-hook-form";
 import { vi } from "vitest";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 // Mock dependencies
 vi.mock("react-hook-form", () => ({
@@ -11,13 +13,22 @@ vi.mock("react-hook-form", () => ({
   useFormContext: vi.fn().mockReturnValue({
     register: vi.fn(),
     handleSubmit: vi.fn(),
-    formState: { errors: {} },
+    formState: { errors: {}, isValid: true },
   }),
   FormProvider: ({ children }: { children: React.ReactNode }) => (
     <div>{children}</div>
   ),
   Controller: ({ render }: any) =>
-    render({ field: { onChange: vi.fn(), value: "" } }),
+    render({
+      field: {
+        onChange: vi.fn(),
+        value: {
+          isValid: () => true,
+          isBefore: () => true,
+          toDate: () => new Date(),
+        },
+      },
+    }),
 }));
 
 vi.mock("@hookform/resolvers/zod", () => ({
@@ -29,12 +40,22 @@ vi.mock("@/state-managment/slices", () => ({
     vi.fn().mockReturnValue({ unwrap: () => Promise.resolve() }),
     { isLoading: false },
   ],
-}));
-
-vi.mock("@/components/molecules", () => ({
-  ProviderAutocomplete: () => (
-    <div data-testid="provider-autocomplete">Provider Autocomplete</div>
-  ),
+  useGetProductsQuery: vi.fn().mockReturnValue({
+    data: [
+      { id: 1, nombre: "Producto 1" },
+      { id: 2, nombre: "Producto 2" },
+    ],
+    isLoading: false,
+    error: null,
+  }),
+  useGetProvidersQuery: vi.fn().mockReturnValue({
+    data: [
+      { id: 1, nombre: "Proveedor 1" },
+      { id: 2, nombre: "Proveedor 2" },
+    ],
+    isLoading: false,
+    error: null,
+  }),
 }));
 
 vi.mock("react-toastify", () => ({
@@ -49,24 +70,44 @@ describe("CreateProductForm Component", () => {
     (useForm as any).mockReturnValue({
       handleSubmit: (cb: any) => (data: any) => cb(data),
       register: vi.fn(),
-      formState: { errors: {} },
+      formState: { errors: {}, isValid: true },
       reset: vi.fn(),
     });
   });
 
-  it("renders product form fields correctly", () => {
-    render(<CreateProductForm onClose={vi.fn()} />);
+  it("renders product form fields correctly", async () => {
+    const onClose = vi.fn();
 
-    expect(screen.getByTestId("provider-autocomplete")).toBeInTheDocument();
-    expect(screen.getByText("Agregar producto")).toBeInTheDocument();
-    expect(screen.getByText("Cancelar")).toBeInTheDocument();
+    render(
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CreateProductForm onClose={onClose} />
+      </LocalizationProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("nombre-del-producto")).toBeInTheDocument();
+      expect(screen.getByTestId("fecha-de-expiracion")).toBeInTheDocument();
+      expect(screen.getByTestId("precio-de-compra")).toBeInTheDocument();
+      expect(screen.getByTestId("precio-de-venta")).toBeInTheDocument();
+      expect(screen.getByTestId("categoria")).toBeInTheDocument();
+      expect(screen.getByTestId("tiempo-de-entrega")).toBeInTheDocument();
+
+      expect(screen.getByText("Agregar producto")).toBeInTheDocument();
+      expect(screen.getByText("Cancelar")).toBeInTheDocument();
+    });
   });
 
-  it("calls onClose when cancel button is clicked", () => {
+  it("calls onClose when cancel button is clicked", async () => {
     const onClose = vi.fn();
-    render(<CreateProductForm onClose={onClose} />);
+    render(
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CreateProductForm onClose={onClose} />
+      </LocalizationProvider>
+    );
 
-    fireEvent.click(screen.getByText("Cancelar"));
-    expect(onClose).toHaveBeenCalled();
+    await waitFor(() => {
+      fireEvent.click(screen.getByText("Cancelar"));
+      expect(onClose).toHaveBeenCalled();
+    });
   });
 });

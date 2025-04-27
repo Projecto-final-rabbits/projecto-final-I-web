@@ -3,18 +3,22 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { Product } from "@core/domain/entities";
 import { ProductRepositoryImpl } from "@core/infrastructure/api/repositories";
 import { getProducts } from "@core/domain/use-cases/products/get-products";
-import { ICreateProduct } from "@/core/domain/interfaces";
+import { ICreateProduct, IMoveProduct } from "@/core/domain/interfaces";
+import { inventoriesApi } from "@/state-managment/slices/inventoriesSlice";
 
 export const productsApi = createApi({
   reducerPath: "productsApi",
-  tagTypes: ["Products"],
+  tagTypes: ["Products", "Inventories"],
   baseQuery: () => ({ data: {} }),
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], void>({
-      queryFn: async () => {
+    getProducts: builder.query<
+      Product[],
+      { providerId?: string | null; categoryId?: string | null }
+    >({
+      queryFn: async ({ providerId, categoryId }) => {
         try {
           const repo = new ProductRepositoryImpl();
-          const data = await getProducts(repo);
+          const data = await getProducts(repo, { providerId, categoryId });
           return { data };
         } catch (error) {
           return {
@@ -65,6 +69,32 @@ export const productsApi = createApi({
       },
       invalidatesTags: ["Products"],
     }),
+    moveProduct: builder.mutation<void, IMoveProduct>({
+      async queryFn(movement) {
+        try {
+          const repo = new ProductRepositoryImpl();
+          await repo.move(movement);
+          return { data: undefined };
+        } catch (error) {
+          return {
+            error: {
+              status: 500,
+              data:
+                error instanceof Error ? error.message : "Ops, algo salió mal",
+            },
+          };
+        }
+      },
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled; // esperamos a que el mutation se complete
+          // forzamos la invalidación en inventoriesApi
+          dispatch(inventoriesApi.util.invalidateTags(["Inventories"]));
+        } catch {
+          /* no hacemos nada si falló */
+        }
+      },
+    }),
   }),
 });
 
@@ -72,4 +102,5 @@ export const {
   useGetProductsQuery,
   useSaveProductMutation,
   useSaveMultipleProductsMutation,
+  useMoveProductMutation,
 } = productsApi;

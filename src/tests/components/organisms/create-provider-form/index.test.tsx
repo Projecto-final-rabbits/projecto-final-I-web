@@ -2,7 +2,7 @@
 import "@testing-library/jest-dom";
 
 import { render, screen, fireEvent } from "@testing-library/react";
-import { CreateProviderForm } from "@/components/organisms/create-provider-form";
+import { ProviderForm } from "@/components/organisms/provider-form";
 import { useForm } from "react-hook-form";
 import { vi } from "vitest";
 
@@ -47,7 +47,7 @@ describe("CreateProviderForm Component", () => {
   });
 
   it("renders provider form fields correctly", () => {
-    render(<CreateProviderForm onClose={vi.fn()} />);
+    render(<ProviderForm onClose={vi.fn()} onSubmit={vi.fn()} />);
 
     expect(screen.getByText("Agregar Proveedor")).toBeInTheDocument();
     expect(screen.getByText("Cancelar")).toBeInTheDocument();
@@ -55,7 +55,7 @@ describe("CreateProviderForm Component", () => {
 
   it("calls onClose when cancel button is clicked", () => {
     const onClose = vi.fn();
-    render(<CreateProviderForm onClose={onClose} />);
+    render(<ProviderForm onClose={onClose} onSubmit={vi.fn()} />);
 
     fireEvent.click(screen.getByText("Cancelar"));
     expect(onClose).toHaveBeenCalled();

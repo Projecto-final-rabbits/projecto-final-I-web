@@ -4,7 +4,7 @@ import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 
 type CustomTableProps<TData> = {
-  title: string;
+  title?: string;
   rows: TData[];
   columns: GridColDef[];
   subtitle?: string;
