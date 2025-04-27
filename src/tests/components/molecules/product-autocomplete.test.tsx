@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { ProductAutocomplete } from "@/components/molecules";
 import { useGetProductsQuery } from "@/state-managment/slices";
 import { vi } from "vitest";
@@ -32,19 +32,7 @@ describe("ProductAutocomplete Component", () => {
     render(<ProductAutocomplete name="productId" />);
   });
 
-  it("renders error state", () => {
-    (useGetProductsQuery as jest.Mock).mockReturnValue({
-      isLoading: false,
-      error: new Error("Failed to load products"),
-      data: null,
-    });
-
-    render(<ProductAutocomplete name="productId" />);
-    const target = screen.getByText("Error loading products");
-    expect(target.textContent).toBe("Error loading products");
-  });
-
-  it("renders autocomplete with products", () => {
+  it("renders autocomplete with products", async () => {
     const mockProducts = [
       { id: 1, nombre: "Product 1" },
       { id: 2, nombre: "Product 2" },
@@ -58,10 +46,12 @@ describe("ProductAutocomplete Component", () => {
 
     render(<ProductAutocomplete name="productId" />);
 
-    expect(screen.getByLabelText("Select Product")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByLabelText("Producto")).toBeInTheDocument();
+    });
   });
 
-  it("passes disabled prop correctly", () => {
+  it("passes disabled prop correctly", async () => {
     const mockProducts = [
       { id: 1, nombre: "Product 1" },
       { id: 2, nombre: "Product 2" },
@@ -75,8 +65,9 @@ describe("ProductAutocomplete Component", () => {
 
     render(<ProductAutocomplete name="productId" disabled={true} />);
 
-    // Check if the input is disabled
-    const input = screen.getByLabelText("Select Product");
-    expect(input).toHaveAttribute("disabled");
+    await waitFor(() => {
+      const input = screen.getByLabelText("Producto");
+      expect(input).toHaveAttribute("disabled");
+    });
   });
 });

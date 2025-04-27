@@ -1,5 +1,5 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import Button from "@mui/material/Button";
 import { CreateUserFormValues } from "@components/organisms/create-user-form/types";
 import { Stack } from "@mui/material";
@@ -21,9 +21,7 @@ const Actions: React.FC<ActionsProps> = ({
 }) => {
   const {
     formState: { isValid },
-  } = useForm<CreateUserFormValues>({
-    mode: "onChange", // Enables validation on change
-  });
+  } = useFormContext<CreateUserFormValues>();
 
   return (
     <Stack direction="row" spacing={2} justifyContent="flex-end">
@@ -42,8 +40,7 @@ const Actions: React.FC<ActionsProps> = ({
         variant="contained"
         color="secondary"
         data-testid="crear-usuario"
-        disabled={!isValid || disabled}
-        loading={isLoading}
+        disabled={!isValid || disabled || isLoading}
         sx={{ marginRight: 2 }}
       >
         {submitText}
