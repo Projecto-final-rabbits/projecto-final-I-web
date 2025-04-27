@@ -19,7 +19,16 @@ vi.mock("react-hook-form", () => ({
     <div>{children}</div>
   ),
   Controller: ({ render }: any) =>
-    render({ field: { onChange: vi.fn(), value: "" } }),
+    render({
+      field: {
+        onChange: vi.fn(),
+        value: {
+          isValid: () => true,
+          isBefore: () => true,
+          toDate: () => new Date(),
+        },
+      },
+    }),
 }));
 
 vi.mock("@hookform/resolvers/zod", () => ({
@@ -31,12 +40,22 @@ vi.mock("@/state-managment/slices", () => ({
     vi.fn().mockReturnValue({ unwrap: () => Promise.resolve() }),
     { isLoading: false },
   ],
-}));
-
-vi.mock("@/components/molecules", () => ({
-  ProviderAutocomplete: () => (
-    <div data-testid="provider-autocomplete">Provider Autocomplete</div>
-  ),
+  useGetProductsQuery: vi.fn().mockReturnValue({
+    data: [
+      { id: 1, nombre: "Producto 1" },
+      { id: 2, nombre: "Producto 2" },
+    ],
+    isLoading: false,
+    error: null,
+  }),
+  useGetProvidersQuery: vi.fn().mockReturnValue({
+    data: [
+      { id: 1, nombre: "Proveedor 1" },
+      { id: 2, nombre: "Proveedor 2" },
+    ],
+    isLoading: false,
+    error: null,
+  }),
 }));
 
 vi.mock("react-toastify", () => ({
@@ -78,7 +97,7 @@ describe("CreateProductForm Component", () => {
     });
   });
 
-  it("calls onClose when cancel button is clicked", () => {
+  it("calls onClose when cancel button is clicked", async () => {
     const onClose = vi.fn();
     render(
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -86,7 +105,9 @@ describe("CreateProductForm Component", () => {
       </LocalizationProvider>
     );
 
-    fireEvent.click(screen.getByText("Cancelar"));
-    expect(onClose).toHaveBeenCalled();
+    await waitFor(() => {
+      fireEvent.click(screen.getByText("Cancelar"));
+      expect(onClose).toHaveBeenCalled();
+    });
   });
 });

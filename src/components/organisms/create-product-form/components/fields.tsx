@@ -31,7 +31,6 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
           <DatePicker
             label="Fecha de expiración"
             value={field.value}
-            data-testid="fecha-de-expiracion"
             onChange={field.onChange}
             slotProps={{
               textField: {
@@ -40,6 +39,9 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
                 disabled,
                 error: !!formState.errors.expirationDate,
                 helperText: formState.errors.expirationDate?.message as string,
+                inputProps: {
+                  "data-testid": "fecha-de-expiracion",
+                },
               },
             }}
           />
