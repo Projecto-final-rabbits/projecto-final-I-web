@@ -28,10 +28,6 @@ jobs:
 
       - name: 🛠️ Build React App
         run: npm run build
-      - name: 📝 Show .env file (for debug only)
-        run: ls -la
-      - name: 📝 Show .env file (for debug only)
-        run: cat .env
       - name: 🔥 Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
