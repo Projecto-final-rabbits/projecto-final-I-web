@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm install # Instalar las dependencias de tu proyecto React
 
+      - name: 📝 Show only a variable
+        run: echo "VITE_API_URL_CLIENTS=${{ secrets.VITE_API_URL_CLIENTS }}"
+
       - name: 📝 Create .env file for Vite
         run: |
           echo "VITE_API_URL_CLIENTS=${{ secrets.VITE_API_URL_CLIENTS }}" >> .env
@@ -41,4 +44,4 @@ jobs:
         run: cat .env
 
       - name: Run tests
-        run: npm test # Ejecutar las pruebas y generar el reporte de cobertura
+        run: npm test -- --coverage # Ejecutar las pruebas y generar el reporte de cobertura
