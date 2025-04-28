@@ -27,6 +27,9 @@ jobs:
       - name: 📝 Show only a variable
         run: echo "VITE_API_URL_CLIENTS=${{ secrets.VITE_API_URL_CLIENTS }}"
 
+      - name: 📝 Show only a variable 2
+        run: echo "VITE_API_URL_SELLERS=${{ vars.VITE_API_URL_SELLERS }}"
+
       - name: 📝 Create .env file for Vite
         run: |
           echo "VITE_API_URL_CLIENTS=${{ secrets.VITE_API_URL_CLIENTS }}" >> .env
