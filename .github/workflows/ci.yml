@@ -24,9 +24,6 @@ jobs:
       - name: Install dependencies
         run: npm install # Instalar las dependencias de tu proyecto React
 
-      - name: 📝 Show .env file (for debug only)
-        run: cat .env
-
       - name: 📝 Create .env file for Vite
         run: |
           echo "VITE_API_URL_CLIENTS=${{ secrets.VITE_API_URL_CLIENTS }}" >> .env
@@ -39,6 +36,9 @@ jobs:
           echo "VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}" >> .env
           echo "VITE_NODE_ENV=${{ secrets.VITE_NODE_ENV }}" >> .env
           echo "VITE_PORT=${{ secrets.VITE_PORT }}" >> .env
+
+      - name: 📝 Show .env file (for debug only)
+        run: cat .env
 
       - name: Run tests
         run: npm test # Ejecutar las pruebas y generar el reporte de cobertura
