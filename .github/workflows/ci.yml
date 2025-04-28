@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest # Usar una máquina virtual Ubuntu
+    environment: prod
 
     steps:
       - name: Checkout code
