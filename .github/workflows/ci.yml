@@ -38,4 +38,4 @@ jobs:
           echo "VITE_PORT=${{ secrets.VITE_PORT }}" >> .env
 
       - name: Run tests
-        run: npm test -- --coverage # Ejecutar las pruebas y generar el reporte de cobertura
+        run: npm test # Ejecutar las pruebas y generar el reporte de cobertura
