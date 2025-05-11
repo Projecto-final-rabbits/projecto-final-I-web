@@ -24,6 +24,7 @@ export default defineConfig({
         "src/utils/styles.ts",
         "*.js",
         "*.config.*",
+        "src/core/domain/entities/**",
       ],
     },
   },
