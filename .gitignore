@@ -1,4 +1,5 @@
 ### react ###
+coverage/
 .DS_*
 *.log
 logs

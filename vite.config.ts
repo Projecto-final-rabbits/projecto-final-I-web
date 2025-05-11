@@ -7,6 +7,25 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
+    coverage: {
+      reporter: ["text", "json", "html"],
+      exclude: [
+        "**/node_modules/**",
+        "**/dist/**",
+        "**/types/**",
+        "**/interfaces/**",
+        "**/core/domain/interfaces/**",
+        "**/index.ts",
+        "**/*.d.ts",
+        "**/__mocks__/**",
+        "src/main.tsx",
+        "src/theme.ts",
+        "src/utils/countries.ts",
+        "src/utils/styles.ts",
+        "*.js",
+        "*.config.*",
+      ],
+    },
   },
   resolve: {
     alias: {
