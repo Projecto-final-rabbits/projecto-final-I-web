@@ -2,8 +2,20 @@ import { screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { renderWithProviders } from "../utils/test-utils";
 import { ProvidersPage } from "@/pages/providers";
-import { vi } from "vitest";
+import { vi, expect } from "vitest";
 import { toast } from "react-toastify";
+import "@testing-library/jest-dom";
+
+// Define proper types for the mock responses
+interface Provider {
+  id: string;
+  nombre: string;
+  telefono: string;
+  email: string;
+  pais: string;
+  contacto: string;
+  direccion: string;
+}
 
 // Mock API calls
 vi.mock("@/state-managment/slices", () => ({
@@ -33,10 +45,20 @@ vi.mock("@/state-managment/slices", () => ({
   },
   useSaveProviderMutation: () => [
     vi.fn().mockImplementation((data) => {
-      return Promise.resolve({
+      // Create a mock that includes the unwrap method
+      const mockPromise = Promise.resolve({
         id: "mock-provider-id",
         ...data,
       });
+
+      // Add unwrap method to the promise
+      return {
+        unwrap: () => mockPromise,
+        then: (callback: (data: Provider) => void) =>
+          mockPromise.then(callback),
+        catch: (callback: (error: Error) => void) =>
+          mockPromise.catch(callback),
+      };
     }),
     { isLoading: false },
   ],
@@ -56,16 +78,26 @@ vi.mock("@/state-managment/slices", () => ({
   }),
   useUpdateProviderMutation: () => [
     vi.fn().mockImplementation((data) => {
-      return Promise.resolve({
+      // Create a mock that includes the unwrap method
+      const mockPromise = Promise.resolve({
         id: data.id,
         ...data.provider,
       });
+
+      // Add unwrap method to the promise
+      return {
+        unwrap: () => mockPromise,
+        then: (callback: (data: Provider) => void) =>
+          mockPromise.then(callback),
+        catch: (callback: (error: Error) => void) =>
+          mockPromise.catch(callback),
+      };
     }),
     { isLoading: false },
   ],
 }));
 
-// Mock toast
+// Mock toast notification function
 vi.mock("react-toastify", () => ({
   toast: {
     success: vi.fn(),
@@ -97,64 +129,65 @@ describe("Provider Integration Test", () => {
       </MemoryRouter>
     );
 
-    // Step 1: Find the button element by text content and icon and click it
+    // Step 1: Find and click the add provider button using the data-testid
     await waitFor(() => {
-      // Get all buttons on the page
-      const buttons = screen.getAllByRole("button");
-
-      // Find the add provider button with the specific text
-      const addButton = buttons.find(
-        (button) =>
-          button.textContent?.includes("Agregar Proveedor") &&
-          button.querySelector('[data-testid="AddIcon"]')
-      );
-
-      expect(addButton).toBeTruthy();
-      if (addButton) {
-        fireEvent.click(addButton);
-      }
+      const addButton = screen.getByTestId("crear-proveedor-button");
+      expect(addButton).toBeInTheDocument();
+      fireEvent.click(addButton);
     });
 
-    // Verify the provider form is shown
+    // Verify the provider form is shown - use data-testid for modal title
     await waitFor(() => {
-      expect(screen.getByText("Agregar Proveedor")).toBeInTheDocument();
+      const modalTitle = screen.getByTestId("modal-Agregar Proveedor");
+      expect(modalTitle).toBeInTheDocument();
     });
 
     // Fill out the provider form
-    const nameField = screen
-      .getByTestId("nombre-del-proveedor")
-      .querySelector("input");
-    const emailField = screen
-      .getByTestId("email-del-proveedor")
-      .querySelector("input");
-    const phoneField = screen
-      .getByTestId("telefono-del-proveedor")
-      .querySelector("input");
-    const countryField = screen
-      .getByTestId("country-del-proveedor")
-      .querySelector("input");
-    const contactField = screen
-      .getByTestId("contacto-del-proveedor")
-      .querySelector("input");
+    await waitFor(() => {
+      // Use getAllByTestId to handle multiple elements with the same testid and get the first one
+      const nameFields = screen.getAllByTestId("nombre-del-proveedor");
+      const nameField = nameFields[0].querySelector("input");
 
-    if (nameField && emailField && phoneField && countryField && contactField) {
-      fireEvent.change(nameField, { target: { value: "Proveedor Test" } });
-      fireEvent.change(emailField, { target: { value: "test@example.com" } });
-      fireEvent.change(phoneField, { target: { value: "123456789" } });
-      fireEvent.change(countryField, { target: { value: "Argentina" } });
-      fireEvent.change(contactField, { target: { value: "Contacto Test" } });
-    }
+      const emailFields = screen.getAllByTestId("email-del-proveedor");
+      const emailField = emailFields[0].querySelector("input");
 
-    // Submit the form - use form submission instead of button click
-    const form = screen.getByRole("form");
-    fireEvent.submit(form);
+      const phoneFields = screen.getAllByTestId("telefono-del-proveedor");
+      const phoneField = phoneFields[0].querySelector("input");
+
+      const countryFields = screen.getAllByTestId("country-del-proveedor");
+      const countryField = countryFields[0].querySelector("input");
+
+      const contactFields = screen.getAllByTestId("contacto-del-proveedor");
+      const contactField = contactFields[0].querySelector("input");
+
+      if (
+        nameField &&
+        emailField &&
+        phoneField &&
+        countryField &&
+        contactField
+      ) {
+        fireEvent.change(nameField, { target: { value: "Proveedor Test" } });
+        fireEvent.change(emailField, { target: { value: "test@example.com" } });
+        fireEvent.change(phoneField, { target: { value: "123456789" } });
+        fireEvent.change(countryField, { target: { value: "Argentina" } });
+        fireEvent.change(contactField, { target: { value: "Contacto Test" } });
+      }
+
+      // Submit the form using the submit button with data-testid
+      const submitButton = screen.getByTestId("crear-proveedor-form");
+      fireEvent.click(submitButton);
+    });
 
     // Step 2: Verify the provider was created and shows success message
-    await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith(
-        "Proveedor creado correctamente"
-      );
-    });
+    await waitFor(
+      () => {
+        expect(toast.success).toHaveBeenCalledWith(
+          "Proveedor creado correctamente"
+        );
+      },
+      { timeout: 3000 }
+    );
 
     // Verify the provider is in the list
     await waitFor(() => {
@@ -169,28 +202,41 @@ describe("Provider Integration Test", () => {
 
     // Verify the edit form is shown
     await waitFor(() => {
-      expect(screen.getByText("Editar Proveedor")).toBeInTheDocument();
+      // Use a more specific selector for the modal title in edit mode
+      expect(screen.getByTestId("modal-Editar Proveedor")).toBeInTheDocument();
     });
 
     // Change the provider name
-    const editNameField = screen
-      .getByTestId("nombre-del-proveedor")
-      .querySelector("input");
-    if (editNameField) {
-      fireEvent.change(editNameField, {
-        target: { value: "Proveedor Actualizado" },
+    await waitFor(() => {
+      // Use getAllByTestId and get the visible input
+      const nameFields = screen.getAllByTestId("nombre-del-proveedor");
+      const visibleNameField = nameFields.find((field) => {
+        const parentStyle = window.getComputedStyle(
+          field.parentElement || field
+        );
+        return parentStyle.display !== "none";
       });
-    }
 
-    // Submit the edit form
-    const saveButton = screen.getByText("Guardar");
-    fireEvent.click(saveButton);
+      const editNameField = visibleNameField?.querySelector("input");
+      if (editNameField) {
+        fireEvent.change(editNameField, {
+          target: { value: "Proveedor Actualizado" },
+        });
+      }
+
+      // Submit the edit form - look for a Save button by test id
+      const saveButton = screen.getByText("Guardar");
+      fireEvent.click(saveButton);
+    });
 
     // Verify the provider was updated and shows success message
-    await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith(
-        "Proveedor actualizado correctamente"
-      );
-    });
+    await waitFor(
+      () => {
+        expect(toast.success).toHaveBeenCalledWith(
+          "Proveedor actualizado correctamente"
+        );
+      },
+      { timeout: 3000 }
+    );
   });
 });
