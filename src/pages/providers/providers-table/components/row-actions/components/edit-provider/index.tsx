@@ -44,6 +44,7 @@ const EditProvider: React.FC<EditProviderProps> = ({
           setIsOpen(true);
         }}
         aria-label="edit"
+        data-testid={`edit-icon-${id}`}
       >
         <EditIcon fontSize="inherit" />
       </IconButton>
@@ -65,6 +66,7 @@ const EditProvider: React.FC<EditProviderProps> = ({
             isLoading={isLoading}
             onSubmit={handleEditProvider}
             onClose={handleOnClose}
+            submitText="Guardar"
           />
         </Modal>
       )}
