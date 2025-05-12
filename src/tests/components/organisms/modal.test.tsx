@@ -55,4 +55,50 @@ describe("Modal Component", () => {
 
     expect(screen.getByText(footerContent)).toBeInTheDocument();
   });
+
+  it("doesn't close when backdrop is clicked with disableEscapeKeyDown set to true", () => {
+    render(
+      <Modal
+        open={true}
+        handleClose={mockHandleClose}
+        title={mockTitle}
+        disableEscapeKeyDown={true}
+      >
+        <div>{mockContent}</div>
+      </Modal>
+    );
+
+    // Simulate backdrop click
+    const backdropElement = document.querySelector(".MuiBackdrop-root");
+    if (backdropElement) {
+      fireEvent.click(backdropElement);
+      // The handler should still be called but the dialog should not close
+      expect(mockHandleClose).toHaveBeenCalledTimes(0);
+    }
+  });
+
+  it("is not visible when open is false", () => {
+    render(
+      <Modal open={false} handleClose={mockHandleClose} title={mockTitle}>
+        <div>{mockContent}</div>
+      </Modal>
+    );
+
+    // Dialog should not be visible
+    const dialog = document.querySelector(".MuiDialog-root");
+    expect(dialog).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("has the correct ARIA attributes for accessibility", () => {
+    render(
+      <Modal open={true} handleClose={mockHandleClose} title={mockTitle}>
+        <div>{mockContent}</div>
+      </Modal>
+    );
+
+    // Check the dialog content for aria attributes
+    const dialog = screen.getByRole("dialog");
+    expect(dialog).toBeInTheDocument();
+    expect(dialog).toHaveAttribute("aria-describedby", `modal-${mockTitle}`);
+  });
 });

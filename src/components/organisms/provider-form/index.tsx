@@ -11,6 +11,7 @@ type CreateProviderFormProps = {
   disabled?: boolean;
   isLoading?: boolean;
   defaultValues?: CreateProviderFormValues;
+  submitText?: string;
 };
 
 const ProviderForm: React.FC<CreateProviderFormProps> = ({
@@ -19,6 +20,7 @@ const ProviderForm: React.FC<CreateProviderFormProps> = ({
   disabled,
   isLoading,
   defaultValues,
+  submitText = "Agregar Proveedor",
 }) => {
   const methods = useForm<CreateProviderFormValues>({
     resolver: zodResolver(createProviderSchema),
@@ -51,7 +53,7 @@ const ProviderForm: React.FC<CreateProviderFormProps> = ({
           </Stack>
           <Actions
             onCancel={handleOnClose}
-            submitText="Agregar Proveedor"
+            submitText={submitText}
             cancelText="Cancelar"
             isLoading={isLoading}
             disabled={disabled}

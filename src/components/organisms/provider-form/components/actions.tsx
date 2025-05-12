@@ -40,7 +40,7 @@ const Actions: React.FC<ActionsProps> = ({
         type="submit"
         variant="contained"
         color="secondary"
-        data-testid="crear-proveedor"
+        data-testid="crear-proveedor-form"
         disabled={!isValid || disabled || isLoading}
         sx={{ marginRight: 2 }}
       >
