@@ -81,12 +81,13 @@ describe("WarehouseAutocomplete Component", () => {
       mockUseGetWarehousesQuery
     );
 
-    renderWithProviders(
+    const { findByLabelText } = renderWithProviders(
       <WarehouseAutocomplete name="warehouseId" disabled={true} />
     );
 
-    await waitFor(() => {
-      expect(screen.getByLabelText("Bodega")).toHaveAttribute("disabled");
-    });
+    // First wait for the element to be in the document
+    const autocomplete = await findByLabelText("Bodega");
+    // Then check if it has the disabled attribute
+    expect(autocomplete).toHaveAttribute("disabled");
   });
 });
