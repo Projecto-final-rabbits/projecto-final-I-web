@@ -33,7 +33,7 @@ const AddProvider: React.FC = () => {
         variant="contained"
         color="secondary"
         onClick={() => setOpen(true)}
-        data-testid="crear-proveedor"
+        data-testid="crear-proveedor-button"
         size="small"
         startIcon={<AddIcon />}
       >

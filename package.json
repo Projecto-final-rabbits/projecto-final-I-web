@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky",
-    "test": "vitest"
+    "test": "vitest --no-watch"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
