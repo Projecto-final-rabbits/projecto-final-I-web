@@ -1,5 +1,5 @@
-const ChangeLenguage = () => {
-  return <div>ChangeLenguage</div>;
+const ChangeLanguage = () => {
+  return <div>ChangeLanguage</div>;
 };
 
-export { ChangeLenguage };
+export { ChangeLanguage };
