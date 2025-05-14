@@ -1,16 +1,18 @@
 import { z } from "zod";
+import i18next from "i18next";
 
 const MoveProductSchema = z.object({
-  productId: z.string({ message: "El campo es requerido" }).nonempty({
-    message: "El campo es requerido",
+  productId: z.string({ message: i18next.t("validation.required") }).nonempty({
+    message: i18next.t("validation.required"),
   }),
-  warehouseId: z.number({ message: "El campo es requerido" }).min(1, {
-    message: "El campo es requerido",
+  warehouseId: z.number({ message: i18next.t("validation.required") }).min(1, {
+    message: i18next.t("validation.required"),
   }),
-  quantity: z.string({ message: "El campo es requerido" }).min(1, {
-    message: "Minimo 1 producto",
+  quantity: z.string({ message: i18next.t("validation.required") }).min(1, {
+    message: i18next.t("validation.minQuantity"),
   }),
   description: z.string({}),
+  movementType: z.string({ message: i18next.t("validation.required") }),
 });
 
 type MoveProductFormValues = z.infer<typeof MoveProductSchema>;

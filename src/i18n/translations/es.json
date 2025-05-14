@@ -1,0 +1,85 @@
+{
+  "common": {
+    "language": "Idioma",
+    "english": "Inglés",
+    "spanish": "Español",
+    "yes": "Sí",
+    "no": "No",
+    "save": "Guardar",
+    "or": "o",
+    "loading": "Cargando...",
+    "errorLoading": "Error al cargar {{resource}}"
+  },
+  "products": {
+    "moveProduct": "Mover Producto",
+    "cancel": "Cancelar",
+    "description": "Descripción",
+    "quantity": "Cantidad",
+    "warehouse": "Almacén",
+    "warehouses": "almacenes",
+    "movementType": "Tipo de Movimiento",
+    "entrance": "Entrada",
+    "exit": "Salida",
+    "transfer": "Traslado",
+    "yourProducts": "Tus productos",
+    "addProduct": "Agregar Producto",
+    "importCsv": "Importar .csv",
+    "name": "Nombre",
+    "purchasePrice": "Precio de compra",
+    "salePrice": "Precio de venta",
+    "activePromotion": "Promoción activa",
+    "storageCondition": "Condición de almacenamiento",
+    "expirationDate": "Fecha de vencimiento",
+    "notApplicable": "No aplica",
+    "deliveryTime": "Tiempo de entrega",
+    "days": "días",
+    "category": "Categoría",
+    "categoryDescription": "Esta columna tiene un getter de valor y no es ordenable",
+    "availableQuantity": "Cantidad disponible",
+    "unknownProduct": "Producto desconocido",
+    "inventories": "Inventarios",
+    "product": "Producto",
+    "products": "productos"
+  },
+  "messages": {
+    "productMovedSuccess": "Producto movido correctamente",
+    "error": "Error",
+    "productsImportedSuccess": "Productos importados correctamente",
+    "productsImportError": "Error al importar productos"
+  },
+  "validation": {
+    "required": "El campo es requerido",
+    "minQuantity": "Mínimo 1 producto",
+    "invalidEmail": "Formato de email inválido",
+    "passwordMinLength": "La contraseña debe tener al menos 4 caracteres"
+  },
+  "providers": {
+    "yourProviders": "Tus proveedores",
+    "actions": "Acciones",
+    "name": "Nombre",
+    "contact": "Contacto",
+    "phone": "Teléfono",
+    "email": "Email",
+    "country": "País",
+    "editProvider": "Editar Proveedor",
+    "updateSuccess": "Proveedor actualizado correctamente",
+    "updateError": "¡Ups! Error, inténtalo más tarde.",
+    "addProvider": "Agregar Proveedor",
+    "createSuccess": "Proveedor creado correctamente",
+    "createError": "¡Ups! Error, inténtalo más tarde.",
+    "manufacturer": "Fabricante",
+    "providers": "proveedores"
+  },
+  "login": {
+    "title": "Inicio de sesión",
+    "welcome": "Bienvenido, inicia sesión para ver tus productos",
+    "googleSignIn": "Iniciar sesión con Google",
+    "email": "Email",
+    "password": "Contraseña",
+    "continue": "Continuar"
+  },
+  "users": {
+    "fullName": "Nombre completo",
+    "email": "Correo electrónico"
+  }
+}

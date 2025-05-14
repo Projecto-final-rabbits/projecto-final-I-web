@@ -1,9 +1,11 @@
 import {
+  MovementTypeAutocomplete,
   ProductAutocomplete,
   WarehouseAutocomplete,
 } from "@/components/molecules";
 import { TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 type FieldsProps = {
   disabled?: boolean;
@@ -11,13 +13,15 @@ type FieldsProps = {
 
 const Fields: React.FC<FieldsProps> = ({ disabled }) => {
   const { register, formState } = useFormContext();
+  const { t } = useTranslation();
 
   return (
     <>
+      <MovementTypeAutocomplete name="movementType" />
       <ProductAutocomplete name="productId" />
       <WarehouseAutocomplete name="warehouseId" />
       <TextField
-        label="Cantidad"
+        label={t("products.quantity")}
         fullWidth
         type="number"
         min={1}
@@ -29,7 +33,7 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         helperText={formState.errors.quantity?.message as string}
       />
       <TextField
-        label="Descripcion"
+        label={t("products.description")}
         fullWidth
         multiline
         rows={3}

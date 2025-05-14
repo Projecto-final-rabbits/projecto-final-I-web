@@ -3,6 +3,7 @@ import { ProviderAutocomplete } from "@/components/molecules";
 import { useGetProvidersQuery } from "@/state-managment/slices";
 import { vi } from "vitest";
 import "@testing-library/jest-dom";
+import { I18nTestProvider } from "@/tests/utils/i18n-test-utils";
 
 // Mock dependencies
 vi.mock("@/state-managment/slices", () => ({
@@ -21,6 +22,10 @@ vi.mock("react-hook-form", () => ({
   }) => render({ field: { onChange: vi.fn(), value: "" } }),
 }));
 
+const renderWithI18n = (component: React.ReactElement) => {
+  return render(component, { wrapper: I18nTestProvider });
+};
+
 describe("ProviderAutocomplete Component", () => {
   it("renders loading state", () => {
     (useGetProvidersQuery as jest.Mock).mockReturnValue({
@@ -29,7 +34,7 @@ describe("ProviderAutocomplete Component", () => {
       data: null,
     });
 
-    render(<ProviderAutocomplete name="providerId" />);
+    renderWithI18n(<ProviderAutocomplete name="providerId" />);
   });
 
   it("renders error state", async () => {
@@ -39,11 +44,11 @@ describe("ProviderAutocomplete Component", () => {
       data: null,
     });
 
-    render(<ProviderAutocomplete name="providerId" />);
+    renderWithI18n(<ProviderAutocomplete name="providerId" />);
 
     await waitFor(() => {
-      const target = screen.getByText("Error loading providers");
-      expect(target.textContent).toBe("Error loading providers");
+      const target = screen.getByText("Error al cargar proveedores");
+      expect(target.textContent).toBe("Error al cargar proveedores");
     });
   });
 
@@ -59,7 +64,7 @@ describe("ProviderAutocomplete Component", () => {
       data: mockProviders,
     });
 
-    render(<ProviderAutocomplete name="providerId" />);
+    renderWithI18n(<ProviderAutocomplete name="providerId" />);
 
     await waitFor(() => {
       expect(screen.getByLabelText("Fabricante")).toBeInTheDocument();
@@ -78,7 +83,7 @@ describe("ProviderAutocomplete Component", () => {
       data: mockProviders,
     });
 
-    render(<ProviderAutocomplete name="providerId" disabled={true} />);
+    renderWithI18n(<ProviderAutocomplete name="providerId" disabled={true} />);
 
     await waitFor(() => {
       const input = screen.getByLabelText("Fabricante");

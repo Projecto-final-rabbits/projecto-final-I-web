@@ -2,52 +2,29 @@ import React from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { useFormContext, Controller } from "react-hook-form";
-import { Role } from "@/core/domain/interfaces";
 import { useTranslation } from "react-i18next";
 
-type RoleAutocompleteProps = {
+type MovementTypeAutocompleteProps = {
   name: string;
   disabled?: boolean;
 };
 
-type Common = {
-  id: Role;
-  nombre: string;
-};
-
-const ROLES: Common[] = [
-  {
-    id: "admin",
-    nombre: "Admin",
-  },
-  {
-    id: "bodega",
-    nombre: "Logistica",
-  },
-  {
-    id: "compras",
-    nombre: "Compras",
-  },
-  {
-    id: "ventas",
-    nombre: "Ventas",
-  },
-];
-const RoleAutocomplete: React.FC<RoleAutocompleteProps> = ({
+const MovementTypeAutocomplete: React.FC<MovementTypeAutocompleteProps> = ({
   name,
   disabled = false,
 }) => {
   const { t } = useTranslation();
+
+  const MovementTypeOptions = [
+    { label: t("products.entrance"), id: "entrada" },
+    { label: t("products.exit"), id: "salida" },
+    { label: t("products.transfer"), id: "traslado" },
+  ];
+
   const {
     control,
     formState: { errors },
   } = useFormContext();
-
-  const providerOptions =
-    ROLES?.map(({ id, nombre }) => ({
-      label: nombre,
-      id: id,
-    })) || [];
 
   return (
     <Controller
@@ -55,12 +32,14 @@ const RoleAutocomplete: React.FC<RoleAutocompleteProps> = ({
       control={control}
       render={({ field: { onChange, value } }) => (
         <Autocomplete
-          options={providerOptions}
+          options={MovementTypeOptions}
           getOptionLabel={(option) => option?.label || ""}
           size="small"
+          fullWidth
           value={
             value
-              ? providerOptions.find((option) => option.id === value) || null
+              ? MovementTypeOptions.find((option) => option.id === value) ||
+                null
               : null
           }
           onChange={(_, newValue) => {
@@ -70,7 +49,7 @@ const RoleAutocomplete: React.FC<RoleAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label={t("users.role")}
+              label={t("products.movementType")}
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}
@@ -82,4 +61,4 @@ const RoleAutocomplete: React.FC<RoleAutocompleteProps> = ({
   );
 };
 
-export { RoleAutocomplete };
+export { MovementTypeAutocomplete };

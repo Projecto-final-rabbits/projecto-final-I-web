@@ -19,6 +19,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import { useSelector } from "react-redux";
 import { RootState } from "@/state-managment/store";
 import { Link } from "react-router-dom";
+import { ChangeLanguage } from "@/components/molecules/ChangeLanguage";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -139,6 +140,7 @@ const Header: React.FC = () => {
             )}
           </Stack>
           <Box sx={{ flexGrow: 1 }} />
+          <ChangeLanguage />
           <CreateUser role={user?.role ?? "admin"} />
           <Search>
             <SearchIconWrapper>

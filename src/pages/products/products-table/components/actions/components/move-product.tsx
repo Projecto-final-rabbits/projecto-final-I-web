@@ -3,8 +3,10 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { Modal } from "@/components/organisms";
 import { useState } from "react";
 import { MoveProductForm } from "@/components/organisms/move-product-form";
+import { useTranslation } from "react-i18next";
 
 const MoveProduct: React.FC = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const handleOnClose = () => {
@@ -21,12 +23,12 @@ const MoveProduct: React.FC = () => {
         size="small"
         startIcon={<LocalShippingIcon />}
       >
-        Mover Producto
+        {t("products.moveProduct")}
       </Button>
       <Modal
         open={open}
         handleClose={handleOnClose}
-        title="Mover Producto"
+        title={t("products.moveProduct")}
         disableEscapeKeyDown
       >
         <MoveProductForm onClose={handleOnClose} />

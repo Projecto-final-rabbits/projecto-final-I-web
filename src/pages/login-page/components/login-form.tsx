@@ -9,17 +9,22 @@ import { getDoc, doc } from "firebase/firestore";
 import { setUser } from "@/state-managment/slices";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-
-const loginSchema = z.object({
-  email: z.string({ message: "El campo es requerido" }).email(),
-  password: z
-    .string({ message: "El campo es requerido" })
-    .min(4, { message: "Password must be at least 4 characters" }),
-});
+import { useTranslation } from "react-i18next";
 
 const LoginForm: React.FC = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+
+  const loginSchema = z.object({
+    email: z
+      .string({ message: t("validation.required") })
+      .email({ message: t("validation.invalidEmail") }),
+    password: z
+      .string({ message: t("validation.required") })
+      .min(4, { message: t("validation.passwordMinLength") }),
+  });
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -75,7 +80,7 @@ const LoginForm: React.FC = () => {
     <form onSubmit={form.handleSubmit((data) => handleSubmit(data))}>
       <Stack spacing={2}>
         <TextField
-          label="Email"
+          label={t("login.email")}
           variant="outlined"
           error={!!form.formState.errors.email}
           helperText={form.formState.errors.email?.message}
@@ -84,7 +89,7 @@ const LoginForm: React.FC = () => {
           {...form.register("email")}
         />
         <TextField
-          label="Password"
+          label={t("login.password")}
           variant="outlined"
           error={!!form.formState.errors.password}
           helperText={form.formState.errors.password?.message}
@@ -100,7 +105,7 @@ const LoginForm: React.FC = () => {
           loading={isLoading}
           disabled={!form.formState.isValid}
         >
-          Continuar
+          {t("login.continue")}
         </Button>
       </Stack>
     </form>
