@@ -1,3 +1,4 @@
+// src/pages/dashboardSales/index.tsx
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/state-managment/hooks";
 import { fetchSalesSummary } from "@/state-managment/slices/dashboard-slice";
@@ -8,8 +9,14 @@ import {
   Typography,
   CircularProgress,
   Button,
+  Divider,
 } from "@mui/material";
 import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip as ReTooltip,
+  Legend,
   BarChart,
   Bar,
   XAxis,
@@ -17,26 +24,21 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
 } from "recharts";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
+
 const COLORS = ["#1976d2", "#388e3c", "#d32f2f", "#ffa000", "#7b1fa2"];
 
 const DashboardSales: React.FC = () => {
   const dispatch = useAppDispatch();
   const { data, status, error } = useAppSelector((state) => state.dashboard);
 
-  // Estados locales para las fechas
   const [startDate, setStartDate] = useState<Dayjs | null>(
     dayjs().startOf("month")
   );
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs().endOf("month"));
 
-  // Función para disparar la carga con parámetros
   const loadData = () => {
     dispatch(
       fetchSalesSummary({
@@ -46,13 +48,11 @@ const DashboardSales: React.FC = () => {
     );
   };
 
-  // Carga inicial
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // solo al montar
+  }, []);
 
-  // Muestra spinner si estamos recargando datos
   if (status === "loading" && !data) {
     return (
       <Box display="flex" justifyContent="center" mt={8}>
@@ -60,7 +60,6 @@ const DashboardSales: React.FC = () => {
       </Box>
     );
   }
-
   if (status === "failed") {
     return (
       <Typography color="error" align="center" mt={4}>
@@ -68,31 +67,38 @@ const DashboardSales: React.FC = () => {
       </Typography>
     );
   }
-
   if (!data) return null;
 
-  // Transformaciones de datos
+  // Prepara datos para gráficos
   const estadoData = Object.entries(data.pedidos_por_estado).map(
     ([estado, count]) => ({ estado, count })
   );
   const ciudadData = Object.entries(data.ventas_por_ciudad).map(
     ([ciudad, ingresos]) => ({ ciudad, ingresos })
   );
-  const { total_pedidos, ingresos_totales, ticket_promedio, clientes_activos } =
-    data;
+  const {
+    total_pedidos,
+    ingresos_totales,
+    ticket_promedio,
+    clientes_activos,
+  } = data;
 
   return (
-    <Box
-      component="section"
-      sx={{
-        display: "grid",
-        gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" },
-        gap: 2,
-        p: 2,
-      }}
-    >
+    <Box sx={{ p: 3 }}>
+      {/* Cabecera */}
+      <Typography variant="h4" gutterBottom>
+        📊 Panel de Control de Ventas
+      </Typography>
+      <Typography variant="body1" color="text.secondary" gutterBottom>
+        Revisa el desempeño de tus ventas en el periodo seleccionado. Consulta
+        métricas clave como volumen de pedidos, ingresos, comportamiento por
+        estado y distribución geográfica.
+      </Typography>
+
+      <Divider sx={{ my: 2 }} />
+
       {/* Controles de fecha */}
-      <Box gridColumn="1 / -1" display="flex" alignItems="center" gap={2}>
+      <Box display="flex" alignItems="center" gap={2} mb={3} flexWrap="wrap">
         <DatePicker
           label="Desde"
           value={startDate}
@@ -114,109 +120,98 @@ const DashboardSales: React.FC = () => {
         </Button>
       </Box>
 
-      {/* Cards KPI */}
-      <Card>
-        <CardContent>
-          <Typography variant="h6">Total Pedidos</Typography>
-          <Typography variant="h4">{total_pedidos}</Typography>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardContent>
-          <Typography variant="h6">Ingresos Totales</Typography>
-          <Typography variant="h4">
-            ${ingresos_totales.toLocaleString()}
-          </Typography>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardContent>
-          <Typography variant="h6">Ticket Promedio</Typography>
-          <Typography variant="h4">${ticket_promedio.toFixed(2)}</Typography>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardContent>
-          <Typography variant="h6">Clientes Activos</Typography>
-          <Typography variant="h4">{clientes_activos}</Typography>
-        </CardContent>
-      </Card>
-
-      {/* Gráfico de Pedidos por Estado
+      {/* Sección de KPIs */}
+      <Typography variant="h6" gutterBottom>
+        Métricas Clave
+      </Typography>
       <Box
-        gridColumn={{ xs: "1 / -1", md: "1 / 3" }}
-        sx={{ height: 300, bgcolor: "background.paper", p: 2, borderRadius: 1 }}
+        component="section"
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(4, 1fr)" },
+          gap: 2,
+          mb: 4,
+        }}
       >
-        <Typography variant="h6" gutterBottom>
-          Pedidos por Estado
-        </Typography>
-        <ResponsiveContainer width="100%" height="80%">
-          <BarChart
-            data={estadoData}
-            margin={{ top: 10, right: 10, bottom: 0, left: 0 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="estado" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="count" fill="#1976d2" />
-          </BarChart>
-        </ResponsiveContainer>
-      </Box> */}
-      {/* Gráfico de Pedidos por Estado como PieChart */}
-      <Box
-        gridColumn={{ xs: "1 / -1", md: "1 / 3" }}
-        sx={{ height: 300, bgcolor: "background.paper", p: 2, borderRadius: 1 }}
-      >
-        <Typography variant="h6" gutterBottom>
-          Pedidos por Estado
-        </Typography>
-        <ResponsiveContainer width="100%" height="80%">
-          <PieChart>
-            <Pie
-              data={estadoData} // [{ estado, count }]
-              dataKey="count"
-              nameKey="estado"
-              cx="50%"
-              cy="50%"
-              outerRadius={80}
-              label={({ name, percent }) =>
-                `${name}: ${(percent * 100).toFixed(0)}%`
-              }
-            >
-              {estadoData.map((_, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip formatter={(value: number) => `${value} pedidos`} />
-            <Legend verticalAlign="bottom" height={36} />
-          </PieChart>
-        </ResponsiveContainer>
+        {[ 
+          { title: "Total Pedidos", value: total_pedidos },
+          { title: "Ingresos Totales", value: `$${ingresos_totales.toLocaleString()}` },
+          { title: "Ticket Promedio", value: `$${ticket_promedio.toFixed(2)}` },
+          { title: "Clientes Activos", value: clientes_activos },
+        ].map((kpi) => (
+          <Card key={kpi.title} elevation={1}>
+            <CardContent>
+              <Typography variant="subtitle2" color="text.secondary">
+                {kpi.title}
+              </Typography>
+              <Typography variant="h5" mt={1}>
+                {kpi.value}
+              </Typography>
+            </CardContent>
+          </Card>
+        ))}
       </Box>
 
-      {/* Gráfico de Ventas por Ciudad */}
+      <Divider sx={{ my: 2 }} />
+
+      {/* Gráficos */}
       <Box
-        gridColumn={{ xs: "1 / -1", md: "3 / 5" }}
-        sx={{ height: 300, bgcolor: "background.paper", p: 2, borderRadius: 1 }}
+        component="section"
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", md: "repeat(4, 1fr)" },
+          gap: 2,
+        }}
       >
-        <Typography variant="h6" gutterBottom>
-          Ventas por Ciudad
-        </Typography>
-        <ResponsiveContainer width="100%" height="80%">
-          <BarChart
-            data={ciudadData}
-            margin={{ top: 10, right: 10, bottom: 0, left: 0 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="ciudad" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="ingresos" fill="#388e3c" />
-          </BarChart>
-        </ResponsiveContainer>
+        {/* Pie de Pedidos por Estado */}
+        <Card sx={{ gridColumn: { xs: "1 / -1", md: "1 / 3" }, p: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            Distribución por Estado
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mb={1}>
+            Porcentaje de pedidos en cada estado.
+          </Typography>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                data={estadoData}
+                dataKey="count"
+                nameKey="estado"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                label={({ name, percent }) =>
+                  `${name}: ${(percent * 100).toFixed(0)}%`
+                }
+              >
+                {estadoData.map((_, idx) => (
+                  <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
+                ))}
+              </Pie>
+              <ReTooltip formatter={(value: number) => `${value} pedidos`} />
+              <Legend verticalAlign="bottom" height={36} />
+            </PieChart>
+          </ResponsiveContainer>
+        </Card>
+
+        {/* Barras de Ventas por Ciudad */}
+        <Card sx={{ gridColumn: { xs: "1 / -1", md: "3 / 5" }, p: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            Ventas por Ciudad
+          </Typography>
+          <Typography variant="body2" color="text.secondary" mb={1}>
+            Total de ingresos agrupados por ciudad de entrega.
+          </Typography>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={ciudadData} margin={{ bottom: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="ciudad" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="ingresos" fill="#388e3c" />
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
       </Box>
     </Box>
   );
