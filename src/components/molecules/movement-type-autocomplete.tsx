@@ -2,12 +2,7 @@ import React from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { useFormContext, Controller } from "react-hook-form";
-
-const MovementTypeOptions = [
-  { label: "Entrada", id: "entrada" },
-  { label: "Salida", id: "salida" },
-  { label: "Traslado", id: "traslado" },
-];
+import { useTranslation } from "react-i18next";
 
 type MovementTypeAutocompleteProps = {
   name: string;
@@ -18,6 +13,14 @@ const MovementTypeAutocomplete: React.FC<MovementTypeAutocompleteProps> = ({
   name,
   disabled = false,
 }) => {
+  const { t } = useTranslation();
+
+  const MovementTypeOptions = [
+    { label: t("products.entrance"), id: "entrada" },
+    { label: t("products.exit"), id: "salida" },
+    { label: t("products.transfer"), id: "traslado" },
+  ];
+
   const {
     control,
     formState: { errors },
@@ -46,7 +49,7 @@ const MovementTypeAutocomplete: React.FC<MovementTypeAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Tipo de Movimiento"
+              label={t("products.movementType")}
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}

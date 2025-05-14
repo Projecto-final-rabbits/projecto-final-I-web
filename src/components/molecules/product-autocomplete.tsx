@@ -3,6 +3,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { useGetProductsQuery } from "@/state-managment/slices";
 import { useFormContext, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 type ProductAutocompleteProps = {
   name: string;
@@ -13,14 +14,18 @@ const ProductAutocomplete: React.FC<ProductAutocompleteProps> = ({
   name,
   disabled = false,
 }) => {
+  const { t } = useTranslation();
   const { data: products, isLoading, error } = useGetProductsQuery({});
   const {
     control,
     formState: { errors },
   } = useFormContext();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading providers</p>;
+  if (isLoading) return <p>{t("common.loading")}</p>;
+  if (error)
+    return (
+      <p>{t("common.errorLoading", { resource: t("products.products") })}</p>
+    );
 
   const productOptions =
     products?.map(({ id, nombre }) => ({
@@ -50,7 +55,7 @@ const ProductAutocomplete: React.FC<ProductAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Producto"
+              label={t("products.product")}
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}

@@ -6,7 +6,9 @@
     "yes": "Sí",
     "no": "No",
     "save": "Guardar",
-    "or": "o"
+    "or": "o",
+    "loading": "Cargando...",
+    "errorLoading": "Error al cargar {{resource}}"
   },
   "products": {
     "moveProduct": "Mover Producto",
@@ -14,6 +16,7 @@
     "description": "Descripción",
     "quantity": "Cantidad",
     "warehouse": "Almacén",
+    "warehouses": "almacenes",
     "movementType": "Tipo de Movimiento",
     "entrance": "Entrada",
     "exit": "Salida",
@@ -34,7 +37,9 @@
     "categoryDescription": "Esta columna tiene un getter de valor y no es ordenable",
     "availableQuantity": "Cantidad disponible",
     "unknownProduct": "Producto desconocido",
-    "inventories": "Inventarios"
+    "inventories": "Inventarios",
+    "product": "Producto",
+    "products": "productos"
   },
   "messages": {
     "productMovedSuccess": "Producto movido correctamente",
@@ -61,7 +66,9 @@
     "updateError": "¡Ups! Error, inténtalo más tarde.",
     "addProvider": "Agregar Proveedor",
     "createSuccess": "Proveedor creado correctamente",
-    "createError": "¡Ups! Error, inténtalo más tarde."
+    "createError": "¡Ups! Error, inténtalo más tarde.",
+    "manufacturer": "Fabricante",
+    "providers": "proveedores"
   },
   "login": {
     "title": "Inicio de sesión",
@@ -70,5 +77,9 @@
     "email": "Email",
     "password": "Contraseña",
     "continue": "Continuar"
+  },
+  "users": {
+    "fullName": "Nombre completo",
+    "email": "Correo electrónico"
   }
 }

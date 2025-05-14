@@ -6,7 +6,9 @@
     "yes": "Yes",
     "no": "No",
     "save": "Save",
-    "or": "or"
+    "or": "or",
+    "loading": "Loading...",
+    "errorLoading": "Error loading {{resource}}"
   },
   "products": {
     "moveProduct": "Move Product",
@@ -14,6 +16,7 @@
     "description": "Description",
     "quantity": "Quantity",
     "warehouse": "Warehouse",
+    "warehouses": "warehouses",
     "movementType": "Movement Type",
     "entrance": "Entrance",
     "exit": "Exit",
@@ -34,7 +37,9 @@
     "categoryDescription": "This column has a value getter and is not sortable",
     "availableQuantity": "Available Quantity",
     "unknownProduct": "Unknown product",
-    "inventories": "Inventories"
+    "inventories": "Inventories",
+    "product": "Product",
+    "products": "products"
   },
   "messages": {
     "productMovedSuccess": "Product moved successfully",
@@ -61,7 +66,9 @@
     "updateError": "Oops! Error, please try again later.",
     "addProvider": "Add Provider",
     "createSuccess": "Provider created successfully",
-    "createError": "Oops! Error, please try again later."
+    "createError": "Oops! Error, please try again later.",
+    "manufacturer": "Manufacturer",
+    "providers": "providers"
   },
   "login": {
     "title": "Login",
@@ -70,5 +77,9 @@
     "email": "Email",
     "password": "Password",
     "continue": "Continue"
+  },
+  "users": {
+    "fullName": "Full Name",
+    "email": "Email"
   }
 }

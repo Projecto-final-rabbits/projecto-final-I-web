@@ -3,6 +3,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { useFormContext, Controller } from "react-hook-form";
 import { CATEGORIES } from "@/utils/categories";
+import { useTranslation } from "react-i18next";
 
 type CategoryAutocompleteProps = {
   name: string;
@@ -13,6 +14,7 @@ const CategoryAutocomplete: React.FC<CategoryAutocompleteProps> = ({
   name,
   disabled = false,
 }) => {
+  const { t } = useTranslation();
   const {
     control,
     formState: { errors },
@@ -46,7 +48,7 @@ const CategoryAutocomplete: React.FC<CategoryAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Categoría"
+              label={t("products.category")}
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}
