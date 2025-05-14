@@ -17,7 +17,7 @@ describe("LoginPage", () => {
   test("renders correctly", () => {
     renderWithProviders(<LoginPage />);
 
-    // Check for the main title and subtitle
+    // Check for the main title and subtitle using translation keys
     expect(screen.getByText("Inicio de sesión")).toBeInTheDocument();
     expect(
       screen.getByText("Bienvenido, inicia sesión para ver tus productos")

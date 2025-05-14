@@ -3,6 +3,7 @@ import { ProductAutocomplete } from "@/components/molecules";
 import { useGetProductsQuery } from "@/state-managment/slices";
 import { vi } from "vitest";
 import "@testing-library/jest-dom";
+import { I18nTestProvider } from "@/tests/utils/i18n-test-utils";
 
 // Mock dependencies
 vi.mock("@/state-managment/slices", () => ({
@@ -21,6 +22,10 @@ vi.mock("react-hook-form", () => ({
   }) => render({ field: { onChange: vi.fn(), value: "" } }),
 }));
 
+const renderWithI18n = (component: React.ReactElement) => {
+  return render(component, { wrapper: I18nTestProvider });
+};
+
 describe("ProductAutocomplete Component", () => {
   it("renders loading state", () => {
     (useGetProductsQuery as jest.Mock).mockReturnValue({
@@ -29,7 +34,7 @@ describe("ProductAutocomplete Component", () => {
       data: null,
     });
 
-    render(<ProductAutocomplete name="productId" />);
+    renderWithI18n(<ProductAutocomplete name="productId" />);
   });
 
   it("renders autocomplete with products", async () => {
@@ -44,7 +49,7 @@ describe("ProductAutocomplete Component", () => {
       data: mockProducts,
     });
 
-    render(<ProductAutocomplete name="productId" />);
+    renderWithI18n(<ProductAutocomplete name="productId" />);
 
     await waitFor(() => {
       expect(screen.getByLabelText("Producto")).toBeInTheDocument();
@@ -63,7 +68,7 @@ describe("ProductAutocomplete Component", () => {
       data: mockProducts,
     });
 
-    render(<ProductAutocomplete name="productId" disabled={true} />);
+    renderWithI18n(<ProductAutocomplete name="productId" disabled={true} />);
 
     await waitFor(() => {
       const input = screen.getByLabelText("Producto");

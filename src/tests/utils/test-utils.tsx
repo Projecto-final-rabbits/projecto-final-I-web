@@ -7,6 +7,7 @@ import { warehousesApi } from "@/state-managment/slices/warehouse-slice";
 import { inventoriesApi } from "@/state-managment/slices/inventoriesSlice";
 import authReducer from "@/state-managment/slices/auth-slice";
 import userReducer from "@/state-managment/slices/user-slice";
+import { I18nTestProvider } from "./i18n-test-utils";
 
 // Crear un store mock para pruebas
 export function createMockStore() {
@@ -29,13 +30,17 @@ export function createMockStore() {
   });
 }
 
-// Wrapper con el Provider de Redux
+// Wrapper con el Provider de Redux y I18n
 export function renderWithProviders(
   ui: ReactElement,
   { store = createMockStore(), ...renderOptions } = {}
 ) {
   function Wrapper({ children }: PropsWithChildren<object>): ReactElement {
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <Provider store={store}>
+        <I18nTestProvider>{children}</I18nTestProvider>
+      </Provider>
+    );
   }
 
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
