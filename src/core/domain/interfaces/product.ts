@@ -57,6 +57,7 @@ type IMoveProduct = {
   warehouseId: string;
   description: string;
   quantity: number;
+  movementType: string;
 };
 
 type IUpdateProductDTO = Partial<

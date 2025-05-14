@@ -1,4 +1,5 @@
 import {
+  MovementTypeAutocomplete,
   ProductAutocomplete,
   WarehouseAutocomplete,
 } from "@/components/molecules";
@@ -14,6 +15,7 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
 
   return (
     <>
+      <MovementTypeAutocomplete name="movementType" />
       <ProductAutocomplete name="productId" />
       <WarehouseAutocomplete name="warehouseId" />
       <TextField

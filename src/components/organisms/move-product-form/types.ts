@@ -11,6 +11,7 @@ const MoveProductSchema = z.object({
     message: "Minimo 1 producto",
   }),
   description: z.string({}),
+  movementType: z.string({ message: "El campo es requerido" }),
 });
 
 type MoveProductFormValues = z.infer<typeof MoveProductSchema>;
