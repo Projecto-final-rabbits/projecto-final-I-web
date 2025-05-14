@@ -3,8 +3,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { Modal } from "@/components/organisms";
 import { useState } from "react";
 import { CreateProductForm } from "@/components/organisms/create-product-form";
+import { useTranslation } from "react-i18next";
 
 const AddProduct: React.FC = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   const handleOnClose = () => {
@@ -21,12 +23,12 @@ const AddProduct: React.FC = () => {
         size="small"
         startIcon={<AddIcon />}
       >
-        Agregar Producto
+        {t("products.addProduct")}
       </Button>
       <Modal
         open={open}
         handleClose={handleOnClose}
-        title="Agregar Producto"
+        title={t("products.addProduct")}
         disableEscapeKeyDown
       >
         <CreateProductForm onClose={handleOnClose} />

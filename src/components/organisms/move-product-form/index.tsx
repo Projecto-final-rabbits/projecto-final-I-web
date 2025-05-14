@@ -10,6 +10,7 @@ import {
 } from "@/state-managment/slices";
 import { IMoveProduct } from "@/core/domain/interfaces";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 type MoveProductFormProps = {
   onClose: () => void;
@@ -20,6 +21,7 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
   onClose,
   disabled,
 }) => {
+  const { t } = useTranslation();
   const methods = useForm<MoveProductFormValues>({
     resolver: zodResolver(MoveProductSchema),
     defaultValues: {},
@@ -38,12 +40,11 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
   };
 
   const handleCreateProduct = (data: IMoveProduct) => {
-    console.log(data);
     if (data.movementType === "entrada") {
       moveIncomeProduct(data)
         .unwrap()
         .then(() => {
-          toast.success("Producto movido correctamente");
+          toast.success(t("messages.productMovedSuccess"));
           handleOnClose();
         })
         .catch((error) => {
@@ -53,14 +54,14 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
       moveOutcomeProduct(data)
         .unwrap()
         .then(() => {
-          toast.success("Producto movido correctamente");
+          toast.success(t("messages.productMovedSuccess"));
           handleOnClose();
         });
     } else if (data.movementType === "traslado") {
       moveTransferProduct(data)
         .unwrap()
         .then(() => {
-          toast.success("Producto movido correctamente");
+          toast.success(t("messages.productMovedSuccess"));
           handleOnClose();
         });
     }
@@ -92,8 +93,8 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
           </Stack>
           <Actions
             onCancel={handleOnClose}
-            submitText="Mover producto"
-            cancelText="Cancelar"
+            submitText={t("products.moveProduct")}
+            cancelText={t("products.cancel")}
             isLoading={isIncomeLoading || isOutcomeLoading || isTransferLoading}
             disabled={disabled}
           />

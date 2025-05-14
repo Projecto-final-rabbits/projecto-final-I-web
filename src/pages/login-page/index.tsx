@@ -1,54 +1,59 @@
 import { Box, Typography, Button, Divider, Stack } from "@mui/material";
 import { Footer, LoginForm, LoginImage } from "./components";
+import { useTranslation } from "react-i18next";
 
-const LoginPage: React.FC = () => (
-  <Stack
-    direction="row"
-    justifyContent="center"
-    sx={{ height: "100vh", width: "100%" }}
-  >
-    <Box
-      sx={{
-        minWidth: "40%",
-        maxWidth: "50%",
-        m: "auto",
-        paddingInline: "10rem",
-      }}
+const LoginPage: React.FC = () => {
+  const { t } = useTranslation();
+
+  return (
+    <Stack
+      direction="row"
+      justifyContent="center"
+      sx={{ height: "100vh", width: "100%" }}
     >
-      <Box sx={{ p: 3, textAlign: "center" }}>
-        <Typography variant="h4" fontWeight="bold">
-          Inicio de sesión
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Bienvenido, inicia sesión para ver tus productos
-        </Typography>
+      <Box
+        sx={{
+          minWidth: "40%",
+          maxWidth: "50%",
+          m: "auto",
+          paddingInline: "10rem",
+        }}
+      >
+        <Box sx={{ p: 3, textAlign: "center" }}>
+          <Typography variant="h4" fontWeight="bold">
+            {t("login.title")}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            {t("login.welcome")}
+          </Typography>
 
-        <Stack spacing={2} mt={3}>
-          <Button
-            variant="outlined"
-            fullWidth
-            startIcon={
-              <img
-                src="/google-icon.png"
-                alt="Google"
-                style={{ width: "19px", height: "18px" }}
-              />
-            }
-          >
-            Iniciar sesión con Google
-          </Button>
+          <Stack spacing={2} mt={3}>
+            <Button
+              variant="outlined"
+              fullWidth
+              startIcon={
+                <img
+                  src="/google-icon.png"
+                  alt="Google"
+                  style={{ width: "19px", height: "18px" }}
+                />
+              }
+            >
+              {t("login.googleSignIn")}
+            </Button>
 
-          <Divider>o</Divider>
+            <Divider>{t("common.or")}</Divider>
 
-          <LoginForm />
-        </Stack>
+            <LoginForm />
+          </Stack>
+        </Box>
+
+        <Footer />
       </Box>
 
-      <Footer />
-    </Box>
-
-    <LoginImage />
-  </Stack>
-);
+      <LoginImage />
+    </Stack>
+  );
+};
 
 export { LoginPage };

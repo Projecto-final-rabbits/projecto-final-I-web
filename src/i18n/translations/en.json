@@ -1,0 +1,74 @@
+{
+  "common": {
+    "language": "Language",
+    "english": "English",
+    "spanish": "Spanish",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "or": "or"
+  },
+  "products": {
+    "moveProduct": "Move Product",
+    "cancel": "Cancel",
+    "description": "Description",
+    "quantity": "Quantity",
+    "warehouse": "Warehouse",
+    "movementType": "Movement Type",
+    "entrance": "Entrance",
+    "exit": "Exit",
+    "transfer": "Transfer",
+    "yourProducts": "Your Products",
+    "addProduct": "Add Product",
+    "importCsv": "Import .csv",
+    "name": "Name",
+    "purchasePrice": "Purchase Price",
+    "salePrice": "Sale Price",
+    "activePromotion": "Active Promotion",
+    "storageCondition": "Storage Condition",
+    "expirationDate": "Expiration Date",
+    "notApplicable": "Not applicable",
+    "deliveryTime": "Delivery Time",
+    "days": "days",
+    "category": "Category",
+    "categoryDescription": "This column has a value getter and is not sortable",
+    "availableQuantity": "Available Quantity",
+    "unknownProduct": "Unknown product",
+    "inventories": "Inventories"
+  },
+  "messages": {
+    "productMovedSuccess": "Product moved successfully",
+    "error": "Error",
+    "productsImportedSuccess": "Products imported successfully",
+    "productsImportError": "Error importing products"
+  },
+  "validation": {
+    "required": "This field is required",
+    "minQuantity": "Minimum 1 product",
+    "invalidEmail": "Invalid email format",
+    "passwordMinLength": "Password must be at least 4 characters"
+  },
+  "providers": {
+    "yourProviders": "Your Providers",
+    "actions": "Actions",
+    "name": "Name",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "country": "Country",
+    "editProvider": "Edit Provider",
+    "updateSuccess": "Provider updated successfully",
+    "updateError": "Oops! Error, please try again later.",
+    "addProvider": "Add Provider",
+    "createSuccess": "Provider created successfully",
+    "createError": "Oops! Error, please try again later."
+  },
+  "login": {
+    "title": "Login",
+    "welcome": "Welcome, login to view your products",
+    "googleSignIn": "Sign in with Google",
+    "email": "Email",
+    "password": "Password",
+    "continue": "Continue"
+  }
+}
