@@ -8,7 +8,37 @@
     "save": "Guardar",
     "or": "o",
     "loading": "Cargando...",
-    "errorLoading": "Error al cargar {{resource}}"
+    "errorLoading": "Error al cargar {{resource}}",
+    "errors": {
+      "loadingDashboard": "Error al cargar los datos del panel"
+    }
+  },
+  "dashboard": {
+    "title": "📊 Panel de Control de Ventas",
+    "description": "Revisa el desempeño de tus ventas en el periodo seleccionado. Consulta métricas clave como volumen de pedidos, ingresos, comportamiento por estado y distribución geográfica.",
+    "date": {
+      "from": "Desde",
+      "to": "Hasta",
+      "update": "Actualizar",
+      "loading": "Cargando..."
+    },
+    "metrics": {
+      "title": "Métricas Clave",
+      "totalOrders": "Total Pedidos",
+      "totalRevenue": "Ingresos Totales",
+      "averageTicket": "Ticket Promedio",
+      "activeCustomers": "Clientes Activos"
+    },
+    "charts": {
+      "statusDistribution": {
+        "title": "Distribución por Estado",
+        "description": "Porcentaje de pedidos en cada estado"
+      },
+      "salesByCity": {
+        "title": "Ventas por Ciudad",
+        "description": "Total de ingresos agrupados por ciudad de entrega"
+      }
+    }
   },
   "products": {
     "moveProduct": "Mover Producto",

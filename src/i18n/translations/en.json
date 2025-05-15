@@ -8,7 +8,37 @@
     "save": "Save",
     "or": "or",
     "loading": "Loading...",
-    "errorLoading": "Error loading {{resource}}"
+    "errorLoading": "Error loading {{resource}}",
+    "errors": {
+      "loadingDashboard": "Error loading dashboard data"
+    }
+  },
+  "dashboard": {
+    "title": "📊 Sales Dashboard",
+    "description": "Review your sales performance for the selected period. Check key metrics such as order volume, revenue, status behavior, and geographic distribution.",
+    "date": {
+      "from": "From",
+      "to": "To",
+      "update": "Update",
+      "loading": "Loading..."
+    },
+    "metrics": {
+      "title": "Key Metrics",
+      "totalOrders": "Total Orders",
+      "totalRevenue": "Total Revenue",
+      "averageTicket": "Average Ticket",
+      "activeCustomers": "Active Customers"
+    },
+    "charts": {
+      "statusDistribution": {
+        "title": "Status Distribution",
+        "description": "Percentage of orders in each status"
+      },
+      "salesByCity": {
+        "title": "Sales by City",
+        "description": "Total revenue grouped by delivery city"
+      }
+    }
   },
   "products": {
     "moveProduct": "Move Product",

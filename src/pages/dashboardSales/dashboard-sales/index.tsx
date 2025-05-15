@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/state-managment/hooks";
 import { fetchSalesSummary } from "@/state-managment/slices/dashboard-slice";
+import { useTranslation } from "react-i18next";
 import {
   Box,
   Card,
@@ -31,6 +32,7 @@ import dayjs, { Dayjs } from "dayjs";
 const COLORS = ["#1976d2", "#388e3c", "#d32f2f", "#ffa000", "#7b1fa2"];
 
 const DashboardSales: React.FC = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { data, status, error } = useAppSelector((state) => state.dashboard);
 
@@ -63,7 +65,7 @@ const DashboardSales: React.FC = () => {
   if (status === "failed") {
     return (
       <Typography color="error" align="center" mt={4}>
-        {error || "Error cargando datos del dashboard."}
+        {error || t("common:errors.loadingDashboard")}
       </Typography>
     );
   }
@@ -76,23 +78,17 @@ const DashboardSales: React.FC = () => {
   const ciudadData = Object.entries(data.ventas_por_ciudad).map(
     ([ciudad, ingresos]) => ({ ciudad, ingresos })
   );
-  const {
-    total_pedidos,
-    ingresos_totales,
-    ticket_promedio,
-    clientes_activos,
-  } = data;
+  const { total_pedidos, ingresos_totales, ticket_promedio, clientes_activos } =
+    data;
 
   return (
     <Box sx={{ p: 3 }}>
       {/* Cabecera */}
       <Typography variant="h4" gutterBottom>
-        📊 Panel de Control de Ventas
+        {t("dashboard.title")}
       </Typography>
       <Typography variant="body1" color="text.secondary" gutterBottom>
-        Revisa el desempeño de tus ventas en el periodo seleccionado. Consulta
-        métricas clave como volumen de pedidos, ingresos, comportamiento por
-        estado y distribución geográfica.
+        {t("dashboard.description")}
       </Typography>
 
       <Divider sx={{ my: 2 }} />
@@ -100,13 +96,13 @@ const DashboardSales: React.FC = () => {
       {/* Controles de fecha */}
       <Box display="flex" alignItems="center" gap={2} mb={3} flexWrap="wrap">
         <DatePicker
-          label="Desde"
+          label={t("dashboard.date.from")}
           value={startDate}
           onChange={(d) => setStartDate(d)}
           slotProps={{ textField: { size: "small" } }}
         />
         <DatePicker
-          label="Hasta"
+          label={t("dashboard.date.to")}
           value={endDate}
           onChange={(d) => setEndDate(d)}
           slotProps={{ textField: { size: "small" } }}
@@ -116,28 +112,43 @@ const DashboardSales: React.FC = () => {
           onClick={loadData}
           disabled={status === "loading"}
         >
-          {status === "loading" ? "Cargando..." : "Actualizar"}
+          {status === "loading"
+            ? t("dashboard.date.loading")
+            : t("dashboard.date.update")}
         </Button>
       </Box>
 
       {/* Sección de KPIs */}
       <Typography variant="h6" gutterBottom>
-        Métricas Clave
+        {t("dashboard.metrics.title")}
       </Typography>
       <Box
         component="section"
         sx={{
           display: "grid",
-          gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(4, 1fr)" },
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "1fr 1fr",
+            md: "repeat(4, 1fr)",
+          },
           gap: 2,
           mb: 4,
         }}
       >
-        {[ 
-          { title: "Total Pedidos", value: total_pedidos },
-          { title: "Ingresos Totales", value: `$${ingresos_totales.toLocaleString()}` },
-          { title: "Ticket Promedio", value: `$${ticket_promedio.toFixed(2)}` },
-          { title: "Clientes Activos", value: clientes_activos },
+        {[
+          { title: t("dashboard.metrics.totalOrders"), value: total_pedidos },
+          {
+            title: t("dashboard.metrics.totalRevenue"),
+            value: `$${ingresos_totales.toLocaleString()}`,
+          },
+          {
+            title: t("dashboard.metrics.averageTicket"),
+            value: `$${ticket_promedio.toFixed(2)}`,
+          },
+          {
+            title: t("dashboard.metrics.activeCustomers"),
+            value: clientes_activos,
+          },
         ].map((kpi) => (
           <Card key={kpi.title} elevation={1}>
             <CardContent>
@@ -166,10 +177,10 @@ const DashboardSales: React.FC = () => {
         {/* Pie de Pedidos por Estado */}
         <Card sx={{ gridColumn: { xs: "1 / -1", md: "1 / 3" }, p: 2 }}>
           <Typography variant="h6" gutterBottom>
-            Distribución por Estado
+            {t("dashboard.charts.statusDistribution.title")}
           </Typography>
           <Typography variant="body2" color="text.secondary" mb={1}>
-            Porcentaje de pedidos en cada estado.
+            {t("dashboard.charts.statusDistribution.description")}
           </Typography>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
@@ -197,10 +208,10 @@ const DashboardSales: React.FC = () => {
         {/* Barras de Ventas por Ciudad */}
         <Card sx={{ gridColumn: { xs: "1 / -1", md: "3 / 5" }, p: 2 }}>
           <Typography variant="h6" gutterBottom>
-            Ventas por Ciudad
+            {t("dashboard.charts.salesByCity.title")}
           </Typography>
           <Typography variant="body2" color="text.secondary" mb={1}>
-            Total de ingresos agrupados por ciudad de entrega.
+            {t("dashboard.charts.salesByCity.description")}
           </Typography>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={ciudadData} margin={{ bottom: 20 }}>
