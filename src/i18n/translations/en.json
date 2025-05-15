@@ -16,6 +16,8 @@
     "description": "Description",
     "quantity": "Quantity",
     "warehouse": "Warehouse",
+    "fromWarehouse": "From Warehouse",
+    "toWarehouse": "To Warehouse",
     "warehouses": "warehouses",
     "movementType": "Movement Type",
     "entrance": "Entrance",

@@ -24,6 +24,7 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
   const { t } = useTranslation();
   const methods = useForm<MoveProductFormValues>({
     resolver: zodResolver(MoveProductSchema),
+    mode: "onChange",
     defaultValues: {},
   });
 
@@ -48,7 +49,7 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
           handleOnClose();
         })
         .catch((error) => {
-          toast.error(error.data.message);
+          toast.error(error.data);
         });
     } else if (data.movementType === "salida") {
       moveOutcomeProduct(data)
@@ -56,6 +57,9 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
         .then(() => {
           toast.success(t("messages.productMovedSuccess"));
           handleOnClose();
+        })
+        .catch((error) => {
+          toast.error(error.data);
         });
     } else if (data.movementType === "traslado") {
       moveTransferProduct(data)
@@ -63,6 +67,9 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
         .then(() => {
           toast.success(t("messages.productMovedSuccess"));
           handleOnClose();
+        })
+        .catch((error) => {
+          toast.error(error.data);
         });
     }
   };
@@ -75,6 +82,8 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
             movementType: data.movementType,
             productId: data.productId,
             warehouseId: data.warehouseId + "",
+            fromWarehouseId: data.fromWarehouseId,
+            toWarehouseId: data.toWarehouseId,
             description: data.description,
             quantity: Number(data.quantity),
           });

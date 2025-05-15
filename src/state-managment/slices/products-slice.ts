@@ -121,6 +121,7 @@ export const productsApi = createApi({
     }),
     moveTransferProduct: builder.mutation<void, IMoveProduct>({
       async queryFn(movement) {
+        console.log("movement", movement);
         try {
           const repo = new ProductRepositoryImpl();
           await repo.moveTransfer(movement);

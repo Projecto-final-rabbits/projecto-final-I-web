@@ -16,6 +16,8 @@
     "description": "Descripción",
     "quantity": "Cantidad",
     "warehouse": "Almacén",
+    "fromWarehouse": "Almacén de origen",
+    "toWarehouse": "Almacén de destino",
     "warehouses": "almacenes",
     "movementType": "Tipo de Movimiento",
     "entrance": "Entrada",

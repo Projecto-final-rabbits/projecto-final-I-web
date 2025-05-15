@@ -8,11 +8,16 @@ import { useTranslation } from "react-i18next";
 type WarehouseAutocompleteProps = {
   name: string;
   disabled?: boolean;
+  title?:
+    | "products.warehouse"
+    | "products.fromWarehouse"
+    | "products.toWarehouse";
 };
 
 const WarehouseAutocomplete: React.FC<WarehouseAutocompleteProps> = ({
   name,
   disabled = false,
+  title = "products.warehouse",
 }) => {
   const { t } = useTranslation();
   const { data: warehouses, isLoading, error } = useGetWarehousesQuery();
@@ -55,7 +60,7 @@ const WarehouseAutocomplete: React.FC<WarehouseAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label={t("products.warehouse")}
+              label={t(title)}
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}
