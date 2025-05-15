@@ -6,7 +6,8 @@ import { productsApi, providersApi } from "./slices";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { warehousesApi } from "./slices/warehouse-slice";
 import { inventoriesApi } from "./slices/inventoriesSlice";
-import dashboardReducer from "./slices/dashboard-slice";  
+import dashboardReducer from "./slices/dashboard-slice"; 
+import ordersReducer from "./slices/ordersSlice"; 
 
 export const store = configureStore({
   reducer: {
@@ -20,7 +21,8 @@ export const store = configureStore({
     [inventoriesApi.reducerPath]: inventoriesApi.reducer,
 
     // Slice “normal”
-    dashboard: dashboardReducer,  
+    dashboard: dashboardReducer,
+    orders: ordersReducer  
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

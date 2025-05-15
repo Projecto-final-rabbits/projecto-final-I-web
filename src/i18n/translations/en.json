@@ -14,7 +14,7 @@
     }
   },
   "dashboard": {
-    "title": "📊 Sales Dashboard",
+    "title": "Sales Dashboard",
     "description": "Review your sales performance for the selected period. Check key metrics such as order volume, revenue, status behavior, and geographic distribution.",
     "date": {
       "from": "From",
@@ -38,6 +38,20 @@
         "title": "Sales by City",
         "description": "Total revenue grouped by delivery city"
       }
+    }
+  },
+  "orders": {
+    "title": "Orders List",
+    "table": {
+      "id": "ID",
+      "date": "Date",
+      "customer": "Customer",
+      "address": "Address",
+      "status": "Status",
+      "total": "Total",
+      "actions": "Actions",
+      "viewRoute": "View Route",
+      "optimizeRoute": "Optimize Route"
     }
   },
   "products": {
