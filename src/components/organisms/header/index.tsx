@@ -138,6 +138,18 @@ const Header: React.FC = () => {
                 Proveedores
               </Link>
             )}
+            {user?.role != "compras" && (
+            <Link
+              to="/dashboard-sales"
+              style={{
+                textDecoration: "none",
+                color: "white",
+                fontWeight: 500,
+              }}
+            >
+              Dashboard Ventas
+            </Link>
+            )}
           </Stack>
           <Box sx={{ flexGrow: 1 }} />
           <ChangeLanguage />
