@@ -23,7 +23,11 @@ const CreateUser: React.FC<CreateUserProps> = ({ role }) => {
 
   return (
     <>
-      <Button variant="contained" onClick={() => setOpen(true)}>
+      <Button
+        data-testid="crear-usuario"
+        variant="contained"
+        onClick={() => setOpen(true)}
+      >
         {TITLE[role]}
       </Button>
       {open && (
