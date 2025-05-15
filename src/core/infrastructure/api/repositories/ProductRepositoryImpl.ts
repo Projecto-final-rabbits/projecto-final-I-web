@@ -71,10 +71,10 @@ class ProductRepositoryImpl implements IProductRepository {
   async moveTransfer(movement: IMoveProduct): Promise<void> {
     return axiosClientForWarehouse.post("/movimientos/traslado", {
       producto_id: movement.productId,
-      bodega_id: movement.warehouseId,
+      origen_bodega_id: movement.fromWarehouseId,
+      destino_bodega_id: movement.toWarehouseId,
       cantidad: +movement.quantity,
       descripcion: movement.description,
-      tipo_movimiento: "traslado",
     });
   }
 }

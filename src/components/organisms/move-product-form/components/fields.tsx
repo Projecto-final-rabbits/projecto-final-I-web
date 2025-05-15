@@ -12,14 +12,29 @@ type FieldsProps = {
 };
 
 const Fields: React.FC<FieldsProps> = ({ disabled }) => {
-  const { register, formState } = useFormContext();
+  const { register, formState, watch } = useFormContext();
   const { t } = useTranslation();
+
+  const movementType = watch("movementType");
 
   return (
     <>
       <MovementTypeAutocomplete name="movementType" />
       <ProductAutocomplete name="productId" />
-      <WarehouseAutocomplete name="warehouseId" />
+      {movementType === "traslado" ? (
+        <>
+          <WarehouseAutocomplete
+            name="fromWarehouseId"
+            title="products.fromWarehouse"
+          />
+          <WarehouseAutocomplete
+            name="toWarehouseId"
+            title="products.toWarehouse"
+          />
+        </>
+      ) : (
+        <WarehouseAutocomplete name="warehouseId" />
+      )}
       <TextField
         label={t("products.quantity")}
         fullWidth
