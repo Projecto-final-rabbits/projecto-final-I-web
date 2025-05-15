@@ -1,5 +1,5 @@
-// src/core/infraestructure/api/repositories/DashboardRepositoryImpl.ts
-import { axiosClientForSales } from "@/core/infraestructure/api/clients";
+// src/core/infrastructure/api/repositories/DashboardRepositoryImpl.ts
+import { axiosClientForSales } from "@/core/infrastructure/api/clients";
 import { SalesSummary } from "@/core/domain/interfaces/dashboard";
 
 export class DashboardRepositoryImpl {
