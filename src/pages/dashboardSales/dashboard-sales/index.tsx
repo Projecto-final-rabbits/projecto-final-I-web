@@ -11,6 +11,7 @@ import {
   CircularProgress,
   Button,
   Divider,
+  IconButton,
 } from "@mui/material";
 import {
   PieChart,
@@ -28,6 +29,7 @@ import {
 } from "recharts";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
+import BarChartIcon from "@mui/icons-material/BarChart";
 
 const COLORS = ["#1976d2", "#388e3c", "#d32f2f", "#ffa000", "#7b1fa2"];
 
@@ -84,9 +86,14 @@ const DashboardSales: React.FC = () => {
   return (
     <Box sx={{ p: 3 }}>
       {/* Cabecera */}
-      <Typography variant="h4" gutterBottom>
-        {t("dashboard.title")}
-      </Typography>
+      <Box display="flex" alignItems="center" mb={1}>
+        <IconButton disabled size="large">
+          <BarChartIcon fontSize="inherit" />
+        </IconButton>
+        <Typography variant="h4" gutterBottom>
+          {t("dashboard.title")}
+        </Typography>
+      </Box>
       <Typography variant="body1" color="text.secondary" gutterBottom>
         {t("dashboard.description")}
       </Typography>

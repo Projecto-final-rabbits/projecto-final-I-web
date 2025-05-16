@@ -14,7 +14,7 @@
     }
   },
   "dashboard": {
-    "title": "📊 Panel de Control de Ventas",
+    "title": "Panel de Control de Ventas",
     "description": "Revisa el desempeño de tus ventas en el periodo seleccionado. Consulta métricas clave como volumen de pedidos, ingresos, comportamiento por estado y distribución geográfica.",
     "date": {
       "from": "Desde",
@@ -38,6 +38,20 @@
         "title": "Ventas por Ciudad",
         "description": "Total de ingresos agrupados por ciudad de entrega"
       }
+    }
+  },
+  "orders": {
+    "title": "Listado de Pedidos",
+    "table": {
+      "id": "ID",
+      "date": "Fecha",
+      "customer": "Cliente",
+      "address": "Dirección",
+      "status": "Estado",
+      "total": "Total",
+      "actions": "Acciones",
+      "viewRoute": "Ver Ruta",
+      "optimizeRoute": "Optimizar Ruta"
     }
   },
   "products": {
