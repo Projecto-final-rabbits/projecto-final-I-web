@@ -8,7 +8,7 @@ interface RouteModalProps {
   onClose: () => void;
 }
 
-const RouteModal = ({ open, onClose }: RouteModalProps) => {
+const RouteModal = ({ orderId, open, onClose }: RouteModalProps) => {
   const handleCloseRouteModal = () => {
     setTimeout(() => {
       onClose();
@@ -19,7 +19,7 @@ const RouteModal = ({ open, onClose }: RouteModalProps) => {
     <Dialog open={open} onClose={handleCloseRouteModal}>
       <DialogTitle>Rutas de entrega</DialogTitle>
       <DialogContent>
-        <Map />
+        <Map orderId={orderId} />
       </DialogContent>
     </Dialog>
   );

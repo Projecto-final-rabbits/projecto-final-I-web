@@ -18,6 +18,8 @@ import {
 } from "@mui/material";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import { RouteModal } from "./components";
+import { LoadScript } from "@react-google-maps/api";
+import { env } from "@/config/env";
 
 export const OrdersListPage: React.FC = () => {
   const [openRouteModal, setOpenRouteModal] = useState(false);
@@ -108,6 +110,9 @@ export const OrdersListPage: React.FC = () => {
           </Table>
         </Paper>
       </Box>
+      <LoadScript
+        googleMapsApiKey={env.VITE_API_REACT_APP_GOOGLE_MAPS_API_KEY!}
+      ></LoadScript>
     </Fragment>
   );
 };

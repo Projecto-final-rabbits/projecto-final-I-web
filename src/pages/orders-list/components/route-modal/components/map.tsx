@@ -1,94 +1,86 @@
-import { env } from "@/config/env";
-import { Stack, Button, Skeleton } from "@mui/material";
+import { useAppDispatch } from "@/state-managment/hooks";
 import {
-  GoogleMap,
-  LoadScript,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
-import { Fragment, useCallback, useReducer, useState } from "react";
+  clearSuggestion,
+  suggestRoute,
+} from "@/state-managment/slices/ordersSlice";
+import { RootState } from "@/state-managment/store"; // adjust if needed
+import { Stack, Button } from "@mui/material";
+import { GoogleMap, DirectionsRenderer } from "@react-google-maps/api";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
-type Route = {
-  from: string;
-  to: string;
+type MapProps = {
+  orderId: number;
 };
 
 const center = {
-  lat: 4.711, // Center on Bogotá
+  lat: 4.711,
   lng: -74.0721,
 };
 
-const initialRoute: Route = {
-  from: "Carrera 15 #80-45, Bogotá, Colombia",
-  to: "Carrera 7 #72-10, Bogotá, Colombia",
-};
-
-function routeReducer(state: Route, action: { type: string; payload: Route }) {
-  switch (action.type) {
-    case "updateDirection":
-      return action.payload;
-    default:
-      return state;
-  }
-}
-
-const Map = () => {
-  const [wasOptimized, setWasOptimized] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [route] = useReducer(routeReducer, initialRoute);
+const Map = ({ orderId }: MapProps) => {
+  const dispatch = useAppDispatch();
+  const route = useSelector((state: RootState) => state.orders.route);
   const [directions, setDirections] =
     useState<google.maps.DirectionsResult | null>(null);
 
-  const fetchDirections = useCallback(() => {
-    const directionsService = new google.maps.DirectionsService();
+  const optimizedRequestedRef = useRef(false);
+
+  const fetchDirections = (route: { origen: string; destino: string }) => {
+    if (!window.google) return;
+    if (optimizedRequestedRef.current) return;
+
+    optimizedRequestedRef.current = true;
+    console.log("*****", optimizedRequestedRef.current);
+
+    const directionsService = new window.google.maps.DirectionsService();
 
     directionsService.route(
       {
-        origin: route.from,
-        destination: route.to,
-        travelMode: google.maps.TravelMode.DRIVING,
+        origin: route.origen,
+        destination: route.destino,
+        travelMode: window.google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK && result) {
+        if (status === window.google.maps.DirectionsStatus.OK && result) {
           setDirections(result);
         } else {
           console.error("Directions request failed:", status, result);
         }
-        setLoading(false);
       }
     );
-  }, [route]);
+  };
 
   const handleOptimizeRoute = () => {
-    setWasOptimized(true);
-    fetchDirections(); // Manually trigger when button is clicked
+    dispatch(suggestRoute(orderId));
   };
+
+  useEffect(() => {
+    if (route && !optimizedRequestedRef.current && window.google) {
+      fetchDirections(route);
+    }
+  }, [route]);
+
+  useEffect(() => {
+    return () => {
+      optimizedRequestedRef.current = false;
+      dispatch(clearSuggestion());
+    };
+  }, [dispatch]);
 
   return (
     <Stack direction="column" spacing={2}>
-      {loading ? (
-        <Skeleton height={400} width={400} />
-      ) : (
-        <Fragment>
-          <LoadScript
-            googleMapsApiKey={env.VITE_API_REACT_APP_GOOGLE_MAPS_API_KEY!}
-          >
-            <GoogleMap
-              mapContainerStyle={{ width: "400px", height: "400px" }}
-              center={center}
-              zoom={12}
-            >
-              {directions && <DirectionsRenderer directions={directions} />}
-            </GoogleMap>
-          </LoadScript>
-        </Fragment>
-      )}
+      <Fragment>
+        <GoogleMap
+          mapContainerStyle={{ width: "400px", height: "400px" }}
+          center={center}
+          zoom={12}
+        >
+          {directions && <DirectionsRenderer directions={directions} />}
+        </GoogleMap>
+      </Fragment>
 
-      <Button
-        variant="contained"
-        color="primary"
-        disabled={wasOptimized}
-        onClick={handleOptimizeRoute}
-      >
+      <Button variant="contained" color="primary" onClick={handleOptimizeRoute}>
         Optimizar ruta
       </Button>
     </Stack>
