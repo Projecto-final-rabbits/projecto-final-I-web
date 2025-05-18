@@ -81,7 +81,7 @@ const Map = ({ orderId }: MapProps) => {
       </Stack>
 
       <GoogleMap
-        mapContainerStyle={{ width: "100%", height: "450px" }}
+        mapContainerStyle={{ width: "100%", height: "450px", minWidth: 450 }}
         center={center}
         zoom={12}
       >

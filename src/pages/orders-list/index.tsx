@@ -22,13 +22,13 @@ import { LoadScript } from "@react-google-maps/api";
 import { env } from "@/config/env";
 
 export const OrdersListPage: React.FC = () => {
-  const [openRouteModal, setOpenRouteModal] = useState(false);
+  const [orderIdSelected, setOrderIdSelected] = useState<number>();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { list, status, error } = useAppSelector((s) => s.orders);
 
-  const handleOpenRouteModal = () => {
-    setOpenRouteModal(true);
+  const handleOpenRouteModal = (id: number) => {
+    setOrderIdSelected(id);
   };
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export const OrdersListPage: React.FC = () => {
                       <Button
                         size="small"
                         startIcon={<ListAltIcon />}
-                        onClick={handleOpenRouteModal}
+                        onClick={() => handleOpenRouteModal(o.id)}
                       >
                         {t("orders.table.viewRoute")}
                       </Button>
@@ -97,19 +97,19 @@ export const OrdersListPage: React.FC = () => {
                       </Button>
                     </TableCell>
                   </TableRow>
-                  {openRouteModal && (
-                    <RouteModal
-                      orderId={o.id}
-                      open={openRouteModal}
-                      onClose={() => setOpenRouteModal(false)}
-                    />
-                  )}
                 </Fragment>
               ))}
             </TableBody>
           </Table>
         </Paper>
       </Box>
+      {orderIdSelected && (
+        <RouteModal
+          orderId={orderIdSelected}
+          open={true}
+          onClose={() => setOrderIdSelected(undefined)}
+        />
+      )}
       <LoadScript
         googleMapsApiKey={env.VITE_API_REACT_APP_GOOGLE_MAPS_API_KEY!}
       ></LoadScript>
