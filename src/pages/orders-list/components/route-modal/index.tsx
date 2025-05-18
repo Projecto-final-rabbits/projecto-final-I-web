@@ -1,4 +1,5 @@
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { Map } from "./components";
 
@@ -9,6 +10,8 @@ interface RouteModalProps {
 }
 
 const RouteModal = ({ orderId, open, onClose }: RouteModalProps) => {
+  const { t } = useTranslation();
+
   const handleCloseRouteModal = () => {
     setTimeout(() => {
       onClose();
@@ -17,7 +20,7 @@ const RouteModal = ({ orderId, open, onClose }: RouteModalProps) => {
 
   return (
     <Dialog open={open} onClose={handleCloseRouteModal}>
-      <DialogTitle>Rutas de entrega</DialogTitle>
+      <DialogTitle>{t("orders.table.viewRoute")}</DialogTitle>
       <DialogContent>
         <Map orderId={orderId} />
       </DialogContent>
