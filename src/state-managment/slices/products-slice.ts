@@ -69,11 +69,11 @@ export const productsApi = createApi({
       },
       invalidatesTags: ["Products"],
     }),
-    moveProduct: builder.mutation<void, IMoveProduct>({
+    moveIncomeProduct: builder.mutation<void, IMoveProduct>({
       async queryFn(movement) {
         try {
           const repo = new ProductRepositoryImpl();
-          await repo.move(movement);
+          await repo.moveIncome(movement);
           return { data: undefined };
         } catch (error) {
           return {
@@ -87,11 +87,61 @@ export const productsApi = createApi({
       },
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled; // esperamos a que el mutation se complete
-          // forzamos la invalidación en inventoriesApi
+          await queryFulfilled;
           dispatch(inventoriesApi.util.invalidateTags(["Inventories"]));
         } catch {
-          /* no hacemos nada si falló */
+          console.log("Error al mover el producto");
+        }
+      },
+    }),
+    moveOutcomeProduct: builder.mutation<void, IMoveProduct>({
+      async queryFn(movement) {
+        try {
+          const repo = new ProductRepositoryImpl();
+          await repo.moveOutcome(movement);
+          return { data: undefined };
+        } catch (error) {
+          return {
+            error: {
+              status: 500,
+              data:
+                error instanceof Error ? error.message : "Ops, algo salió mal",
+            },
+          };
+        }
+      },
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(inventoriesApi.util.invalidateTags(["Inventories"]));
+        } catch {
+          console.log("Error al mover el producto");
+        }
+      },
+    }),
+    moveTransferProduct: builder.mutation<void, IMoveProduct>({
+      async queryFn(movement) {
+        console.log("movement", movement);
+        try {
+          const repo = new ProductRepositoryImpl();
+          await repo.moveTransfer(movement);
+          return { data: undefined };
+        } catch (error) {
+          return {
+            error: {
+              status: 500,
+              data:
+                error instanceof Error ? error.message : "Ops, algo salió mal",
+            },
+          };
+        }
+      },
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          dispatch(inventoriesApi.util.invalidateTags(["Inventories"]));
+        } catch {
+          console.log("Error al mover el producto");
         }
       },
     }),
@@ -102,5 +152,7 @@ export const {
   useGetProductsQuery,
   useSaveProductMutation,
   useSaveMultipleProductsMutation,
-  useMoveProductMutation,
+  useMoveIncomeProductMutation,
+  useMoveOutcomeProductMutation,
+  useMoveTransferProductMutation,
 } = productsApi;

@@ -3,24 +3,34 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { useFormContext, Controller } from "react-hook-form";
 import { useGetWarehousesQuery } from "@/state-managment/slices/warehouse-slice";
+import { useTranslation } from "react-i18next";
 
 type WarehouseAutocompleteProps = {
   name: string;
   disabled?: boolean;
+  title?:
+    | "products.warehouse"
+    | "products.fromWarehouse"
+    | "products.toWarehouse";
 };
 
 const WarehouseAutocomplete: React.FC<WarehouseAutocompleteProps> = ({
   name,
   disabled = false,
+  title = "products.warehouse",
 }) => {
+  const { t } = useTranslation();
   const { data: warehouses, isLoading, error } = useGetWarehousesQuery();
   const {
     control,
     formState: { errors },
   } = useFormContext();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading providers</p>;
+  if (isLoading) return <p>{t("common.loading")}</p>;
+  if (error)
+    return (
+      <p>{t("common.errorLoading", { resource: t("products.warehouses") })}</p>
+    );
 
   const warehouseOptions =
     warehouses?.map(({ id, nombre }) => ({
@@ -50,7 +60,7 @@ const WarehouseAutocomplete: React.FC<WarehouseAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Bodega"
+              label={t(title)}
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}

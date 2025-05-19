@@ -55,8 +55,11 @@ type ICreateProductDTO = {
 type IMoveProduct = {
   productId: string;
   warehouseId: string;
-  description: string;
+  fromWarehouseId?: number;
+  toWarehouseId?: number;
+  description?: string;
   quantity: number;
+  movementType: string;
 };
 
 type IUpdateProductDTO = Partial<

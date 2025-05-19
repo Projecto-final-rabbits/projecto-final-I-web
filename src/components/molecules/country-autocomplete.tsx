@@ -3,6 +3,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { useFormContext, Controller } from "react-hook-form";
 import { COUNTRIES } from "@/utils/countries";
+import { useTranslation } from "react-i18next";
 
 type CountryAutocompleteProps = {
   name: string;
@@ -13,6 +14,7 @@ const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
   name,
   disabled = false,
 }) => {
+  const { t } = useTranslation();
   const {
     control,
     formState: { errors },
@@ -46,7 +48,7 @@ const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Pais"
+              label={t("providers.country")}
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}

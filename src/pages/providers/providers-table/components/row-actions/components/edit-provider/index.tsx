@@ -6,6 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 type EditProviderProps = IProvider;
 
@@ -17,6 +18,7 @@ const EditProvider: React.FC<EditProviderProps> = ({
   pais,
   contacto,
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [updateProvider, { isLoading }] = useUpdateProviderMutation();
 
@@ -24,11 +26,11 @@ const EditProvider: React.FC<EditProviderProps> = ({
     updateProvider({ provider: data, id })
       .unwrap()
       .then(() => {
-        toast.success("Proveedor actualizado correctamente");
+        toast.success(t("providers.updateSuccess"));
         handleOnClose();
       })
       .catch(() => {
-        toast.error("Oops! Error, intentalo mas tarde.");
+        toast.error(t("providers.updateError"));
       });
   };
 
@@ -52,7 +54,7 @@ const EditProvider: React.FC<EditProviderProps> = ({
         <Modal
           open={isOpen}
           handleClose={handleOnClose}
-          title="Editar Proveedor"
+          title={t("providers.editProvider")}
           disableEscapeKeyDown
         >
           <ProviderForm
@@ -66,7 +68,7 @@ const EditProvider: React.FC<EditProviderProps> = ({
             isLoading={isLoading}
             onSubmit={handleEditProvider}
             onClose={handleOnClose}
-            submitText="Guardar"
+            submitText={t("common.save")}
           />
         </Modal>
       )}

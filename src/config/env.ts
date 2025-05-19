@@ -13,6 +13,7 @@ const envSchema = z.object({
   VITE_FIREBASE_PROJECT_ID: z.string(),
   VITE_FIREBASE_STORAGE_BUCKET: z.string(),
   VITE_FIREBASE_MESSAGING_SENDER_ID: z.string(),
+  VITE_API_REACT_APP_GOOGLE_MAPS_API_KEY: z.string(),
 });
 
 // Function to validate environment variables

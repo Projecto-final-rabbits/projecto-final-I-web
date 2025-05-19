@@ -1,23 +1,42 @@
 import {
+  MovementTypeAutocomplete,
   ProductAutocomplete,
   WarehouseAutocomplete,
 } from "@/components/molecules";
 import { TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 type FieldsProps = {
   disabled?: boolean;
 };
 
 const Fields: React.FC<FieldsProps> = ({ disabled }) => {
-  const { register, formState } = useFormContext();
+  const { register, formState, watch } = useFormContext();
+  const { t } = useTranslation();
+
+  const movementType = watch("movementType");
 
   return (
     <>
+      <MovementTypeAutocomplete name="movementType" />
       <ProductAutocomplete name="productId" />
-      <WarehouseAutocomplete name="warehouseId" />
+      {movementType === "traslado" ? (
+        <>
+          <WarehouseAutocomplete
+            name="fromWarehouseId"
+            title="products.fromWarehouse"
+          />
+          <WarehouseAutocomplete
+            name="toWarehouseId"
+            title="products.toWarehouse"
+          />
+        </>
+      ) : (
+        <WarehouseAutocomplete name="warehouseId" />
+      )}
       <TextField
-        label="Cantidad"
+        label={t("products.quantity")}
         fullWidth
         type="number"
         min={1}
@@ -29,7 +48,7 @@ const Fields: React.FC<FieldsProps> = ({ disabled }) => {
         helperText={formState.errors.quantity?.message as string}
       />
       <TextField
-        label="Descripcion"
+        label={t("products.description")}
         fullWidth
         multiline
         rows={3}

@@ -3,6 +3,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { useFormContext, Controller } from "react-hook-form";
 import { Role } from "@/core/domain/interfaces";
+import { useTranslation } from "react-i18next";
 
 type RoleAutocompleteProps = {
   name: string;
@@ -36,6 +37,7 @@ const RoleAutocomplete: React.FC<RoleAutocompleteProps> = ({
   name,
   disabled = false,
 }) => {
+  const { t } = useTranslation();
   const {
     control,
     formState: { errors },
@@ -68,7 +70,7 @@ const RoleAutocomplete: React.FC<RoleAutocompleteProps> = ({
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Rol"
+              label={t("users.role")}
               variant="outlined"
               error={!!errors[name]}
               helperText={errors[name]?.message?.toString()}

@@ -3,9 +3,14 @@ import { Stack } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import { MoveProductFormValues, MoveProductSchema } from "./types";
 import { Actions, Fields } from "./components";
-import { useMoveProductMutation } from "@/state-managment/slices";
+import {
+  useMoveIncomeProductMutation,
+  useMoveOutcomeProductMutation,
+  useMoveTransferProductMutation,
+} from "@/state-managment/slices";
 import { IMoveProduct } from "@/core/domain/interfaces";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 type MoveProductFormProps = {
   onClose: () => void;
@@ -16,12 +21,19 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
   onClose,
   disabled,
 }) => {
+  const { t } = useTranslation();
   const methods = useForm<MoveProductFormValues>({
     resolver: zodResolver(MoveProductSchema),
+    mode: "onChange",
     defaultValues: {},
   });
 
-  const [moveProduct, { isLoading }] = useMoveProductMutation();
+  const [moveIncomeProduct, { isLoading: isIncomeLoading }] =
+    useMoveIncomeProductMutation();
+  const [moveOutcomeProduct, { isLoading: isOutcomeLoading }] =
+    useMoveOutcomeProductMutation();
+  const [moveTransferProduct, { isLoading: isTransferLoading }] =
+    useMoveTransferProductMutation();
 
   const handleOnClose = () => {
     methods.reset();
@@ -29,15 +41,37 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
   };
 
   const handleCreateProduct = (data: IMoveProduct) => {
-    moveProduct(data)
-      .unwrap()
-      .then(() => {
-        toast.success("Producto movido correctamente");
-        handleOnClose();
-      })
-      .catch((error) => {
-        toast.error(error.data.message);
-      });
+    if (data.movementType === "entrada") {
+      moveIncomeProduct(data)
+        .unwrap()
+        .then(() => {
+          toast.success(t("messages.productMovedSuccess"));
+          handleOnClose();
+        })
+        .catch((error) => {
+          toast.error(error.data);
+        });
+    } else if (data.movementType === "salida") {
+      moveOutcomeProduct(data)
+        .unwrap()
+        .then(() => {
+          toast.success(t("messages.productMovedSuccess"));
+          handleOnClose();
+        })
+        .catch((error) => {
+          toast.error(error.data);
+        });
+    } else if (data.movementType === "traslado") {
+      moveTransferProduct(data)
+        .unwrap()
+        .then(() => {
+          toast.success(t("messages.productMovedSuccess"));
+          handleOnClose();
+        })
+        .catch((error) => {
+          toast.error(error.data);
+        });
+    }
   };
 
   return (
@@ -45,8 +79,11 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
       <form
         onSubmit={methods.handleSubmit((data) => {
           handleCreateProduct({
+            movementType: data.movementType,
             productId: data.productId,
             warehouseId: data.warehouseId + "",
+            fromWarehouseId: data.fromWarehouseId,
+            toWarehouseId: data.toWarehouseId,
             description: data.description,
             quantity: Number(data.quantity),
           });
@@ -54,13 +91,20 @@ const MoveProductForm: React.FC<MoveProductFormProps> = ({
       >
         <Stack spacing={2}>
           <Stack direction="column" spacing={1.5}>
-            <Fields disabled={disabled || isLoading} />
+            <Fields
+              disabled={
+                disabled ||
+                isIncomeLoading ||
+                isOutcomeLoading ||
+                isTransferLoading
+              }
+            />
           </Stack>
           <Actions
             onCancel={handleOnClose}
-            submitText="Mover producto"
-            cancelText="Cancelar"
-            isLoading={isLoading}
+            submitText={t("products.moveProduct")}
+            cancelText={t("products.cancel")}
+            isLoading={isIncomeLoading || isOutcomeLoading || isTransferLoading}
             disabled={disabled}
           />
         </Stack>

@@ -1,0 +1,131 @@
+{
+  "common": {
+    "language": "Language",
+    "english": "English",
+    "spanish": "Spanish",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "or": "or",
+    "loading": "Loading...",
+    "errorLoading": "Error loading {{resource}}",
+    "errors": {
+      "loadingDashboard": "Error loading dashboard data"
+    }
+  },
+  "dashboard": {
+    "title": "Sales Dashboard",
+    "description": "Review your sales performance for the selected period. Check key metrics such as order volume, revenue, status behavior, and geographic distribution.",
+    "date": {
+      "from": "From",
+      "to": "To",
+      "update": "Update",
+      "loading": "Loading..."
+    },
+    "metrics": {
+      "title": "Key Metrics",
+      "totalOrders": "Total Orders",
+      "totalRevenue": "Total Revenue",
+      "averageTicket": "Average Ticket",
+      "activeCustomers": "Active Customers"
+    },
+    "charts": {
+      "statusDistribution": {
+        "title": "Status Distribution",
+        "description": "Percentage of orders in each status"
+      },
+      "salesByCity": {
+        "title": "Sales by City",
+        "description": "Total revenue grouped by delivery city"
+      }
+    }
+  },
+  "orders": {
+    "title": "Orders List",
+    "table": {
+      "id": "ID",
+      "date": "Date",
+      "customer": "Customer",
+      "address": "Address",
+      "status": "Status",
+      "total": "Total",
+      "actions": "Actions",
+      "viewRoute": "View Route",
+      "optimizeRoute": "Optimize Route"
+    }
+  },
+  "products": {
+    "moveProduct": "Move Product",
+    "cancel": "Cancel",
+    "description": "Description",
+    "quantity": "Quantity",
+    "warehouse": "Warehouse",
+    "fromWarehouse": "From Warehouse",
+    "toWarehouse": "To Warehouse",
+    "warehouses": "warehouses",
+    "movementType": "Movement Type",
+    "entrance": "Entrance",
+    "exit": "Exit",
+    "transfer": "Transfer",
+    "yourProducts": "Your Products",
+    "addProduct": "Add Product",
+    "importCsv": "Import .csv",
+    "name": "Name",
+    "purchasePrice": "Purchase Price",
+    "salePrice": "Sale Price",
+    "activePromotion": "Active Promotion",
+    "storageCondition": "Storage Condition",
+    "expirationDate": "Expiration Date",
+    "notApplicable": "Not applicable",
+    "deliveryTime": "Delivery Time",
+    "days": "days",
+    "category": "Category",
+    "categoryDescription": "This column has a value getter and is not sortable",
+    "availableQuantity": "Available Quantity",
+    "unknownProduct": "Unknown product",
+    "inventories": "Inventories",
+    "product": "Product",
+    "products": "products"
+  },
+  "messages": {
+    "productMovedSuccess": "Product moved successfully",
+    "error": "Error",
+    "productsImportedSuccess": "Products imported successfully",
+    "productsImportError": "Error importing products"
+  },
+  "validation": {
+    "required": "This field is required",
+    "minQuantity": "Minimum 1 product",
+    "invalidEmail": "Invalid email format",
+    "passwordMinLength": "Password must be at least 4 characters"
+  },
+  "providers": {
+    "yourProviders": "Your Providers",
+    "actions": "Actions",
+    "name": "Name",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "country": "Country",
+    "editProvider": "Edit Provider",
+    "updateSuccess": "Provider updated successfully",
+    "updateError": "Oops! Error, please try again later.",
+    "addProvider": "Add Provider",
+    "createSuccess": "Provider created successfully",
+    "createError": "Oops! Error, please try again later.",
+    "manufacturer": "Manufacturer",
+    "providers": "providers"
+  },
+  "login": {
+    "title": "Login",
+    "welcome": "Welcome, login to view your products",
+    "googleSignIn": "Sign in with Google",
+    "email": "Email",
+    "password": "Password",
+    "continue": "Continue"
+  },
+  "users": {
+    "fullName": "Full Name",
+    "email": "Email"
+  }
+}

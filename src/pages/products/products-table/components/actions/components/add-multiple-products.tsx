@@ -3,8 +3,10 @@ import GetAppIcon from "@mui/icons-material/GetApp";
 import { useSaveMultipleProductsMutation } from "@/state-managment/slices";
 import { useRef } from "react";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const AddMultipleProducts = () => {
+  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [saveMultipleProducts, { isLoading }] =
     useSaveMultipleProductsMutation();
@@ -20,10 +22,10 @@ const AddMultipleProducts = () => {
     saveMultipleProducts(formData)
       .unwrap()
       .then(() => {
-        toast.success("Productos importados correctamente");
+        toast.success(t("messages.productsImportedSuccess"));
       })
       .catch(() => {
-        toast.error("Error al importar productos");
+        toast.error(t("messages.productsImportError"));
       });
   };
 
@@ -49,7 +51,7 @@ const AddMultipleProducts = () => {
         onClick={handleClick}
         data-testid="importar-productos"
       >
-        Importar .csv
+        {t("products.importCsv")}
       </Button>
     </>
   );

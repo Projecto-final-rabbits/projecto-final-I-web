@@ -6,6 +6,8 @@ import { Layout } from "@/components/template";
 import { useSelector } from "react-redux";
 import { RootState } from "@/state-managment/store";
 import { ProvidersPage } from "@/pages/providers";
+import { DashboardSales } from "@/pages/dashboardSales/dashboard-sales";
+import { OrdersListPage } from "@/pages/orders-list";
 
 type ProtectedRouteProps = {
   children: React.ReactNode;
@@ -47,6 +49,22 @@ const AppRoutes: React.FC = () => {
         element={
           <ProtectedRoute>
             <ProvidersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dashboard-sales"
+        element={
+          <ProtectedRoute>
+            <DashboardSales />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/orders"
+        element={
+          <ProtectedRoute>
+            <OrdersListPage />
           </ProtectedRoute>
         }
       />

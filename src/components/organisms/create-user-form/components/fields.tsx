@@ -1,7 +1,7 @@
 import { RoleAutocomplete } from "@/components/molecules";
-
 import { Stack, TextField } from "@mui/material";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 type FieldsProps = {
   disabled?: boolean;
@@ -9,12 +9,13 @@ type FieldsProps = {
 };
 
 const Fields: React.FC<FieldsProps> = ({ disabled, isAdmin }) => {
+  const { t } = useTranslation();
   const { register, formState } = useFormContext();
 
   return (
     <Stack direction="column" spacing={2}>
       <TextField
-        label="Nombre completo"
+        label={t("users.fullName")}
         variant="outlined"
         fullWidth
         disabled={disabled}
@@ -31,7 +32,7 @@ const Fields: React.FC<FieldsProps> = ({ disabled, isAdmin }) => {
         />
       )}
       <TextField
-        label="Correo electrónico"
+        label={t("users.email")}
         variant="outlined"
         fullWidth
         disabled={disabled}

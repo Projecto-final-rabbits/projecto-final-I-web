@@ -48,13 +48,33 @@ class ProductRepositoryImpl implements IProductRepository {
     });
   }
 
-  async move(movement: IMoveProduct): Promise<void> {
+  async moveIncome(movement: IMoveProduct): Promise<void> {
     return axiosClientForWarehouse.post("/movimientos/entrada", {
       producto_id: movement.productId,
       bodega_id: movement.warehouseId,
       cantidad: +movement.quantity,
       descripcion: movement.description,
       tipo_movimiento: "entrada",
+    });
+  }
+
+  async moveOutcome(movement: IMoveProduct): Promise<void> {
+    return axiosClientForWarehouse.post("/movimientos/salida", {
+      producto_id: movement.productId,
+      bodega_id: movement.warehouseId,
+      cantidad: +movement.quantity,
+      descripcion: movement.description,
+      tipo_movimiento: "salida",
+    });
+  }
+
+  async moveTransfer(movement: IMoveProduct): Promise<void> {
+    return axiosClientForWarehouse.post("/movimientos/traslado", {
+      producto_id: movement.productId,
+      origen_bodega_id: movement.fromWarehouseId,
+      destino_bodega_id: movement.toWarehouseId,
+      cantidad: +movement.quantity,
+      descripcion: movement.description,
     });
   }
 }

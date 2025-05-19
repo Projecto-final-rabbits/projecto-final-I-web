@@ -6,8 +6,10 @@ import { ProviderForm } from "@/components/organisms/provider-form";
 import { useSaveProviderMutation } from "@/state-managment/slices";
 import { ICreateProvider } from "@/core/domain/interfaces";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const AddProvider: React.FC = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saveProvider, { isLoading }] = useSaveProviderMutation();
 
@@ -15,11 +17,11 @@ const AddProvider: React.FC = () => {
     saveProvider(data)
       .unwrap()
       .then(() => {
-        toast.success("Proveedor creado correctamente");
+        toast.success(t("providers.createSuccess"));
         handleOnClose();
       })
       .catch(() => {
-        toast.error("Oops! Error, intentalo mas tarde.");
+        toast.error(t("providers.createError"));
       });
   };
 
@@ -37,12 +39,12 @@ const AddProvider: React.FC = () => {
         size="small"
         startIcon={<AddIcon />}
       >
-        Agregar Proveedor
+        {t("providers.addProvider")}
       </Button>
       <Modal
         open={open}
         handleClose={handleOnClose}
-        title="Agregar Proveedor"
+        title={t("providers.addProvider")}
         disableEscapeKeyDown
       >
         <ProviderForm
